@@ -1,6 +1,6 @@
 
 var player;
-var keys;
+var keys = {};
 
 function startGame() {
     type = "circle"
@@ -19,9 +19,37 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
+
         window.addEventListener('keydown', function (e) {
             //Right now just latest keydown is active
-            keys = {};
+            
+            if( e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40 || e.keyCode == 87 || e.keyCode == 65 || e.keyCode == 83 || e.keyCode == 68 ){
+                if(37 in keys){
+                    delete keys[37];
+                }
+                else if(38 in keys){
+                    delete keys[38];
+                }
+                else if(39 in keys){
+                    delete keys[39];
+                }
+                else if(40 in keys){
+                    delete keys[40];
+                }
+                else if(87 in keys){
+                    delete keys[87];
+                }
+                else if(65 in keys){
+                    delete keys[65];
+                }
+                else if(83 in keys){
+                    delete keys[83];
+                }
+                else if(68 in keys){
+                    delete keys[68];
+                }
+            }
+            
             keys[e.keyCode] = true;
             e.preventDefault();
         })
@@ -75,20 +103,44 @@ function updateGameArea() {
     player.speedY = 0;    
     if  (37 in keys || 65 in keys) {
         if (player.x - player.speedX > player.width) {
-            player.speedX = -5; }
+            if(16 in keys){
+                player.speedX = -7;
+            }
+            else{
+            player.speedX = -5; 
+            }
         }
+    }
     if (39 in keys||  68 in keys) {
         if (player.x + player.speedX < myGameArea.canvas.width- player.width) {
-            player.speedX = 5; }
+            if(16 in keys){
+                player.speedX = 7;
+            }
+            else{
+                player.speedX = 5; 
+            }
         }
+    }
     if  (38 in keys || 87 in keys) {
         if (player.y - player.speedY > player.height) {
-            player.speedY = -5; }
+            if(16 in keys){
+                player.speedY = -7;
+            }
+            else{
+                player.speedY = -5; 
+            }
         }
+    }
     if ( 40 in keys || 83 in keys) {
         if (player.y + player.speedY < myGameArea.canvas.height- player.height) {
-            player.speedY = 5; }
+            if(16 in keys){
+                player.speedY = 7;
+            }
+            else{
+                player.speedY = 5; 
+            }
         }
+    }
     player.newPos();    
     player.update();
 }
