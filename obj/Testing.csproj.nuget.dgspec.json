@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Testing\\Testing.csproj": {}
+    "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\Testing.csproj": {}
   },
   "projects": {
-    "C:\\Testing\\Testing.csproj": {
+    "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\Testing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Testing\\Testing.csproj",
+        "projectUniqueName": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\Testing.csproj",
         "projectName": "Testing",
-        "projectPath": "C:\\Testing\\Testing.csproj",
+        "projectPath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\Testing.csproj",
         "packagesPath": "C:\\Users\\liamg\\.nuget\\packages\\",
-        "outputPath": "C:\\Testing\\obj\\",
+        "outputPath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\liamg\\AppData\\Roaming\\NuGet\\NuGet.Config",
