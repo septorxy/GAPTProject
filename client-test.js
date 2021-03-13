@@ -23,7 +23,7 @@ var myGameArea = {
         window.addEventListener('keydown', function (e) {
             //Right now just latest keydown is active
             
-            if( e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40 || e.keyCode == 87 || e.keyCode == 65 || e.keyCode == 83 || e.keyCode == 68 ){
+            /*if( e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40 || e.keyCode == 87 || e.keyCode == 65 || e.keyCode == 83 || e.keyCode == 68 ){
                 if(37 in keys){
                     delete keys[37];
                 }
@@ -49,6 +49,7 @@ var myGameArea = {
                     delete keys[68];
                 }
             }
+            */
             
             keys[e.keyCode] = true;
             e.preventDefault();
@@ -101,7 +102,7 @@ function updateGameArea() {
     myGameArea.clear();
     player.speedX = 0;
     player.speedY = 0;    
-    if  (37 in keys || 65 in keys) {
+    if  ((37 in keys || 65 in keys) && !( (38 in keys || 87 in keys) || ( 40 in keys || 83 in keys))) {
         if (player.x - player.speedX > player.width) {
             if(16 in keys){
                 player.speedX = -7;
@@ -111,7 +112,7 @@ function updateGameArea() {
             }
         }
     }
-    if (39 in keys||  68 in keys) {
+    if ((39 in keys||  68 in keys) && !( (38 in keys || 87 in keys) || ( 40 in keys || 83 in keys))) {
         if (player.x + player.speedX < myGameArea.canvas.width- player.width) {
             if(16 in keys){
                 player.speedX = 7;
@@ -121,7 +122,7 @@ function updateGameArea() {
             }
         }
     }
-    if  (38 in keys || 87 in keys) {
+    if  ((38 in keys || 87 in keys) && !( (65 in keys || 37 in keys) || ( 39 in keys || 68 in keys))) {
         if (player.y - player.speedY > player.height) {
             if(16 in keys){
                 player.speedY = -7;
@@ -131,7 +132,7 @@ function updateGameArea() {
             }
         }
     }
-    if ( 40 in keys || 83 in keys) {
+    if (( 40 in keys || 83 in keys)  && !( (65 in keys || 37 in keys) || ( 39 in keys || 68 in keys))) {
         if (player.y + player.speedY < myGameArea.canvas.height- player.height) {
             if(16 in keys){
                 player.speedY = 7;
