@@ -97,6 +97,17 @@ function component(width, height, color, x, y, type) {
     }
 }
 
+function MouseClick(event) {
+    if(event.button == 0) //left click
+    {
+        action("shoot");
+    }
+    else if(event.button == 2) //right click
+    {
+        action("ability");
+    }
+}
+
 function updateGameArea() {
     myGameArea.clear();
     player.speedX = 0;
@@ -141,6 +152,19 @@ function updateGameArea() {
             }
         }
     }
+
+    if ( 82 in keys || 17 in keys) {
+        action("reload");
+    }
+    
+    if ( 69 in keys || 13 in keys) {
+        action("interaction");
+    }
+
+    if ( 81 in keys || 32 in keys) {
+        action("changeWeapon");
+    }
+
     player.newPos();    
     player.update();
 }
@@ -171,5 +195,30 @@ function getColor()
 
 
     return color;
+}
+
+function action(actionType)
+{
+    if(actionType == "shoot")
+    {
+        document.getElementById("action1").innerHTML = "Player just shot.";
+    }
+    else if(actionType == "reload")
+    {
+        document.getElementById("action1").innerHTML = "Player just reloaded.";
+    }
+    else if(actionType == "ability")
+    {
+        document.getElementById("action1").innerHTML = "Player just used their ability.";
+    }
+    else if(actionType == "interaction")
+    {
+        document.getElementById("action1").innerHTML = "Player just interacted with the game.";
+    }
+    else if(actionType == "changeWeapon")
+    {
+        document.getElementById("action1").innerHTML = "Player just changed their weapon.";
+    }
+
 }
 
