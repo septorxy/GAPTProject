@@ -105,7 +105,7 @@ function updateGameArea() {
     if  ((37 in keys || 65 in keys) && !( (38 in keys || 87 in keys) || ( 40 in keys || 83 in keys))) {
         if (player.x - player.speedX > player.width) {
             if(16 in keys){
-                player.speedX = -7;
+                player.speedX = -10;
             }
             else{
             player.speedX = -5; 
@@ -115,7 +115,7 @@ function updateGameArea() {
     if ((39 in keys||  68 in keys) && !( (38 in keys || 87 in keys) || ( 40 in keys || 83 in keys))) {
         if (player.x + player.speedX < myGameArea.canvas.width- player.width) {
             if(16 in keys){
-                player.speedX = 7;
+                player.speedX = 10;
             }
             else{
                 player.speedX = 5; 
@@ -125,7 +125,7 @@ function updateGameArea() {
     if  ((38 in keys || 87 in keys) && !( (65 in keys || 37 in keys) || ( 39 in keys || 68 in keys))) {
         if (player.y - player.speedY > player.height) {
             if(16 in keys){
-                player.speedY = -7;
+                player.speedY = -10;
             }
             else{
                 player.speedY = -5; 
@@ -135,13 +135,91 @@ function updateGameArea() {
     if (( 40 in keys || 83 in keys)  && !( (65 in keys || 37 in keys) || ( 39 in keys || 68 in keys))) {
         if (player.y + player.speedY < myGameArea.canvas.height- player.height) {
             if(16 in keys){
-                player.speedY = 7;
+                player.speedY = 10;
             }
             else{
                 player.speedY = 5; 
             }
         }
     }
+
+    if ((38 in keys || 87 in keys)  && (65 in keys || 37 in keys) ) {
+        if (player.y - player.speedY > player.height) {
+            if(16 in keys){
+                player.speedY = -10/2;
+            }
+            else{
+                player.speedY = -5/2; 
+            }
+        }
+        if (player.x - player.speedX > player.width) {
+            if(16 in keys){
+                player.speedX = -10/2;
+            }
+            else{
+            player.speedX = -5/2; 
+            }
+        }
+    }
+
+    if ((38 in keys || 87 in keys)  && ( 39 in keys || 68 in keys) ) {
+        if (player.y - player.speedY > player.height) {
+            if(16 in keys){
+                player.speedY = -10/2;
+            }
+            else{
+                player.speedY = -5/2; 
+            }
+        }
+        if (player.x + player.speedX < myGameArea.canvas.width- player.width) {
+            if(16 in keys){
+                player.speedX = 10/2;
+            }
+            else{
+                player.speedX = 5/2; 
+            }
+        }
+    }
+
+    if (( 40 in keys || 83 in keys)  && (65 in keys || 37 in keys) ) {
+        if (player.y + player.speedY < myGameArea.canvas.height- player.height) {
+            if(16 in keys){
+                player.speedY = 10/2;
+            }
+            else{
+                player.speedY = 5/2; 
+            }
+        }
+        if (player.x - player.speedX > player.width) {
+            if(16 in keys){
+                player.speedX = -10/2;
+            }
+            else{
+            player.speedX = -5/2; 
+            }
+        }
+    }
+    if (( 40 in keys || 83 in keys)  && ( 39 in keys || 68 in keys) ) {
+        if (player.y + player.speedY < myGameArea.canvas.height- player.height) {
+            if(16 in keys){
+                player.speedY = 10/2;
+            }
+            else{
+                player.speedY = 5/2; 
+            }
+        }
+        if (player.x + player.speedX < myGameArea.canvas.width- player.width) {
+            if(16 in keys){
+                player.speedX = 10/2;
+            }
+            else{
+                player.speedX = 5/2; 
+            }
+        }
+    }
+
+
+
     player.newPos();    
     player.update();
 }
