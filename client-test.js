@@ -94,7 +94,9 @@ function component(width, height, color, x, y, type) {
     }
     this.newPos = function() {
         this.x += this.speedX;
-        this.y += this.speedY;        
+        this.y += this.speedY;
+        
+        
     }
 }
 
