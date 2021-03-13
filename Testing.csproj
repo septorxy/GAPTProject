@@ -15,10 +15,4 @@
   <PackageReference Include="Microsoft.Azure.SignalR" Version="1.7.1" />
 </ItemGroup>
 
-  <connectionStrings>
-    <add name="Test1"
-     providerName="testsignalrliam.service.signalr.net"
-     connectionString="Endpoint=https://testsignalrliam.service.signalr.net;AccessKey=zmyypiyjBJX4Whdx+I2NClx46rP9KozUCYjz2ghSwfw=;Version=1.0;" />
-  </connectionStrings>
-
 </Project>
