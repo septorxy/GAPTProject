@@ -5,11 +5,11 @@ namespace Testing
 {
     public class ChatHub : Hub
     {
-        public Task BroadcastMessage(string name, string message) =>
-            Clients.All.SendAsync("broadcastMessage", name, message);
+        public Task BroadcastMessage(string type, string name, int x, int y) =>
+            Clients.All.SendAsync("broadcastMessage", type, name, x, y);
 
-        public Task Echo(string name, string message) =>
+        public Task Echo(string name, int x, int y) =>
             Clients.Client(Context.ConnectionId)
-                   .SendAsync("echo", name, $"{message} (echo from server)");
+                   .SendAsync("echo", name, $"{x}, {y} (echo from server)");
     }
 }
