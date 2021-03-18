@@ -173,6 +173,17 @@ function component(width, height, color, x, y, type , name) {
     }
 }
 
+function MouseClick(event) {
+    if (event.button == 0) //left click
+    {
+        action("shoot");
+    }
+    else if (event.button == 2) //right click
+    {
+        action("ability");
+    }
+}
+
 function updateGameArea() {
     myGameArea.clear();
     player.speedX = 0;
@@ -293,6 +304,18 @@ function updateGameArea() {
         }
     }
 
+    if (82 in keys || 17 in keys) {
+        action("reload");
+    }
+
+    if (69 in keys || 13 in keys) {
+        action("interaction");
+    }
+
+    if (81 in keys || 32 in keys) {
+        action("changeWeapon");
+    }
+
     player.newPos();
     player.update();
 
@@ -302,6 +325,24 @@ function updateGameArea() {
         opponent[j].update();
     }
 
+}
+
+function action(actionType) {
+    if (actionType == "shoot") {
+        //shoot action
+    }
+    else if (actionType == "reload") {
+        //reload action
+    }
+    else if (actionType == "ability") {
+        //ability action
+    }
+    else if (actionType == "interaction") {
+        //interaction action
+    }
+    else if (actionType == "changeWeapon") {
+        //change weapon action
+    }
 }
 
 function getColor(name) {
