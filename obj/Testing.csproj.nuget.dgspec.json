@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj": {}
+    "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj": {
+    "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj",
+        "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
         "projectName": "Testing",
-        "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj",
+        "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
         "packagesPath": "C:\\Users\\kriss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\obj\\",
+        "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kriss\\AppData\\Roaming\\NuGet\\NuGet.Config",
