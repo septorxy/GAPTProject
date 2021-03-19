@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "GAPTProj": {
+    "GAPT": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
