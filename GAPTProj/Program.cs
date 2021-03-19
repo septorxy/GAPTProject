@@ -21,10 +21,10 @@ namespace GAPTProj
             Host.CreateDefaultBuilder(args)
 .ConfigureAppConfiguration((context, config) =>
 {
-var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-config.AddAzureKeyVault(
-keyVaultEndpoint,
-new DefaultAzureCredential());
+    var keyVaultEndpoint = new Uri("https://connstringsvault.vault.azure.net/");
+    config.AddAzureKeyVault(
+    keyVaultEndpoint,
+    new DefaultAzureCredential());
 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
