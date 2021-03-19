@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ChatRoom": {
+    "GAPTProj": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
