@@ -21,7 +21,8 @@ namespace GAPTProj
             Host.CreateDefaultBuilder(args)
 .ConfigureAppConfiguration((context, config) =>
 {
-    var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+    var uri = Environment.GetEnvironmentVariable("VaultUri");
+    var keyVaultEndpoint = new Uri(uri);
     config.AddAzureKeyVault(
     keyVaultEndpoint,
     new DefaultAzureCredential());
