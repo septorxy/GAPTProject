@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D/q8r5vtqloGlfp3TmuwiaYmdN59Wb243u1UmSIYCDhx2Z88TW2D/255SBXjpWumhNXBIyTXdjw+63exfE/M7g==",
+  "dgSpecHash": "mvRn6c7YJtl9v/R+1zE50ezXJ6j3v09/uqjbVOnVUnLg3rkREcqK/TGJr6+qCRY/RrSKr4a2MeuWSfueGL//4A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\GAPTProj\\GAPTProj.csproj",
+  "projectFilePath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\GAPTProj\\GAPTProj.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\liamg\\.nuget\\packages\\azure.core\\1.4.1\\azure.core.1.4.1.nupkg.sha512",
     "C:\\Users\\liamg\\.nuget\\packages\\azure.extensions.aspnetcore.configuration.secrets\\1.0.0\\azure.extensions.aspnetcore.configuration.secrets.1.0.0.nupkg.sha512",
