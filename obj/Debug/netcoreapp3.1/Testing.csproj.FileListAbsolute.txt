@@ -150,6 +150,8 @@ C:\Users\kriss\Desktop\GAPT\GAPTProject-iteration1_backend\GAPTProject-iteration
 C:\Users\kriss\Desktop\GAPT\GAPTProject-iteration1_backend\GAPTProject-iteration1_backend\obj\Debug\netcoreapp3.1\Testing.genruntimeconfig.cache
 C:\Users\kriss\Desktop\GAPT\GAPTProject-iteration1_backend\GAPTProject-iteration1_backend\bin\Debug\netcoreapp3.1\package-lock.json
 C:\Users\kriss\Desktop\GAPT\GAPTProject-iteration1_backend\GAPTProject-iteration1_backend\bin\Debug\netcoreapp3.1\package.json
+<<<<<<< HEAD
+=======
 C:\Users\kriss\Desktop\GAPT\GAPTProject\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\kriss\Desktop\GAPT\GAPTProject\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\kriss\Desktop\GAPT\GAPTProject\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -202,3 +204,4 @@ C:\Users\kriss\Desktop\GAPT\GAPTProject\obj\Debug\netcoreapp3.1\staticwebassets\
 C:\Users\kriss\Desktop\GAPT\GAPTProject\obj\Debug\netcoreapp3.1\Testing.dll
 C:\Users\kriss\Desktop\GAPT\GAPTProject\obj\Debug\netcoreapp3.1\Testing.pdb
 C:\Users\kriss\Desktop\GAPT\GAPTProject\obj\Debug\netcoreapp3.1\Testing.genruntimeconfig.cache
+>>>>>>> origin/iteration2_interpolation
