@@ -18,13 +18,10 @@ connection.start()
 
 
 //RECEIVING FROM HUB
-function bindConnectionMessage()
-{
-    var messageCallback = function (type, inMessage)
-    {
+function bindConnectionMessage() {
+    var messageCallback = function (type, inMessage) {
         if (!type) return;
-        if (type === "newPlayer")
-        {
+        if (type === "newPlayer") {
             if (inMessage.name == player.name) { return; }
             color = getColor(inMessage.name);
             opponent[oCount] = new component(30, 30, color, 100, 60, "circle", inMessage.name);
@@ -35,23 +32,20 @@ function bindConnectionMessage()
             //alert(opponent[oCount].gamearea.id);
             oCount++;
         }
-        if (type === "updatePlayer")
-        {
+        if (type === "updatePlayer") {
             var j;
-            for (j = 0; j < opponent.length; j++)
-            {
-                if(opponent[j].name == inMessage.name)
-                {
-                    
+            for (j = 0; j < opponent.length; j++) {
+                if (opponent[j].name == inMessage.name) {
+
                     opponent[j].newX = inMessage.x;
                     opponent[j].newY = inMessage.y;
                     opponent[j].speed = inMessage.speed;
-                        //alert(opponent[j].name);
-                    
+                    //alert(opponent[j].name);
+
                 }
             }
         }
-        
+
     }
 
 
@@ -70,12 +64,12 @@ function onConnectionError(error) {
 function startGame() {
     opponent = [];
     console.log('Connection and game started');
-    
+
     type = "sprite";
 
     var name = window.prompt("Enter your name: ");
     color = getColor(name);
-    
+
 
     myGameArea.start(name);
 
@@ -85,12 +79,11 @@ function startGame() {
     var newPlayerSend = new newMessage(player.x, player.y, player.name);
     connection.send('broadcastMessage', "newPlayer", newPlayerSend);
 
-    
+
 }
 
-function newMessage(x, y, name, speed)
-{
-    this.x = x; 
+function newMessage(x, y, name, speed) {
+    this.x = x;
     this.y = y;
     this.name = name;
     this.speed = speed;
@@ -150,7 +143,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y, type , name) {
+function component(width, height, color, x, y, type, name) {
     this.gamearea = myGameArea;
     this.width = width;
     this.height = height;
@@ -177,9 +170,8 @@ function component(width, height, color, x, y, type , name) {
 
         }
     }
-    else if (this.type == "sprite")
-    {
-        
+    else if (this.type == "sprite") {
+
         this.update = function () {
             ctx = myGameArea.context;
             var img = new Image();
@@ -363,51 +355,61 @@ function component(width, height, color, x, y, type , name) {
     }
 }
 
-    this.interpolate = function ()
-    {
-        var d = Math.hypot(this.newX - this.x, this.newY, this.y);
+this.interpolate = function () {
+    var d = Math.hypot(this.newX - this.x, this.newY, this.y);
 
-        //find equation of line  y=mx+b
+    //find equation of line  y=mx+b
 
-        var m = (this.newY - this.y) / (this.newX - this.x);
+    var m = (this.newY - this.y) / (this.newX - this.x);
 
-        var b = this.y - (m * this.x);
-
+    var b = this.y - (m * this.x);
 
 
-        if (d > this.speed * 4 && this.speed != 0) {
-            var i;
-            for (i = 0; i < d / this.speed; i++) {
-                if (this.newX < this.x) {
-                    this.x = this.x - this.speed;
-                    this.y = (m * this.x) + b;
-                    this.update();
-                }
-                else if (this.newX > this.x) {
-                    this.x = this.x + this.speed;
-                    this.y = (m * this.x) + b;
-                    this.update();
-                }
-                else {
-                    if (this.newY < this.y) {
-                        this.y = this.y - this.speed;
-                        this.update();
-                    }
-                    else if (this.newY > this.y) {
-                        this.y = this.y + this.speed;
-                        this.update();
-                    }
 
-                }
+    if (d > this.speed * 4 && this.speed != 0) {
+        var i;
+        for (i = 0; i < d / this.speed; i++) {
+            if (this.newX < this.x) {
+                this.x = this.x - this.speed;
+                this.y = (m * this.x) + b;
+                this.update();
             }
+            else if (this.newX > this.x) {
+                this.x = this.x + this.speed;``
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else {
+                if (this.newY < this.y) {
+                    this.y = this.y - this.speed;
+                    this.update();
+                }
+                else if (this.newY > this.y) {
+                    this.y = this.y + this.speed;
+                    this.update();
+                }
 
+            }
         }
-        
-            this.x = this.newX;
-            this.y = this.newY;
 
-            this.update();
-        
+    }
+
+    this.x = this.newX;
+    this.y = this.newY;
+
+    this.update();
+
+}
+
+
+function MouseClick(event) {
+    if (event.button == 0) //left click
+    {
+        action("shoot");
+    }
+    else if (event.button == 2) //right click
+    {
+        action("ability");
     }
 }
 
@@ -543,22 +545,28 @@ function updateGameArea() {
     if (16 in keys) {
         player.speed = 10;
     }
-    else
-    {
+    else {
         player.speed = 5;
     }
 
 
-    if (player.speedX != 0 || player.speedY != 0)
-    {
+    if (player.speedX != 0 || player.speedY != 0) {
         if (walk >= 4) {
             player.bool = !player.bool;
             walk = 0;
         }
-        else
-        {
+        else {
             walk++;
         }
+    }
+
+    if (82 in keys || 17 in keys) {
+        action("reload");
+    }
+
+    if (69 in keys || 13 in keys) {
+        action("interaction");
+    }
 
     if (81 in keys || 32 in keys) {
         action("changeWeapon");
@@ -567,12 +575,12 @@ function updateGameArea() {
     player.newPos();
     player.update();
 
+
     var j;
-    for (j = 0; j < opponent.length; j++)
-    {
+    for (j = 0; j < opponent.length; j++) {
         opponent[j].interpolate();
     }
-
+}
 function action(actionType) {
     if (actionType == "shoot") {
         //shoot action
