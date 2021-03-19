@@ -9,7 +9,7 @@
         "AZURE_USERNAME": "liamgatt@gmail.com",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
       },
-      "applicationUrl": "http://localhost:5000/"
+      "applicationUrl": "https://testinggapt.azurewebsites.net"
     }
   }
 }
