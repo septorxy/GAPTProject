@@ -6891,11 +6891,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj",
       "projectName": "Testing",
       "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj",
       "packagesPath": "C:\\Users\\kriss\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
+      "projectName": "Testing",
+      "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
+      "packagesPath": "C:\\Users\\kriss\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\obj\\",
+>>>>>>> origin/iteration2_interpolation
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kriss\\AppData\\Roaming\\NuGet\\NuGet.Config",
