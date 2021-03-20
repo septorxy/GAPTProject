@@ -1,5 +1,6 @@
 {
   "ExpandedNodes": [
+    "",
     "\\Controllers",
     "\\Hub",
     "\\Properties",
@@ -7,5 +8,6 @@
     "\\wwwroot\\css",
     "\\wwwroot\\js"
   ],
+  "SelectedNode": "\\GAPT.csproj",
   "PreviewInSolutionExplorer": false
 }

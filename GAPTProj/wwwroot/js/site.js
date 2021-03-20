@@ -1,5 +1,4 @@
-﻿
-var player;
+﻿var player;
 var keys = {};
 var opponent;
 var oCount = 0;
@@ -15,7 +14,13 @@ connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
+connection.onclose(error => {
+    console.assert(connection.state === signalR.HubConnectionState.Disconnected);
 
+    var disconnectedPlayer = new newMessage(player.x, player.y, player.name);
+    connection.send('broadcastMessage', "disconnection", disconnectedPlayer);
+
+});
 
 //RECEIVING FROM HUB
 function bindConnectionMessage()
@@ -23,6 +28,7 @@ function bindConnectionMessage()
     var messageCallback = function (type, inMessage)
     {
         if (!type) return;
+
         if (type === "newPlayer")
         {
             if (inMessage.name == player.name) { return; }
@@ -35,6 +41,7 @@ function bindConnectionMessage()
             //alert(opponent[oCount].gamearea.id);
             oCount++;
         }
+
         if (type === "updatePlayer")
         {
             var j;
@@ -48,6 +55,17 @@ function bindConnectionMessage()
                     opponent[j].speed = inMessage.speed;
                         //alert(opponent[j].name);
                     
+                }
+            }
+        }
+
+        if (type === "disconnection") {
+            var j;
+            for (j = 0; j < opponent.length; j++) {
+                if (opponent[j].name == inMessage.name) {
+
+                    opponent = opponent.splice(j, 1);
+
                 }
             }
         }
