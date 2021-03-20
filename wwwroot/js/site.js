@@ -368,6 +368,7 @@ this.interpolate = function () {
     if (d > this.speed * 4 && this.speed != 0) {
         var i;
         for (i = 0; i < d / this.speed; i++) {
+<<<<<<< HEAD
             if (this.newX < this.x  && this.newY != this.y) {
                 this.x = this.x - this.speed/2;
                 this.y = (m * this.x) + b;
@@ -379,12 +380,19 @@ this.interpolate = function () {
                 this.update();
             }
             else if (this.newX < this.x ) {
+=======
+            if (this.newX < this.x) {
+>>>>>>> 8979117c9d06b0f33925de027d8e26b81e46fee3
                 this.x = this.x - this.speed;
                 this.y = (m * this.x) + b;
                 this.update();
             }
             else if (this.newX > this.x) {
+<<<<<<< HEAD
                 this.x = this.x + this.speed;
+=======
+                this.x = this.x + this.speed;``
+>>>>>>> 8979117c9d06b0f33925de027d8e26b81e46fee3
                 this.y = (m * this.x) + b;
                 this.update();
             }

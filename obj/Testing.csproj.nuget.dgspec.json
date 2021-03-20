@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\crist\\Assignments\\GAPTProject\\Testing.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\Testing.csproj",
         "packagesPath": "C:\\Users\\crist\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\obj\\",
+=======
+    "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
+        "projectName": "Testing",
+        "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
+        "packagesPath": "C:\\Users\\kriss\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\obj\\",
+>>>>>>> 8979117c9d06b0f33925de027d8e26b81e46fee3
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\crist\\AppData\\Roaming\\NuGet\\NuGet.Config",

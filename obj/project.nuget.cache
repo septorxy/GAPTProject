@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "Q9GU9F1ZpLZnkpB5uApA4N4Ga9iedX2IjZhpFn1s5fs7lpNWRDu5KzdjPHlzunpk4+etveSPEtYFXTMhjW5a5w==",
   "success": true,
   "projectFilePath": "C:\\Users\\crist\\Assignments\\GAPTProject\\Testing.csproj",
+=======
+  "dgSpecHash": "VkD6rI2rtlAPsnepkAK5/ikfq/KIv1bG4icKfdUYnHf+VR80L6PH8meUQau7kx9tJyYsCGwo0auS1VMs6XQAeA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\Testing.csproj",
+>>>>>>> 8979117c9d06b0f33925de027d8e26b81e46fee3
   "expectedPackageFiles": [
     "C:\\Users\\crist\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\3.0.0\\microsoft.aspnetcore.connections.abstractions.3.0.0.nupkg.sha512",
     "C:\\Users\\crist\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\3.0.0\\microsoft.aspnetcore.http.connections.client.3.0.0.nupkg.sha512",
