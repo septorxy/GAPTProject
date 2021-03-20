@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPTProj\\GAPTProj.csproj": {}
+    "C:\\Users\\liamg\\Source\\Repos\\GAPTProject\\GAPTProj\\GAPTProj.csproj": {}
   },
   "projects": {
-    "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPTProj\\GAPTProj.csproj": {
+    "C:\\Users\\liamg\\Source\\Repos\\GAPTProject\\GAPTProj\\GAPTProj.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPTProj\\GAPTProj.csproj",
+        "projectUniqueName": "C:\\Users\\liamg\\Source\\Repos\\GAPTProject\\GAPTProj\\GAPTProj.csproj",
         "projectName": "GAPTProj",
-        "projectPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPTProj\\GAPTProj.csproj",
-        "packagesPath": "C:\\Users\\crist\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPTProj\\obj\\",
+        "projectPath": "C:\\Users\\liamg\\Source\\Repos\\GAPTProject\\GAPTProj\\GAPTProj.csproj",
+        "packagesPath": "C:\\Users\\liamg\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\liamg\\Source\\Repos\\GAPTProject\\GAPTProj\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\crist\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\liamg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
