@@ -14,13 +14,13 @@ connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
-/*connection.onclose(error => {
+connection.onclose(error => {
     console.assert(connection.state === signalR.HubConnectionState.Disconnected);
 
     var disconnectedPlayer = new newMessage(player.x, player.y, player.name);
     connection.send('broadcastMessage', "disconnection", disconnectedPlayer);
 
-});*/
+});
 
 //RECEIVING FROM HUB
 function bindConnectionMessage()
@@ -59,7 +59,7 @@ function bindConnectionMessage()
             }
         }
 
-        /*if (type === "disconnection") {
+        if (type === "disconnection") {
             var j;
             for (j = 0; j < opponent.length; j++) {
                 if (opponent[j].name == inMessage.name) {
@@ -68,7 +68,7 @@ function bindConnectionMessage()
 
                 }
             }
-        }*/
+        }
         
     }
 
@@ -163,9 +163,9 @@ var myGameArea = {
 
         })
 
-        /*window.addEventListener('blur', function () {
+        window.addEventListener('blur', function () {
             keys = {};
-        })*/
+        })
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
