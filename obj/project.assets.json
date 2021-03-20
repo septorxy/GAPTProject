@@ -67,13 +67,13 @@
           "lib/netstandard2.0/Microsoft.Azure.Services.AppAuthentication.dll": {}
         }
       },
-      "Microsoft.Azure.SignalR/1.7.1": {
+      "Microsoft.Azure.SignalR/1.8.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "3.0.0",
           "Microsoft.AspNetCore.Http.Connections.Client": "3.0.0",
           "Microsoft.Azure.Services.AppAuthentication": "1.5.0",
-          "Microsoft.Azure.SignalR.Protocols": "1.7.1",
+          "Microsoft.Azure.SignalR.Protocols": "1.8.0",
           "Microsoft.Extensions.DependencyInjection": "3.0.0",
           "Microsoft.Extensions.Http": "2.1.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.0.0",
@@ -94,7 +94,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Microsoft.Azure.SignalR.Protocols/1.7.1": {
+      "Microsoft.Azure.SignalR.Protocols/1.8.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "2.1.0",
@@ -2110,10 +2110,10 @@
         "microsoft.azure.services.appauthentication.nuspec"
       ]
     },
-    "Microsoft.Azure.SignalR/1.7.1": {
-      "sha512": "NFOG1n9IRYBjWWcCkg+MEWk4IJiefcvhoSdH03jxM9O2L9JVrxRLpIcg4DDDy69XpKFP4R5XPDzZW4wlh1Qvsw==",
+    "Microsoft.Azure.SignalR/1.8.0": {
+      "sha512": "R7Af7726lk/rxSXgmrkHxKuduv80n0S1iEjWdSvlVPyqPgPWRNgY4TzjZYxj1W361s0Dk+nYEfCwsCKPJIeKeQ==",
       "type": "package",
-      "path": "microsoft.azure.signalr/1.7.1",
+      "path": "microsoft.azure.signalr/1.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2129,21 +2129,21 @@
         "lib/netstandard2.0/Microsoft.Azure.SignalR.Common.xml",
         "lib/netstandard2.0/Microsoft.Azure.SignalR.dll",
         "lib/netstandard2.0/Microsoft.Azure.SignalR.xml",
-        "microsoft.azure.signalr.1.7.1.nupkg.sha512",
+        "microsoft.azure.signalr.1.8.0.nupkg.sha512",
         "microsoft.azure.signalr.nuspec",
         "microsoft.png"
       ]
     },
-    "Microsoft.Azure.SignalR.Protocols/1.7.1": {
-      "sha512": "K446nGQM741rEnrzaTlaj08gc0Fbyc4n+RDb2UKfv9QEFoq1P4n5ocVSGNXVFFg0+xmWI7lJbFOb+sEnNgkkxw==",
+    "Microsoft.Azure.SignalR.Protocols/1.8.0": {
+      "sha512": "M1aoRIesv3xUj6XJ4cTEEC1AB6Rtors3BGSF2aL+f2IvSQvn98SFagEUrjW9GovkUSiJZdsv+0477qTzhQuWTw==",
       "type": "package",
-      "path": "microsoft.azure.signalr.protocols/1.7.1",
+      "path": "microsoft.azure.signalr.protocols/1.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.Azure.SignalR.Protocols.dll",
         "lib/netstandard2.0/Microsoft.Azure.SignalR.Protocols.xml",
-        "microsoft.azure.signalr.protocols.1.7.1.nupkg.sha512",
+        "microsoft.azure.signalr.protocols.1.8.0.nupkg.sha512",
         "microsoft.azure.signalr.protocols.nuspec",
         "microsoft.png"
       ]
@@ -6882,23 +6882,23 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "Microsoft.Azure.SignalR >= 1.7.1"
+      "Microsoft.Azure.SignalR >= 1.8.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kriss\\.nuget\\packages\\": {}
+    "C:\\Users\\crist\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj",
+      "projectUniqueName": "C:\\Users\\crist\\Assignments\\GAPTProject\\Testing.csproj",
       "projectName": "Testing",
-      "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\Testing.csproj",
-      "packagesPath": "C:\\Users\\kriss\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject-iteration1_backend\\GAPTProject-iteration1_backend\\obj\\",
+      "projectPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\Testing.csproj",
+      "packagesPath": "C:\\Users\\crist\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\kriss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\crist\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6910,6 +6910,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -6921,10 +6922,11 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.Azure.SignalR": {
             "target": "Package",
-            "version": "[1.7.1, )"
+            "version": "[1.8.0, )"
           }
         },
         "imports": [
@@ -6945,7 +6947,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

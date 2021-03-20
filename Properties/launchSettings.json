@@ -6,8 +6,8 @@
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         },
-        "applicationUrl": "https://testinggapt.azurewebsites.net",
-        //"applicationUrl": "http://localhost:5000/"
+        //"applicationUrl": "https://gapttestsignalr.service.signalr.net"
+        "applicationUrl": "http://localhost:5000/"
     }
   }
 }

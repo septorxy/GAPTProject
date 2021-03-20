@@ -8,9 +8,16 @@
       "TRACE",
       "DEBUG",
       "NETCOREAPP",
-      "NETCOREAPP3_1"
+      "NETCOREAPP3_1",
+      "NETCOREAPP1_0_OR_GREATER",
+      "NETCOREAPP1_1_OR_GREATER",
+      "NETCOREAPP2_0_OR_GREATER",
+      "NETCOREAPP2_1_OR_GREATER",
+      "NETCOREAPP2_2_OR_GREATER",
+      "NETCOREAPP3_0_OR_GREATER",
+      "NETCOREAPP3_1_OR_GREATER"
     ],
-    "languageVersion": "",
+    "languageVersion": "8.0",
     "platform": "",
     "allowUnsafe": false,
     "warningsAsErrors": false,
@@ -24,7 +31,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Testing/1.0.0": {
         "dependencies": {
-          "Microsoft.Azure.SignalR": "1.7.1",
+          "Microsoft.Azure.SignalR": "1.8.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -363,12 +370,12 @@
           "lib/netstandard2.0/Microsoft.Azure.Services.AppAuthentication.dll": {}
         }
       },
-      "Microsoft.Azure.SignalR/1.7.1": {
+      "Microsoft.Azure.SignalR/1.8.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "3.0.0",
           "Microsoft.AspNetCore.Http.Connections.Client": "3.0.0",
           "Microsoft.Azure.Services.AppAuthentication": "1.5.0",
-          "Microsoft.Azure.SignalR.Protocols": "1.7.1",
+          "Microsoft.Azure.SignalR.Protocols": "1.8.0",
           "Microsoft.Extensions.DependencyInjection": "3.0.0",
           "Microsoft.Extensions.Http": "2.1.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.0.0",
@@ -379,12 +386,12 @@
         },
         "runtime": {
           "lib/netcoreapp3.0/Microsoft.Azure.SignalR.Common.dll": {
-            "assemblyVersion": "1.7.1.0",
-            "fileVersion": "1.7.1.0"
+            "assemblyVersion": "1.8.0.0",
+            "fileVersion": "1.8.0.0"
           },
           "lib/netcoreapp3.0/Microsoft.Azure.SignalR.dll": {
-            "assemblyVersion": "1.7.1.0",
-            "fileVersion": "1.7.1.0"
+            "assemblyVersion": "1.8.0.0",
+            "fileVersion": "1.8.0.0"
           }
         },
         "compile": {
@@ -392,7 +399,7 @@
           "lib/netcoreapp3.0/Microsoft.Azure.SignalR.dll": {}
         }
       },
-      "Microsoft.Azure.SignalR.Protocols/1.7.1": {
+      "Microsoft.Azure.SignalR.Protocols/1.8.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "3.0.0",
           "Microsoft.Azure.Services.AppAuthentication": "1.5.0",
@@ -410,8 +417,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Azure.SignalR.Protocols.dll": {
-            "assemblyVersion": "1.7.1.0",
-            "fileVersion": "1.7.1.0"
+            "assemblyVersion": "1.8.0.0",
+            "fileVersion": "1.8.0.0"
           }
         },
         "compile": {
@@ -3257,19 +3264,19 @@
       "path": "microsoft.azure.services.appauthentication/1.5.0",
       "hashPath": "microsoft.azure.services.appauthentication.1.5.0.nupkg.sha512"
     },
-    "Microsoft.Azure.SignalR/1.7.1": {
+    "Microsoft.Azure.SignalR/1.8.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-NFOG1n9IRYBjWWcCkg+MEWk4IJiefcvhoSdH03jxM9O2L9JVrxRLpIcg4DDDy69XpKFP4R5XPDzZW4wlh1Qvsw==",
-      "path": "microsoft.azure.signalr/1.7.1",
-      "hashPath": "microsoft.azure.signalr.1.7.1.nupkg.sha512"
+      "sha512": "sha512-R7Af7726lk/rxSXgmrkHxKuduv80n0S1iEjWdSvlVPyqPgPWRNgY4TzjZYxj1W361s0Dk+nYEfCwsCKPJIeKeQ==",
+      "path": "microsoft.azure.signalr/1.8.0",
+      "hashPath": "microsoft.azure.signalr.1.8.0.nupkg.sha512"
     },
-    "Microsoft.Azure.SignalR.Protocols/1.7.1": {
+    "Microsoft.Azure.SignalR.Protocols/1.8.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-K446nGQM741rEnrzaTlaj08gc0Fbyc4n+RDb2UKfv9QEFoq1P4n5ocVSGNXVFFg0+xmWI7lJbFOb+sEnNgkkxw==",
-      "path": "microsoft.azure.signalr.protocols/1.7.1",
-      "hashPath": "microsoft.azure.signalr.protocols.1.7.1.nupkg.sha512"
+      "sha512": "sha512-M1aoRIesv3xUj6XJ4cTEEC1AB6Rtors3BGSF2aL+f2IvSQvn98SFagEUrjW9GovkUSiJZdsv+0477qTzhQuWTw==",
+      "path": "microsoft.azure.signalr.protocols/1.8.0",
+      "hashPath": "microsoft.azure.signalr.protocols.1.8.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.5.0": {
       "type": "package",
