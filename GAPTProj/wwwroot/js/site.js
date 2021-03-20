@@ -162,6 +162,10 @@ var myGameArea = {
             delete keys[e.keyCode];
 
         })
+
+        window.addEventListener('blur', function () {
+            keys = {};
+        })
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
