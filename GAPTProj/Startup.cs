@@ -38,6 +38,10 @@ namespace GAPTProj
             {
                 option.Configuration = Configuration["ConnectionStrings:CacheConnection"];
             });
+            services.AddDistributedRedisCache(option =>
+            {
+                option.Configuration = Configuration["ConnectionStrings:CacheConnection"];
+            });
             //services.AddControllers();
         }
 
