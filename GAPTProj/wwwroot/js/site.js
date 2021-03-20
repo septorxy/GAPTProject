@@ -14,23 +14,32 @@ connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
-connection.onclose(error => {
-    console.assert(connection.state === signalR.HubConnectionState.Disconnected);
+function getBlob(name) {
+    const containerClient = new ContainerClient(
+        `https://$spritestorage.blob.core.windows.net/$warlock`,
+        sharedKeyCredential
+    );
 
-    var disconnectedPlayer = new newMessage(player.x, player.y, player.name);
-    connection.send('broadcastMessage', "disconnection", disconnectedPlayer);
+    const createContainerResponse = await containerClient.create();
+    console.log(`Created container $warlock successfully`, createContainerResponse.requestId);
 
-});
+    let i = 1;
+    let iter = containerClient.listBlobsFlat();
+    for await (const blob of iter) {
+        if (blob.name.includes(name)) {
+            return blob.Uri.AbsoluteUri;
+        }
+    }
+
+    return "";
+}
+
 
 //RECEIVING FROM HUB
-function bindConnectionMessage()
-{
-    var messageCallback = function (type, inMessage)
-    {
+function bindConnectionMessage() {
+    var messageCallback = function (type, inMessage) {
         if (!type) return;
-
-        if (type === "newPlayer")
-        {
+        if (type === "newPlayer") {
             if (inMessage.name == player.name) { return; }
             color = getColor(inMessage.name);
             opponent[oCount] = new component(30, 30, color, 100, 60, "circle", inMessage.name);
@@ -41,35 +50,20 @@ function bindConnectionMessage()
             //alert(opponent[oCount].gamearea.id);
             oCount++;
         }
-
-        if (type === "updatePlayer")
-        {
-            var j;
-            for (j = 0; j < opponent.length; j++)
-            {
-                if(opponent[j].name == inMessage.name)
-                {
-                    
-                    opponent[j].newX = inMessage.x;
-                    opponent[j].newY = inMessage.y;
-                    opponent[j].speed = inMessage.speed;
-                        //alert(opponent[j].name);
-                    
-                }
-            }
-        }
-
-        if (type === "disconnection") {
+        if (type === "updatePlayer") {
             var j;
             for (j = 0; j < opponent.length; j++) {
                 if (opponent[j].name == inMessage.name) {
 
-                    opponent = opponent.splice(j, 1);
+                    opponent[j].newX = inMessage.x;
+                    opponent[j].newY = inMessage.y;
+                    opponent[j].speed = inMessage.speed;
+                    //alert(opponent[j].name);
 
                 }
             }
         }
-        
+
     }
 
 
@@ -88,12 +82,12 @@ function onConnectionError(error) {
 function startGame() {
     opponent = [];
     console.log('Connection and game started');
-    
+
     type = "sprite";
 
     var name = window.prompt("Enter your name: ");
     color = getColor(name);
-    
+
 
     myGameArea.start(name);
 
@@ -103,12 +97,11 @@ function startGame() {
     var newPlayerSend = new newMessage(player.x, player.y, player.name);
     connection.send('broadcastMessage', "newPlayer", newPlayerSend);
 
-    
+
 }
 
-function newMessage(x, y, name, speed)
-{
-    this.x = x; 
+function newMessage(x, y, name, speed) {
+    this.x = x;
     this.y = y;
     this.name = name;
     this.speed = speed;
@@ -162,17 +155,13 @@ var myGameArea = {
             delete keys[e.keyCode];
 
         })
-
-        window.addEventListener('blur', function () {
-            keys = {};
-        })
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
-function component(width, height, color, x, y, type , name) {
+function component(width, height, color, x, y, type, name) {
     this.gamearea = myGameArea;
     this.width = width;
     this.height = height;
@@ -199,9 +188,8 @@ function component(width, height, color, x, y, type , name) {
 
         }
     }
-    else if (this.type == "sprite")
-    {
-        
+    else if (this.type == "sprite") {
+
         this.update = function () {
             ctx = myGameArea.context;
             var img = new Image();
@@ -209,153 +197,153 @@ function component(width, height, color, x, y, type , name) {
                 case "U":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-runl.png";
+                            img.src = getBlob("Up-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-runr.png";
+                            img.src = getBlob("Up-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-walkl.png";
+                            img.src = getBlob("Up-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-walkr.png";
+                            img.src = getBlob("Up-warlock-walkr");
                         }
                     }
                     break;
                 case "RU":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-runl.png";
+                            img.src = getBlob("RU-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-runr.png";
+                            img.src = getBlob("RU-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-walkl.png";
+                            img.src = getBlob("RU-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-walkr.png";
+                            img.src = getBlob("RU-warlock-walkr");
                         }
                     }
                     break;
                 case "LU":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-runl.png";
+                            img.src = getBlob("LU-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-runr.png";
+                            img.src = getBlob("LU-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-walkl.png";
+                            img.src = getBlob("LU-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-walkr.png";
+                            img.src = getBlob("LU-warlock-walkr");
                         }
                     }
                     break;
                 case "D":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-runl.png";
+                            img.src = getBlob("Down-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-runr.png";
+                            img.src = getBlob("Down-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkl.png";
+                            img.src = getBlob("Down-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkr.png";
+                            img.src = getBlob("Down-warlock-walkr");
                         }
                     }
                     break;
                 case "RD":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-runl.png";
+                            img.src = getBlob("RD-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-runr.png";
+                            img.src = getBlob("RD-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-walkl.png";
+                            img.src = getBlob("RD-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-walkr.png";
+                            img.src = getBlob("RD-warlock-walkr");
                         }
                     }
                     break;
                 case "LD":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-runl.png";
+                            img.src = getBlob("LD-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-runr.png";
+                            img.src = getBlob("LD-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-walkl.png";
+                            img.src = getBlob("LD-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-walkr.png";
+                            img.src = getBlob("LD-warlock-walkr");
                         }
                     }
                     break;
                 case "L":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-runl.png";
+                            img.src = getBlob("Left-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-runr.png";
+                            img.src = getBlob("Left-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-walkl.png";
+                            img.src = getBlob("Left-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-walkr.png";
+                            img.src = getBlob("Left-warlock-walkr");
                         }
                     }
                     break;
                 case "R":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-runl.png";
+                            img.src = getBlob("Right-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-runr.png";
+                            img.src = getBlob("Right-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-walkl.png";
+                            img.src = getBlob("Right-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-walkr.png";
+                            img.src = getBlob("Right-warlock-walkr");
                         }
                     }
                     break;
                 default:
                     if (this.bool) {
-                        img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkl.png";
+                        img.src = getBlob("Down-warlock-walkl");
                     }
                     else {
-                        img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkr.png";
+                        img.src = getBlob("Down-warlock-walkr");
                     }
                     break;
 
@@ -365,6 +353,7 @@ function component(width, height, color, x, y, type , name) {
 
 
         }
+
 
     }
     else if (this.type == "rectangle") {
@@ -377,57 +366,79 @@ function component(width, height, color, x, y, type , name) {
     this.newPos = function () {
         this.x += this.speedX;
         this.y += this.speedY;
+        connection.send('broadcastMessage', "updatePlayer", this.name, this.x, this.y);
 
         var newPlayerUpdate = new newMessage(this.x, this.y, this.name, this.speed);
         connection.send('broadcastMessage', "updatePlayer", newPlayerUpdate);
 
     }
+}
 
-    this.interpolate = function ()
-    {
-        var d = Math.hypot(this.newX - this.x, this.newY, this.y);
+this.interpolate = function () {
+    var d = Math.hypot(this.newX - this.x, this.newY, this.y);
 
-        //find equation of line  y=mx+b
+    //find equation of line  y=mx+b
 
-        var m = (this.newY - this.y) / (this.newX - this.x);
+    var m = (this.newY - this.y) / (this.newX - this.x);
 
-        var b = this.y - (m * this.x);
-
+    var b = this.y - (m * this.x);
 
 
-        if (d > this.speed * 4 && this.speed != 0) {
-            var i;
-            for (i = 0; i < d / this.speed; i++) {
-                if (this.newX < this.x) {
-                    this.x = this.x - this.speed;
-                    this.y = (m * this.x) + b;
-                    this.update();
-                }
-                else if (this.newX > this.x) {
-                    this.x = this.x + this.speed;
-                    this.y = (m * this.x) + b;
-                    this.update();
-                }
-                else {
-                    if (this.newY < this.y) {
-                        this.y = this.y - this.speed;
-                        this.update();
-                    }
-                    else if (this.newY > this.y) {
-                        this.y = this.y + this.speed;
-                        this.update();
-                    }
 
-                }
+    if (d > this.speed * 4 && this.speed != 0) {
+        var i;
+        for (i = 0; i < d / this.speed; i++) {
+            if (this.newX < this.x && this.newY != this.y) {
+                this.x = this.x - this.speed / 2;
+                this.y = (m * this.x) + b;
+                this.update();
             }
+            else if (this.newX > this.x && this.newY != this.y) {
+                this.x = this.x + this.speed / 2;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else if (this.newX < this.x) {
+                this.x = this.x - this.speed;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else if (this.newX > this.x) {
+                this.x = this.x + this.speed;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else {
+                if (this.newY < this.y) {
+                    this.y = this.y - this.speed;
+                    this.update();
+                }
+                else if (this.newY > this.y) {
+                    this.y = this.y + this.speed;
+                    this.update();
+                }
 
+            }
         }
-        
-            this.x = this.newX;
-            this.y = this.newY;
 
-            this.update();
-        
+    }
+
+    this.x = this.newX;
+    this.y = this.newY;
+
+    this.update();
+
+}
+
+
+function MouseClick(event) {
+    if (event.button == 0) //left click
+    {
+        action("shoot");
+    }
+    else if (event.button == 2) //right click
+    {
+        action("ability");
     }
 }
 
@@ -563,34 +574,58 @@ function updateGameArea() {
     if (16 in keys) {
         player.speed = 10;
     }
-    else
-    {
+    else {
         player.speed = 5;
     }
 
 
-    if (player.speedX != 0 || player.speedY != 0)
-    {
+    if (player.speedX != 0 || player.speedY != 0) {
         if (walk >= 4) {
             player.bool = !player.bool;
             walk = 0;
         }
-        else
-        {
+        else {
             walk++;
         }
+    }
 
+    if (82 in keys || 17 in keys) {
+        action("reload");
+    }
+
+    if (69 in keys || 13 in keys) {
+        action("interaction");
+    }
+
+    if (81 in keys || 32 in keys) {
+        action("changeWeapon");
     }
 
     player.newPos();
     player.update();
 
+
     var j;
-    for (j = 0; j < opponent.length; j++)
-    {
+    for (j = 0; j < opponent.length; j++) {
         opponent[j].interpolate();
     }
-
+}
+function action(actionType) {
+    if (actionType == "shoot") {
+        //shoot action
+    }
+    else if (actionType == "reload") {
+        //reload action
+    }
+    else if (actionType == "ability") {
+        //ability action
+    }
+    else if (actionType == "interaction") {
+        //interaction action
+    }
+    else if (actionType == "changeWeapon") {
+        //change weapon action
+    }
 }
 
 function getColor(name) {
@@ -617,4 +652,3 @@ function getColor(name) {
 
     return color;
 }
-
