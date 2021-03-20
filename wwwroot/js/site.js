@@ -369,13 +369,23 @@ this.interpolate = function () {
     if (d > this.speed * 4 && this.speed != 0) {
         var i;
         for (i = 0; i < d / this.speed; i++) {
-            if (this.newX < this.x) {
+            if (this.newX < this.x  && this.newY != this.y) {
+                this.x = this.x - this.speed/2;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else if (this.newX > this.x && this.newY != this.y) {
+                this.x = this.x + this.speed/2;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else if (this.newX < this.x ) {
                 this.x = this.x - this.speed;
                 this.y = (m * this.x) + b;
                 this.update();
             }
             else if (this.newX > this.x) {
-                this.x = this.x + this.speed;``
+                this.x = this.x + this.speed;
                 this.y = (m * this.x) + b;
                 this.update();
             }
