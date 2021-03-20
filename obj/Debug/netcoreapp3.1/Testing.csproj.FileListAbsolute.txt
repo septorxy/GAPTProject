@@ -204,8 +204,6 @@ C:\Users\crist\Assignments\GAPTProject\obj\Debug\netcoreapp3.1\Testing.dll
 C:\Users\crist\Assignments\GAPTProject\obj\Debug\netcoreapp3.1\Testing.pdb
 C:\Users\crist\Assignments\GAPTProject\obj\Debug\netcoreapp3.1\Testing.genruntimeconfig.cache
 =======
-<<<<<<< HEAD
-=======
 C:\Users\kriss\Desktop\GAPT\GAPTProject\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\kriss\Desktop\GAPT\GAPTProject\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\kriss\Desktop\GAPT\GAPTProject\bin\Debug\netcoreapp3.1\Properties\launchSettings.json

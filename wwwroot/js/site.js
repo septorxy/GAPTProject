@@ -14,12 +14,21 @@ connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
+connection.onclose(error => {
+    console.assert(connection.state === signalR.HubConnectionState.Disconnected);
+
+    var disconnectedPlayer = new newMessage(player.x, player.y, player.name);
+    connection.send('broadcastMessage', "disconnection", disconnectedPlayer);
+    
+});
+
 
 
 //RECEIVING FROM HUB
 function bindConnectionMessage() {
     var messageCallback = function (type, inMessage) {
         if (!type) return;
+
         if (type === "newPlayer") {
             if (inMessage.name == player.name) { return; }
             color = getColor(inMessage.name);
@@ -31,6 +40,7 @@ function bindConnectionMessage() {
             //alert(opponent[oCount].gamearea.id);
             oCount++;
         }
+
         if (type === "updatePlayer") {
             var j;
             for (j = 0; j < opponent.length; j++) {
@@ -40,6 +50,17 @@ function bindConnectionMessage() {
                     opponent[j].newY = inMessage.y;
                     opponent[j].speed = inMessage.speed;
                     //alert(opponent[j].name);
+
+                }
+            }
+        }
+
+        if (type === "disconnection") {
+            var j;
+            for (j = 0; j < opponent.length; j++) {
+                if (opponent[j].name == inMessage.name) {
+
+                    opponent = opponent.splice(j, 1); 
 
                 }
             }
@@ -368,31 +389,23 @@ this.interpolate = function () {
     if (d > this.speed * 4 && this.speed != 0) {
         var i;
         for (i = 0; i < d / this.speed; i++) {
-<<<<<<< HEAD
-            if (this.newX < this.x  && this.newY != this.y) {
-                this.x = this.x - this.speed/2;
+            if (this.newX < this.x && this.newY != this.y) {
+                this.x = this.x - this.speed / 2;
                 this.y = (m * this.x) + b;
                 this.update();
             }
             else if (this.newX > this.x && this.newY != this.y) {
-                this.x = this.x + this.speed/2;
+                this.x = this.x + this.speed / 2;
                 this.y = (m * this.x) + b;
                 this.update();
             }
-            else if (this.newX < this.x ) {
-=======
-            if (this.newX < this.x) {
->>>>>>> 8979117c9d06b0f33925de027d8e26b81e46fee3
+            else if (this.newX < this.x) {
                 this.x = this.x - this.speed;
                 this.y = (m * this.x) + b;
                 this.update();
             }
             else if (this.newX > this.x) {
-<<<<<<< HEAD
                 this.x = this.x + this.speed;
-=======
-                this.x = this.x + this.speed;``
->>>>>>> 8979117c9d06b0f33925de027d8e26b81e46fee3
                 this.y = (m * this.x) + b;
                 this.update();
             }
@@ -414,7 +427,7 @@ this.interpolate = function () {
     this.x = this.newX;
     this.y = this.newY;
 
-    this.update();
+    this.update();   
 
 }
 
