@@ -1,0 +1,7 @@
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.csprojAssemblyReference.cache
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.AssemblyInfoInputs.cache
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.AssemblyInfo.cs
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.csproj.CoreCompileInputs.cache
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.RazorAssemblyInfo.cache
+C:\Users\liamg\source\repos\Test2\Test2\obj\Debug\netcoreapp3.1\Test2.RazorAssemblyInfo.cs
