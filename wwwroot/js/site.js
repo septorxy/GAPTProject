@@ -21,8 +21,8 @@ function getBlob(name) {
         sharedKeyCredential
     );
 
-    const createContainerResponse = await containerClient.create();
-    console.log(`Created container $warlock successfully`, createContainerResponse.requestId);
+    //const createContainerResponse = await containerClient.create();
+    //console.log(`Created container $warlock successfully`, createContainerResponse.requestId);
 
     let i = 1;
     let iter = containerClient.listBlobsFlat();
