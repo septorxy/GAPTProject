@@ -4,6 +4,7 @@ var opponent;
 var oCount = 0;
 var walk = 0;
 
+//This worked
 
 var connection = new signalR.HubConnectionBuilder()
     .withUrl('/chat')
