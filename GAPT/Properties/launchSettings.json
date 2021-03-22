@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "GAPT": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://connstringsvault.vault.azure.net/",
+        "AZURE_USERNAME": "liamgatt@gmail.com",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
+      },
+      "applicationUrl": "https://testinggapt.azurewebsites.net"
+    }
+  }
+}

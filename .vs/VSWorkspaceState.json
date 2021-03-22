@@ -1,17 +1,8 @@
 {
   "ExpandedNodes": [
-<<<<<<< HEAD
-    ""
-=======
     "",
-    "\\Controllers",
-    "\\Hub",
-    "\\Properties",
-    "\\wwwroot",
-    "\\wwwroot\\css",
-    "\\wwwroot\\js"
->>>>>>> 2044b904140f740fdbc20b0cbbb37519c0473e81
+    "\\GAPTProj"
   ],
-  "SelectedNode": "\\GAPT.csproj",
+  "SelectedNode": "\\GAPTProj",
   "PreviewInSolutionExplorer": false
 }
