@@ -15,6 +15,25 @@ connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
+function getBlob(name) {
+    const containerClient = new ContainerClient(
+        `https://$spritestorage.blob.core.windows.net/$warlock`,
+        sharedKeyCredential
+    );
+
+    //const createContainerResponse = await containerClient.create();
+    //console.log(`Created container $warlock successfully`, createContainerResponse.requestId);
+
+    let i = 1;
+    let iter = containerClient.listBlobsFlat();
+    for await (const blob of iter) {
+        if (blob.name.includes(name)) {
+            return blob.Uri.AbsoluteUri;
+        }
+    }
+
+    return "";
+}
 
 
 //RECEIVING FROM HUB
@@ -179,153 +198,153 @@ function component(width, height, color, x, y, type, name) {
                 case "U":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-runl.png";
+                            img.src = getBlob("Up-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-runr.png";
+                            img.src = getBlob("Up-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-walkl.png";
+                            img.src = getBlob("Up-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Up-warlock-walkr.png";
+                            img.src = getBlob("Up-warlock-walkr");
                         }
                     }
                     break;
                 case "RU":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-runl.png";
+                            img.src = getBlob("RU-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-runr.png";
+                            img.src = getBlob("RU-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-walkl.png";
+                            img.src = getBlob("RU-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RU-warlock-walkr.png";
+                            img.src = getBlob("RU-warlock-walkr");
                         }
                     }
                     break;
                 case "LU":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-runl.png";
+                            img.src = getBlob("LU-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-runr.png";
+                            img.src = getBlob("LU-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-walkl.png";
+                            img.src = getBlob("LU-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LU-warlock-walkr.png";
+                            img.src = getBlob("LU-warlock-walkr");
                         }
                     }
                     break;
                 case "D":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-runl.png";
+                            img.src = getBlob("Down-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-runr.png";
+                            img.src = getBlob("Down-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkl.png";
+                            img.src = getBlob("Down-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkr.png";
+                            img.src = getBlob("Down-warlock-walkr");
                         }
                     }
                     break;
                 case "RD":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-runl.png";
+                            img.src = getBlob("RD-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-runr.png";
+                            img.src = getBlob("RD-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-walkl.png";
+                            img.src = getBlob("RD-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\RD-warlock-walkr.png";
+                            img.src = getBlob("RD-warlock-walkr");
                         }
                     }
                     break;
                 case "LD":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-runl.png";
+                            img.src = getBlob("LD-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-runr.png";
+                            img.src = getBlob("LD-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-walkl.png";
+                            img.src = getBlob("LD-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\LD-warlock-walkr.png";
+                            img.src = getBlob("LD-warlock-walkr");
                         }
                     }
                     break;
                 case "L":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-runl.png";
+                            img.src = getBlob("Left-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-runr.png";
+                            img.src = getBlob("Left-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-walkl.png";
+                            img.src = getBlob("Left-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Left-warlock-walkr.png";
+                            img.src = getBlob("Left-warlock-walkr");
                         }
                     }
                     break;
                 case "R":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-runl.png";
+                            img.src = getBlob("Right-warlock-runl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-runr.png";
+                            img.src = getBlob("Right-warlock-runr");
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-walkl.png";
+                            img.src = getBlob("Right-warlock-walkl");
                         }
                         else {
-                            img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Right-warlock-walkr.png";
+                            img.src = getBlob("Right-warlock-walkr");
                         }
                     }
                     break;
                 default:
                     if (this.bool) {
-                        img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkl.png";
+                        img.src = getBlob("Down-warlock-walkl");
                     }
                     else {
-                        img.src = "C:\Users\kriss\Desktop\GAPT\GAPTProject\media\Down-warlock-walkr.png";
+                        img.src = getBlob("Down-warlock-walkr");
                     }
                     break;
 
@@ -335,6 +354,7 @@ function component(width, height, color, x, y, type, name) {
 
 
         }
+
 
     }
     else if (this.type == "rectangle") {
@@ -369,13 +389,23 @@ this.interpolate = function () {
     if (d > this.speed * 4 && this.speed != 0) {
         var i;
         for (i = 0; i < d / this.speed; i++) {
-            if (this.newX < this.x) {
+            if (this.newX < this.x  && this.newY != this.y) {
+                this.x = this.x - this.speed/2;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else if (this.newX > this.x && this.newY != this.y) {
+                this.x = this.x + this.speed/2;
+                this.y = (m * this.x) + b;
+                this.update();
+            }
+            else if (this.newX < this.x ) {
                 this.x = this.x - this.speed;
                 this.y = (m * this.x) + b;
                 this.update();
             }
             else if (this.newX > this.x) {
-                this.x = this.x + this.speed;``
+                this.x = this.x + this.speed;
                 this.y = (m * this.x) + b;
                 this.update();
             }
