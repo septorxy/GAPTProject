@@ -15,7 +15,7 @@ connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
-function getBlob(name) {
+async function getBlob(name) {
    
     const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
     const containerClient = blobServiceClient.getContainerClient("warlock");
