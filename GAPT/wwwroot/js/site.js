@@ -26,7 +26,7 @@ function getBlob(name) {
 
     let i = 1;
     let iter = containerClient.listBlobsFlat();
-    for await (const blob of iter) {
+    for (const blob of iter) {
         if (blob.name.includes(name)) {
             return blob.Uri.AbsoluteUri;
         }
