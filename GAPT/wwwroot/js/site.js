@@ -16,21 +16,17 @@ connection.start()
     .catch(error => console.error(error.message));
 
 function getBlob(name) {
-    const containerClient = new ContainerClient(
-        `https://$spritestorage.blob.core.windows.net/$warlock`,
-        sharedKeyCredential
-    );
+   
+    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+    const containerClient = blobServiceClient.getContainerClient("warlock");
 
-    //const createContainerResponse = await containerClient.create();
-    //console.log(`Created container $warlock successfully`, createContainerResponse.requestId);
-
-    let i = 1;
-    let iter = containerClient.listBlobsFlat();
-    for (const blob of iter) {
-        if (blob.name.includes(name)) {
-            return blob.Uri.AbsoluteUri;
+    for await (const blob of containerClient.listBlobsFlat()) {
+        if (blob.name.includes(name))
+        {
+            return blobServiceClient.getUrl("warlock", blob.name);
         }
     }
+
 
     return "";
 }
