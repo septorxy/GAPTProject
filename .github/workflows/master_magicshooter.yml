@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'magicshooter'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8ea8e090643f45da8bacb69c80a379f1 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_1e0077880fc7436ea625e29115f5f2e7 }}
         package: ${{env.DOTNET_ROOT}}/myapp 
