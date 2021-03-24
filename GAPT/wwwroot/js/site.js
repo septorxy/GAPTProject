@@ -82,7 +82,7 @@ function startGame() {
     opponent = [];
     console.log('Connection and game started');
 
-    type = "sprite";
+    type = "circle";
 
     var name = window.prompt("Enter your name: ");
     color = getColor(name);
