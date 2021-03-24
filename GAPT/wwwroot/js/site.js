@@ -3,8 +3,6 @@ var keys = {};
 var opponent;
 var oCount = 0;
 var walk = 0;
-const { BlobServiceClient } = require('@azure/storage-blob');
-const { v1: uuidv1} = require('uuid');
 //This worked
 
 var connection = new signalR.HubConnectionBuilder()
@@ -15,23 +13,6 @@ bindConnectionMessage();
 connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
-
-async function getBlob(name) {
-
-   
-    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
-    const containerClient = blobServiceClient.getContainerClient("warlock");
-
-    for await (const blob of containerClient.listBlobsFlat()) {
-        if (blob.name.includes(name))
-        {
-            return blobServiceClient.getUrl("warlock", blob.name);
-        }
-    }
-
-
-    return "";
-}
 
 
 //RECEIVING FROM HUB
