@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\Luke Grixti\\Documents\\University\\Yr2 Sem2\\GAPT\\GAPTProject\\GAPT\\GAPTProj.csproj": {}
+    "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPT\\GAPTProj.csproj": {}
   },
   "projects": {
-    "D:\\Users\\Luke Grixti\\Documents\\University\\Yr2 Sem2\\GAPT\\GAPTProject\\GAPT\\GAPTProj.csproj": {
+    "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPT\\GAPTProj.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\Luke Grixti\\Documents\\University\\Yr2 Sem2\\GAPT\\GAPTProject\\GAPT\\GAPTProj.csproj",
+        "projectUniqueName": "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPT\\GAPTProj.csproj",
         "projectName": "GAPTProj",
-        "projectPath": "D:\\Users\\Luke Grixti\\Documents\\University\\Yr2 Sem2\\GAPT\\GAPTProject\\GAPT\\GAPTProj.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\Luke Grixti\\Documents\\University\\Yr2 Sem2\\GAPT\\GAPTProject\\GAPT\\obj\\",
+        "projectPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPT\\GAPTProj.csproj",
+        "packagesPath": "C:\\Users\\crist\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\crist\\Assignments\\GAPTProject\\GAPT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\crist\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
