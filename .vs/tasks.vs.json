@@ -10,6 +10,11 @@
       "taskLabel": "task-GAPTProject",
       "appliesTo": "/",
       "type": "launch"
+    },
+    {
+      "taskLabel": "task-Web",
+      "appliesTo": "GAPT/wwwroot/Web.config",
+      "type": "launch"
     }
   ]
 }

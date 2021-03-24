@@ -1,4 +1,6 @@
-﻿using GAPTProj.Models;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using GAPTProj.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,7 +13,10 @@ namespace GAPTProj.Controllers
 {
     public class HomeController : Controller
     {
+
+        
         private readonly ILogger<HomeController> _logger;
+
 
         public HomeController(ILogger<HomeController> logger)
         {

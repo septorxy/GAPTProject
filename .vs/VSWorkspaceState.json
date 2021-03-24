@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\GAPTProj"
+    "\\GAPT",
+    "\\GAPT\\Models",
+    "\\GAPT\\Views",
+    "\\GAPT\\wwwroot"
   ],
-  "SelectedNode": "\\GAPTProj",
+  "SelectedNode": "\\GAPT\\Models\\GSContext.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -5,11 +5,9 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "VaultUri": "https://connstringsvault.vault.azure.net/",
-        "AZURE_USERNAME": "liamgatt@gmail.com",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
+        "AZURE_USERNAME": "liamgatt@gmail.com"
       },
-      "applicationUrl": "https://testinggapt.azurewebsites.net"
+      "applicationUrl": "https://localhost:5000/"
     }
   }
 }
