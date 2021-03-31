@@ -1,8 +1,9 @@
 ﻿
-var player;
+﻿var player;
 var keys = {};
 var opponent;
 var oCount = 0;
+var walk = 0;
 
 var connection = new signalR.HubConnectionBuilder()
     .withUrl('/chat')
