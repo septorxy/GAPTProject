@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
-namespace GAPTProj
+namespace Testing
 {
     public class ChatHub : Hub
     {
