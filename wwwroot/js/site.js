@@ -5,6 +5,7 @@ var opponent;
 var oCount = 0;
 var walk = 0;
 
+
 var connection = new signalR.HubConnectionBuilder()
     .withUrl('/chat')
     .build();
@@ -30,7 +31,7 @@ function bindConnectionMessage() {
         if (type === "newPlayer") {
             if (inMessage.name == player.name) { return; }
             color = getColor(inMessage.name);
-            opponent[oCount] = new component(30, 30, color, 100, 60, "circle", inMessage.name);
+            opponent[oCount] = new component(60, 60, color, 100, 60, "sprite", inMessage.name);
             //opponent[oCount].newPos();
             opponent[oCount].update();
             //opponent[oCount].update();
@@ -46,6 +47,9 @@ function bindConnectionMessage() {
                     opponent[j].newX = inMessage.x;
                     opponent[j].newY = inMessage.y;
                     opponent[j].speed = inMessage.speed;
+                    opponent[j].bool = inMessage.bool;
+                    opponent[j].direction = inMessage.direction;
+
                     //alert(opponent[j].name);
 
                 }
@@ -81,7 +85,7 @@ function startGame() {
     opponent = [];
     console.log('Connection and game started');
     
-    type = "circle"
+    type = "sprite"
 
     var name = window.prompt("Enter your name: ");
     color = getColor(name);
@@ -89,18 +93,20 @@ function startGame() {
 
     myGameArea.start(name);
 
-    player = new component(30, 30, color, 60, 60, type, name);
+    player = new component(60, 60, color, 60, 60, type, name);
     //alert("player created");
     //Sending to hub
      var newPlayerSend = new newMessage(player.x, player.y, player.name);
     connection.send('broadcastMessage', "newPlayer", newPlayerSend);
 }
 
-function newMessage(x, y, name, speed) {
+function newMessage(x, y, name, speed, bool, direction) {
     this.x = x;
     this.y = y;
     this.name = name;
     this.speed = speed;
+    this.bool = bool;
+    this.direction = direction;
 }
 
 var myGameArea = {
@@ -172,6 +178,7 @@ function component(width, height, color, x, y, type, name) {
     this.type = type
     this.direction = "";
     this.bool = false;
+    this.spritesrc = "";
 
 
     if (this.type == "circle") {
@@ -189,159 +196,161 @@ function component(width, height, color, x, y, type, name) {
         this.update = function () {
             ctx = myGameArea.context;
             var img = new Image();
+            img.src = this.spritesrc;
             switch (this.direction) {
                 case "U":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Up-warlock-walkr.png";
                         }
                     }
                     break;
                 case "RU":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RU-warlock-walkr.png";
                         }
                     }
                     break;
                 case "LU":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LU-warlock-walkr.png";
                         }
                     }
                     break;
                 case "D":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkr.png";
                         }
                     }
                     break;
                 case "RD":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/RD-warlock-walkr.png";
                         }
                     }
                     break;
                 case "LD":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/LD-warlock-walkr.png";
                         }
                     }
                     break;
                 case "L":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Left-warlock-walkr.png";
                         }
                     }
                     break;
                 case "R":
                     if (this.speed == 10) {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-runl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-runl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-runr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-runr.png";
                         }
                     }
                     else {
                         if (this.bool) {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-walkl.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-walkl.png";
                         }
                         else {
-                            img.src = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-walkr.png";
+                            this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Right-warlock-walkr.png";
                         }
                     }
                     break;
-                default:
+                /*default:
                     if (this.bool) {
-                        img.src = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png";
+                        this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png";
                     }
                     else {
-                        img.src = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png";
+                        this.spritesrc = "https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png";
                     }
                     break;
+                    */
 
             }
 
@@ -364,68 +373,69 @@ function component(width, height, color, x, y, type, name) {
         this.y += this.speedY;
         connection.send('broadcastMessage', "updatePlayer", this.name, this.x, this.y);
 
-        var newPlayerUpdate = new newMessage(this.x, this.y, this.name, this.speed);
+        var newPlayerUpdate = new newMessage(this.x, this.y, this.name, this.speed, this.bool, this.direction);
         connection.send('broadcastMessage', "updatePlayer", newPlayerUpdate);
 
     }
-}
-
-this.interpolate = function () {
-    var d = Math.hypot(this.newX - this.x, this.newY, this.y);
-
-    //find equation of line  y=mx+b
-
-    var m = (this.newY - this.y) / (this.newX - this.x);
-
-    var b = this.y - (m * this.x);
 
 
+    this.interpolate = function () {
+        var d = Math.hypot(this.newX - this.x, this.newY, this.y);
 
-    if (d > this.speed * 4 && this.speed != 0) {
-        var i;
-        for (i = 0; i < d / this.speed; i++) {
-            if (this.newX < this.x  && this.newY != this.y) {
-                this.x = this.x - this.speed/2;
-                this.y = (m * this.x) + b;
-                this.update();
-            }
-            else if (this.newX > this.x && this.newY != this.y) {
-                this.x = this.x + this.speed/2;
-                this.y = (m * this.x) + b;
-                this.update();
-            }
-            else if (this.newX < this.x ) {
-                this.x = this.x - this.speed;
-                this.y = (m * this.x) + b;
-                this.update();
-            }
-            else if (this.newX > this.x) {
-                this.x = this.x + this.speed;
-                this.y = (m * this.x) + b;
-                this.update();
-            }
-            else {
-                if (this.newY < this.y) {
-                    this.y = this.y - this.speed;
+        //find equation of line  y=mx+b
+
+        var m = (this.newY - this.y) / (this.newX - this.x);
+
+        var b = this.y - (m * this.x);
+
+
+
+        if (d > this.speed * 100 && this.speed != 0) {
+            var i;
+            for (i = 0; i < d / this.speed; i++) {
+                if (this.newX < this.x && this.newY != this.y) {
+                    this.x = this.x - this.speed / 2;
+                    this.y = (m * this.x) + b;
                     this.update();
                 }
-                else if (this.newY > this.y) {
-                    this.y = this.y + this.speed;
+                else if (this.newX > this.x && this.newY != this.y) {
+                    this.x = this.x + this.speed / 2;
+                    this.y = (m * this.x) + b;
                     this.update();
                 }
+                else if (this.newX < this.x) {
+                    this.x = this.x - this.speed;
+                    this.y = (m * this.x) + b;
+                    this.update();
+                }
+                else if (this.newX > this.x) {
+                    this.x = this.x + this.speed;
+                    this.y = (m * this.x) + b;
+                    this.update();
+                }
+                else {
+                    if (this.newY < this.y) {
+                        this.y = this.y - this.speed;
+                        this.update();
+                    }
+                    else if (this.newY > this.y) {
+                        this.y = this.y + this.speed;
+                        this.update();
+                    }
 
+                }
             }
+
         }
+
+        this.x = this.newX;
+        this.y = this.newY;
+
+        this.update();
 
     }
 
-    this.x = this.newX;
-    this.y = this.newY;
-
-    this.update();
-
 }
-
 
 
 function MouseClick(event) {
