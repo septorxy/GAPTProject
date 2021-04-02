@@ -1,0 +1,3 @@
+{
+    "StorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=gaptacct;AccountKey=YyQj8hcD68wg9x1x90Wfy6sY5dsVvlEmq95B85ztmJHtGPP8NbwU3g0w5LRbuF2sV4tQeqfJqTiCMPQHk7lsQw==;TableEndpoint=https://gaptacct.table.cosmos.azure.com:443/;"
+}
