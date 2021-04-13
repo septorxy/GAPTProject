@@ -18,6 +18,10 @@ namespace Testing
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR().AddAzureSignalR();
+            services.AddDistributedRedisCache(option =>
+            {
+                option.Configuration = Configuration["ConnectionStrings:CacheConnection"];
+            });
             //services.AddControllers();
         }
 

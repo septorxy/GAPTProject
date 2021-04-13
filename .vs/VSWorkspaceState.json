@@ -1,12 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.github",
-    "\\.github\\workflows",
+    "\\Controllers",
+    "\\Hub",
+    "\\Models",
     "\\Properties",
-    "\\Views",
-    "\\wwwroot"
+    "\\Views\\Home"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\Testing.csproj",
   "PreviewInSolutionExplorer": false
 }
