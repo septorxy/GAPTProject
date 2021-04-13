@@ -10,14 +10,14 @@ namespace Testing
 {
     public class ChatHub : Hub 
     { 
-    
+    IDatabase cache = ConnectionCache.GetDatabase();
         public Task BroadcastMessage(string type, string name, int x, int y)
         {
-            if (type.Equals("newPlayer")) { 
-                IDatabase cache = ConnectionCache.GetDatabase();
+            //if (type.Equals("newPlayer")) { 
+                
                 string cacheCommand = "PING";
                 Console.WriteLine("Cache response : " + cache.Execute(cacheCommand).ToString() + " " + type);
-            }
+           // }
             return Clients.All.SendAsync("broadcastMessage", type, name, x, y);
         }
 
