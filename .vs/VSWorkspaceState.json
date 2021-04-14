@@ -1,12 +1,14 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.github",
     "\\Controllers",
     "\\Hub",
     "\\Models",
     "\\Properties",
-    "\\Views\\Home"
+    "\\wwwroot",
+    "\\wwwroot\\js"
   ],
-  "SelectedNode": "\\Testing.csproj",
+  "SelectedNode": "\\Hub\\ChatHub.cs",
   "PreviewInSolutionExplorer": false
 }
