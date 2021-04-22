@@ -3,10 +3,12 @@
     "",
     "\\.github",
     "\\.github\\workflows",
+    "\\Hub",
     "\\Properties",
     "\\Views",
-    "\\wwwroot"
+    "\\wwwroot",
+    "\\wwwroot\\js"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\wwwroot\\js\\phasersite.js",
   "PreviewInSolutionExplorer": false
 }
