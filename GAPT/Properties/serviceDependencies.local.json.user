@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "redis1": {
+      "restored": true,
+      "restoreTime": "2021-03-30T13:12:29.4077817Z"
+    },
+    "secrets1": {
+      "restored": true,
+      "restoreTime": "2021-03-30T13:12:20.4178858Z"
+    }
+  },
+  "parameters": {
+    "redis1.resourceGroupName": {
+      "Name": "redis1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "GAPT"
+    },
+    "subscriptionId": {
+      "Name": "subscriptionId",
+      "Type": "subscription",
+      "Value": "bcde8194-87f7-4b91-89a7-7dc94eb76209"
+    },
+    "redis1.subscriptionId": {
+      "Name": "redis1.subscriptionId",
+      "Type": "subscription",
+      "Value": "bcde8194-87f7-4b91-89a7-7dc94eb76209"
+    }
+  }
+}
