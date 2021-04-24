@@ -17,12 +17,17 @@ connection.start()
 
 connection.onclose(error => {
     console.assert(connection.state === signalR.HubConnectionState.Disconnected);
-
+    console.log("HEre");
     var disconnectedPlayer = new newMessage(player.x, player.y, player.name);
     connection.send('broadcastMessage', "disconnection", disconnectedPlayer);
 
 });
 
+window.addEventListener('beforeunload', function (e) {
+    console.log("HEre");
+    var disconnectedPlayer = new newMessage(player.x, player.y, player.name);
+    connection.send('broadcastMessage', "disconnection", disconnectedPlayer);
+});
 
 //RECEIVING FROM HUB
 function bindConnectionMessage() {
@@ -59,9 +64,9 @@ function bindConnectionMessage() {
         if (type === "disconnection") {
             var j;
             for (j = 0; j < opponent.length; j++) {
-                if (opponent[j].name == inMessage.name) {
+                var Msg = JSON.parse(inMessage);
+                if (opponent[j].name == Msg.name) {
                     opponent = opponent.splice(j, 1);
-
                 }
             }
         }
