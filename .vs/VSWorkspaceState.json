@@ -2,8 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\.github",
-    "\\GAPT"
+    "\\GAPT",
+    "\\GAPT\\Hub",
+    "\\GAPT\\Models",
+    "\\GAPT\\obj",
+    "\\GAPT\\Views",
+    "\\GAPT\\wwwroot",
+    "\\GAPT\\wwwroot\\js"
   ],
-  "SelectedNode": "\\GAPT.sln",
+  "SelectedNode": "\\GAPT\\Hub\\ChatHub.cs",
   "PreviewInSolutionExplorer": false
 }

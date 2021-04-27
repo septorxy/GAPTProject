@@ -19,14 +19,14 @@ namespace GAPT
             PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
             if (type == "disconnection")
             {
-                Console.WriteLine(inMessage.ToString());
+                //Console.WriteLine(inMessage.ToString());
                 inMessage = inMessage.ToString();
             }
             string name = state.name;
             //Console.WriteLine(inMessage.ToString() + " wha");
             if (type.Equals("newPlayer")) {
                 //PlayerState playerState = new PlayerState(name, x, y);
-                Console.WriteLine(Context.ConnectionId + " + " + name);
+                //Console.WriteLine(Context.ConnectionId + " + " + name);
                 cache.StringSet(name, inMessage.ToString());
                 cache.StringSet(Context.ConnectionId, name);
             }else if (type.Equals("updatePlayer")) { 
@@ -34,7 +34,7 @@ namespace GAPT
             }
             else if (type.Equals("getPlayer"))
             {
-                //PlayerState StateFromCache = JsonConvert.DeserializeObject<PlayerState>(inMessage);
+        7        //PlayerState StateFromCache = JsonConvert.DeserializeObject<PlayerState>(inMessage);
                // x = StateFromCache.x;
                 //y = StateFromCache.y;
             }
@@ -43,10 +43,10 @@ namespace GAPT
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            Console.WriteLine(Context.ConnectionId);
+            //Console.WriteLine(Context.ConnectionId);
             string name = cache.StringGet(Context.ConnectionId);
             var inMessage = cache.StringGet(name);
-            Console.WriteLine(inMessage.ToString());
+            //Console.WriteLine(inMessage.ToString());
             await BroadcastMessage("disconnection", inMessage);
             await base.OnDisconnectedAsync(exception);
            // return Clients.All.SendAsync("broadcastMessage", "disconnection", inMessage);
