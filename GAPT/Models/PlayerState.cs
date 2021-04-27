@@ -5,22 +5,17 @@ namespace GAPT.Models
         
         public double x{ get; set; }
         public double y { get; set; }  
-        public string name { get; set; }
-        public int speed { get; set; }
-        public bool boole { get; set; }
-        public string direction { get; set; }
-        //public object anims { get; set; }
+        public string key { get; set; }
+        public string anims { get; set; }
 
 
-        public PlayerState(int x, int y, string name, int speed, bool boole, string direction/*, object anims*/)
+
+        public PlayerState(double x, double y, string key, string anims)
         {
-            this.name = name;
+            this.key = key;
             this.x = x;
             this.y = y;
-            this.speed = speed;
-            this.boole = boole;
-            this.direction = direction;
-            //this.anims = anims;
+            this.anims = anims;
         }
         
     }
