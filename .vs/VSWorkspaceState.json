@@ -2,14 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\.github",
-    "\\GAPT",
-    "\\GAPT\\Hub",
-    "\\GAPT\\Models",
-    "\\GAPT\\obj",
-    "\\GAPT\\Views",
-    "\\GAPT\\wwwroot",
-    "\\GAPT\\wwwroot\\js"
+    "\\.github\\workflows",
+    "\\Hub",
+    "\\wwwroot",
+    "\\wwwroot\\js"
   ],
-  "SelectedNode": "\\GAPT\\Hub\\ChatHub.cs",
+  "SelectedNode": "\\wwwroot\\js\\phasersite.js",
   "PreviewInSolutionExplorer": false
 }
