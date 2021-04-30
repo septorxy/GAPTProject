@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\GAPT\\GAPT.csproj": {}
+    "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\GAPT\\GAPT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\GAPT\\GAPT.csproj": {
+    "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\GAPT\\GAPT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\GAPT\\GAPT.csproj",
+        "projectUniqueName": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\GAPT\\GAPT.csproj",
         "projectName": "GAPT",
-        "projectPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\GAPT\\GAPT.csproj",
-        "packagesPath": "C:\\Users\\liamg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\GAPT\\obj\\",
+        "projectPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\GAPT\\GAPT.csproj",
+        "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\GAPT\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\liamg\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

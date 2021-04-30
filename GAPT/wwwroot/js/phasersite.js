@@ -70,12 +70,13 @@ function bindConnectionMessage() {
             var thisScene = [];
             //thisScene.add(game.scene.scenes);
             thisScene = thisScene.concat(game.scene.scenes);
-            opponent[oCount] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-warlock-walkl').setScale(0.1);;
+            opponent[oCount] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-warlock-walkl').setScale(0.1);
             opponent[oCount].name = inMessage.key;
             opponent[oCount].anims.load(inMessage.anims);
             oppAnim[oCount] = inMessage.anims;
             //opponent[oCount].anims.isPlaying = true;
 
+            console.log("ADDED PLAYER " + opponent);
             oCount++;
         }
         if (type === "updatePlayer") {
@@ -98,15 +99,24 @@ function bindConnectionMessage() {
         }
         if (type === "disconnection") {
             var j;
-            for (j = 0; j < opponent.length; j++) {
-                if (opponent[j].key == inMessage.key) {
-                    opponent = opponent.splice(j, 1);
 
+            for (j = 0; j < opponent.length; j++) {
+                if (opponent[j].name == inMessage.key) {
+                    console.log("before" + opponent[j].name);
+                    var index = opponent.indexOf(opponent[j]);
+                    opponent[j].destroy();
+                    opponent.splice(index, 1);
+                    oppAnim.splice(index, 1);
+                    console.log("after" + opponent[j].name);
                 }
             }
-        }
 
+            alert("disconnected in js");
+
+            oCount--;
+        }
     }
+
 
     var playerCallback = function (inOpp)
     {

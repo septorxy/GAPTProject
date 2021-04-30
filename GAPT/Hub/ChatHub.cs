@@ -80,7 +80,6 @@ namespace GAPT
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             IDatabase cache = ConnectionCache.GetDatabase();
-            //Console.WriteLine(Context.ConnectionId);
             string key = cache.StringGet(Context.ConnectionId);
             string[] keys = cache.StringGet("myKeys").ToString().Split(",");
             var keyList = keys.ToList();
