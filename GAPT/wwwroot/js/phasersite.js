@@ -53,7 +53,6 @@ function sendMessage(xIn, yIn, keyIn, animsIn)
 //RECEIVE FROM HUB
 function bindConnectionMessage() {
     var messageCallback = function (type, inJSON) {
-        console.log(inJSON + "trial");
         var inMessage = JSON.parse(inJSON);
         if (!type) return;
         if (type === "newPlayer") {
@@ -61,8 +60,7 @@ function bindConnectionMessage() {
 
             console.log("key: " + inMessage.key);
             console.log("player name: " + playername);   
-            if (inMessage.key == playername) { console.log("I am here in if"); return; }
-            console.log("I am here after if");
+            if (inMessage.key == playername) { return; }
             //opponent[oCount] = this.add.sprite(400, 300, inMessage.name, 'Down-warlock-walkl').setScale(0.1);
             //opponent[oCount].newPos();
             //opponent[oCount].update();
@@ -133,7 +131,6 @@ function bindConnectionMessage() {
         if (begining) {
             var temp;
             var i;
-            console.log(inOpp.length + " - length getting players");
             for (i = 0; i < inOpp.length; i++) {
                 //console.log(inOpp[i]+"- inArr getting players");
                 temp = JSON.parse(inOpp[i]);
