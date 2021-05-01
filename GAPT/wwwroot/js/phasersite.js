@@ -104,17 +104,22 @@ function bindConnectionMessage() {
             console.log("Before removing player: " + opponent.toString());
 
             var j;
-
+            var tempOpp = [];
+            var tempAnim = [];
             for (j = 0; j < opponent.length; j++) {
                 if (opponent[j].name == inMessage.key) {
-                    console.log("before" + opponent[j].name);
-                    var index = opponent.indexOf(opponent[j]);
                     opponent[j].destroy();
-                    opponent.splice(index, 1);
-                    oppAnim.splice(index, 1);
-                    console.log("after" + opponent[j].name);
+                }
+                else
+                {
+                    tempOpp[j] = opponent[j];
+                    tempAnim[j] = oppAnim[j];
+
                 }
             }
+
+            opponent = tempOpp;
+            oppAnim = tempAnim;
 
             oCount--;
 
