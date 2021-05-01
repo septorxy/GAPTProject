@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\GAPT",
-    "\\GAPT\\obj",
-    "\\GAPT\\Views",
-    "\\GAPT\\wwwroot"
+    ""
   ],
-  "SelectedNode": "\\GAPT\\Models",
+  "SelectedNode": "\\GAPT.sln",
   "PreviewInSolutionExplorer": false
 }

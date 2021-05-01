@@ -57,6 +57,8 @@ function bindConnectionMessage() {
         var inMessage = JSON.parse(inJSON);
         if (!type) return;
         if (type === "newPlayer") {
+            console.log("Before added new player: " + opponent.toString());
+
             console.log("key: " + inMessage.key);
             console.log("player name: " + playername);   
             if (inMessage.key == playername) { console.log("I am here in if"); return; }
@@ -76,7 +78,8 @@ function bindConnectionMessage() {
             oppAnim[oCount] = inMessage.anims;
             //opponent[oCount].anims.isPlaying = true;
 
-            console.log("ADDED PLAYER " + opponent);
+            console.log("After added new player: " + opponent.toString());
+
             oCount++;
         }
         if (type === "updatePlayer") {
@@ -98,6 +101,8 @@ function bindConnectionMessage() {
             }
         }
         if (type === "disconnection") {
+            console.log("Before removing player: " + opponent.toString());
+
             var j;
 
             for (j = 0; j < opponent.length; j++) {
@@ -111,9 +116,9 @@ function bindConnectionMessage() {
                 }
             }
 
-            alert("disconnected in js");
-
             oCount--;
+
+            console.log("After removing player: " + opponent.toString());
         }
     }
 
