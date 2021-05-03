@@ -6,10 +6,9 @@ var cacheCount = 0;
 var cacheInterval = 30;
 var begining = true;
 
-
-opponent = [];
-oppAnim = [];
-var oCount = 0;
+var opponent = new Object();
+var oppAnim = new Object();
+//hello
 
 var connection = new signalR.HubConnectionBuilder()
     .withUrl('/war')
@@ -55,7 +54,7 @@ function bindConnectionMessage() {
         var inMessage = JSON.parse(inJSON);
         if (!type) return;
         if (type === "newPlayer") {
-            console.log("Before added new player: " + opponent.toString());
+            console.log("Before added new player: " + opponent[inMessage.key].toString());
 
             console.log("key: " + inMessage.key);
             console.log("player name: " + playername);
@@ -69,78 +68,52 @@ function bindConnectionMessage() {
             var thisScene = [];
             //thisScene.add(game.scene.scenes);
             thisScene = thisScene.concat(game.scene.scenes);
-            opponent[oCount] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-warlock-walkl').setScale(0.1);
-            opponent[oCount].name = inMessage.key;
-            opponent[oCount].anims.load(inMessage.anims);
-            oppAnim[oCount] = inMessage.anims;
+            opponent[inMessage.key] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-warlock-walkl').setScale(0.1);
+            opponent[inMessage.key].name = inMessage.key;
+            opponent[inMessage.key].anims.load(inMessage.anims);
+            oppAnim[inMessage.key] = inMessage.anims;
             //opponent[oCount].anims.isPlaying = true;
 
-            console.log("After added new player: " + opponent.toString());
-
-            oCount++;
+            console.log("After added new player: " + opponent[inMessage.key].toString());
         }
         if (type === "updatePlayer") {
-            var j;
-            for (j = 0; j < opponent.length; j++) {
-                if (opponent[j].name == inMessage.key) {
+            opponent[inMessage.key].x = inMessage.x;
+            opponent[inMessage.key].y = inMessage.y;
+            opponent[inMessage.key].anims.load(inMessage.anims);
+            //opponent[j].anims.isPlaying = true;
+            //opponent[j].speed = inMessage.speed;
+            //opponent[j].bool = inMessage.bool;
+            //opponent[j].direction = inMessage.direction;
 
-                    opponent[j].x = inMessage.x;
-                    opponent[j].y = inMessage.y;
-                    opponent[j].anims.load(inMessage.anims);
-                    //opponent[j].anims.isPlaying = true;
-                    //opponent[j].speed = inMessage.speed;
-                    //opponent[j].bool = inMessage.bool;
-                    //opponent[j].direction = inMessage.direction;
-
-                    //alert(opponent[j].name);
+            //alert(opponent[j].name);
 
                 }
-            }
-        }
         if (type === "disconnection") {
-            console.log("Before removing player: " + opponent.toString());
+            console.log("Before removing player: " + opponent[inMessage.key].toString());
 
-            var j;
-            var tempOpp = [];
-            var tempAnim = [];
-            for (j = 0; j < opponent.length; j++) {
-                if (opponent[j].name == inMessage.key) {
-                    opponent[j].destroy();
-                }
-                else {
-                    tempOpp[j] = opponent[j];
-                    tempAnim[j] = oppAnim[j];
+            opponent[inMessage.key].destroy();
 
-                }
-            }
-
-            opponent = tempOpp;
-            oppAnim = tempAnim;
-
-            oCount--;
+            delete opponent[inMessage.key];
 
             console.log("After removing player: " + opponent.toString());
         }
     }
 
 
+
     var playerCallback = function (inOpp) {
         if (begining) {
             var temp;
-            var i;
-            for (i = 0; i < inOpp.length; i++) {
-                //console.log(inOpp[i]+"- inArr getting players");
-                temp = JSON.parse(inOpp[i]);
-
-                //console.log(temp.key + temp.x + temp.y + temp.anims+ " -After parse JSON getting players");
+            for (var name in inOpp) {
+                temp = JSON.parse(inOpp[name]);
                 if (playername != temp.key && uniquename(temp.key)) {
                     var thisScene = [];
                     thisScene = thisScene.concat(game.scene.scenes);
-                    opponent[i] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(0.1);;
-                    opponent[i].name = temp.key;
-                    opponent[i].anims.load(temp.anims);
-                    opponent[i].anims.currentAnim = temp.anims;
-                    oppAnim[i] = temp.anims;
+                    opponent[name] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(0.1);;
+                    opponent[name].name = temp.key;
+                    opponent[name].anims.load(temp.anims);
+                    opponent[name].anims.currentAnim = temp.anims;
+                    oppAnim[name] = temp.anims;
                 }
             }
         }
@@ -154,11 +127,8 @@ function bindConnectionMessage() {
 }
 
 function uniquename(name) {
-    var i;
-    for (i = 0; i < opponent.length; i++) {
-        if (opponent[i].name == name) {
-            return false;
-        }
+    if (opponent.hasOwnProperty(name)) {
+        return false;
     }
 
     return true;
@@ -478,21 +448,17 @@ function update() {
     }
 
 
-    for (i = 0; i < opponent.length; i++) {
-        if ((!opponent[i].anims.isPlaying) && oppAnim[i] != opponent[i].anims.currentAnim) {
-            opponent[i].anims.play(opponent[i].anims.currentAnim.key);
-            oppAnim[i] = opponent[i].anims.currentAnim.key;
+    for (var name in opponent) {
+        if ((!opponent[name].anims.isPlaying) && oppAnim[name] != opponent[name].anims.currentAnim) {
+            opponent[name].anims.play(opponent[name].anims.currentAnim.key);
+            oppAnim[name] = opponent[name].anims.currentAnim.key;
         }
     }
 
-    if (curX != this.player.x || curY != this.player.y) {
+    if (curX > this.player.x + 4 || curX < this.player.x - 4 || curY < this.player.y - 4 || curY > this.player.y + 4) {
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
     }
-
-
-
-
 
 }
 
