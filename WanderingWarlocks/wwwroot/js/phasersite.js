@@ -5,6 +5,7 @@ var myScene;
 var cacheCount = 0;
 var cacheInterval = 30;
 var begining = true;
+var temporary;
 
 var opponent = new Object();
 var oppAnim = new Object();
@@ -52,15 +53,15 @@ function sendMessage(xIn, yIn, keyIn, animsIn) {
 function bindConnectionMessage() {
     var messageCallback = function (type, inJSON) {
         var inMessage = JSON.parse(inJSON);
-        console.log(inMessage);
-        console.log(type);
-        if (!type) return;
-        if (type == "newPlayer") {
-            console.log("Before added new player: " + opponent[inMessage.key].toString());
+        if (!type) { return; }
+        if (type === "newPlayer") {
+            console.log("Before added new player: " + opponent[inMessage.key]/*.toString()*/);
 
             console.log("key: " + inMessage.key);
             console.log("player name: " + playername);
-            if (inMessage.key == playername) { return; }
+            if (inMessage.key == playername) {
+                return;
+            }
             //opponent[oCount] = this.add.sprite(400, 300, inMessage.name, 'Down-warlock-walkl').setScale(0.1);
             //opponent[oCount].newPos();
             //opponent[oCount].update();
@@ -78,7 +79,7 @@ function bindConnectionMessage() {
 
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
-        if (type == "updatePlayer") {
+        if (type === "updatePlayer") {
             opponent[inMessage.key].x = inMessage.x;
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].anims.load(inMessage.anims);
@@ -97,13 +98,14 @@ function bindConnectionMessage() {
 
             delete opponent[inMessage.key];
 
-            console.log("After removing player: " + opponent.toString());
+            //console.log("After removing player: " + opponent.toString());
         }
     }
 
 
 
     var playerCallback = function (inOpp) {
+        console.log("entered playercallback");
         if (begining) {
             var temp;
             var i;
@@ -119,6 +121,7 @@ function bindConnectionMessage() {
                     oppAnim[temp.key] = temp.anims;
                 }
             }
+            begining = false;
         }
 
     }
@@ -141,7 +144,7 @@ function startGame() {
     game = new Phaser.Game(config);
 
     //populate opponent array
-    connection.send('getPlayers', opponent);
+    connection.send('getPlayers', temporary);
 
 
 }
@@ -361,7 +364,7 @@ function create() {
 
 }
 function update() {
-    begining = false;
+    
     var curX = this.player.x;
     var curY = this.player.y;
     this.opponents = opponent;
@@ -458,7 +461,7 @@ function update() {
         }
     }
 
-    if (curX > this.player.x + 4 || curX < this.player.x - 4 || curY < this.player.y - 4 || curY > this.player.y + 4) {
+    if (curX != this.player.x || curY != this.player.y) {
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
     }

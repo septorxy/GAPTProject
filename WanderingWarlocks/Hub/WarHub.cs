@@ -25,7 +25,7 @@ namespace WanderingWarlocks
             string key = state.key;
             if (type.Equals("newPlayer"))
             {
-                Console.WriteLine("Here");
+                Console.WriteLine("HereAM");
                 IDatabase cache = ConnectionCache.GetDatabase();
                 cache.StringSet(key, inMessage.ToString());
                 cache.StringSet(Context.ConnectionId, key);
@@ -42,6 +42,7 @@ namespace WanderingWarlocks
             }
             else if (type.Equals("updatePlayer"))
             {
+                Console.WriteLine(count);
                 if (count == interval)
                 {
                     IDatabase cache = ConnectionCache.GetDatabase();
