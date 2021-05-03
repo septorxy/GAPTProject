@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'TestingGapt'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_c6f107c15fb64bcebfb8c52944a4f370 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4c13adca36814b7bb7c78715bd0e7485 }}
         package: .
