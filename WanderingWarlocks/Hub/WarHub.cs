@@ -70,7 +70,7 @@ namespace WanderingWarlocks
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             System.Diagnostics.Trace.TraceInformation("Hello");
-            System.Diagnostics.Trace.WriteLine("My message!")
+            System.Diagnostics.Trace.WriteLine("My message!");
             Console.WriteLine(exception + "Here");
             IDatabase cache = ConnectionCache.GetDatabase();
             string key = cache.StringGet(Context.ConnectionId);
