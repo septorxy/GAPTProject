@@ -1,12 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.github",
-    "\\.github\\workflows",
-    "\\Properties",
-    "\\Views",
-    "\\wwwroot"
+    "\\GAPT\\bin",
+    "\\GAPT\\Hub"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\WanderingWarlocks.sln",
   "PreviewInSolutionExplorer": false
 }
