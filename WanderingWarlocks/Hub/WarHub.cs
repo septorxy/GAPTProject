@@ -20,13 +20,13 @@ namespace WanderingWarlocks
             if (type == "disconnection")
             {
                 inMessage = inMessage.ToString();
-                Console.WriteLine("Here");
+                //Console.WriteLine("Here");
             }
             string key = state.key;
             if (type.Equals("newPlayer"))
             {
-                System.Diagnostics.Trace.TraceInformation("In TI newPlayer");
-                System.Diagnostics.Trace.WriteLine("In WL On newPlayer");
+                //System.Diagnostics.Trace.TraceInformation("In TI newPlayer");
+                //System.Diagnostics.Trace.WriteLine("In WL On newPlayer");
                 IDatabase cache = ConnectionCache.GetDatabase();
                 cache.StringSet(key, inMessage.ToString());
                 cache.StringSet(Context.ConnectionId, key);
@@ -47,7 +47,7 @@ namespace WanderingWarlocks
                 {
                     IDatabase cache = ConnectionCache.GetDatabase();
                     cache.StringSet(key, inMessage.ToString());
-                    Console.WriteLine("Executed");
+                    //Console.WriteLine("Executed");
 
                 }
             }
@@ -71,8 +71,8 @@ namespace WanderingWarlocks
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            System.Diagnostics.Trace.TraceInformation("In TI OnDisc");
-            System.Diagnostics.Trace.WriteLine("In WL On Disc");
+            //System.Diagnostics.Trace.TraceInformation("In TI OnDisc");
+            //System.Diagnostics.Trace.WriteLine("In WL On Disc");
             Console.WriteLine(exception + "Here");
             IDatabase cache = ConnectionCache.GetDatabase();
             string key = cache.StringGet(Context.ConnectionId);
