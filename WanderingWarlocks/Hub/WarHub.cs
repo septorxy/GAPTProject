@@ -64,6 +64,7 @@ namespace WanderingWarlocks
             foreach (String key in keys)
             {
                 players[counter] = cache.StringGet(key).ToString();
+                Console.WriteLine(players[counter]);
                 counter++;
             }
             return Clients.All.SendAsync("getPlayers", players);
