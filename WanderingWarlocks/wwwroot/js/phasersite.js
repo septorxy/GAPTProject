@@ -52,8 +52,10 @@ function sendMessage(xIn, yIn, keyIn, animsIn) {
 function bindConnectionMessage() {
     var messageCallback = function (type, inJSON) {
         var inMessage = JSON.parse(inJSON);
+        console.log(inMessage);
+        console.log(type);
         if (!type) return;
-        if (type === "newPlayer") {
+        if (type == "newPlayer") {
             console.log("Before added new player: " + opponent[inMessage.key].toString());
 
             console.log("key: " + inMessage.key);
@@ -76,7 +78,7 @@ function bindConnectionMessage() {
 
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
-        if (type === "updatePlayer") {
+        if (type == "updatePlayer") {
             opponent[inMessage.key].x = inMessage.x;
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].anims.load(inMessage.anims);
@@ -104,16 +106,17 @@ function bindConnectionMessage() {
     var playerCallback = function (inOpp) {
         if (begining) {
             var temp;
-            for (var name in inOpp) {
-                temp = JSON.parse(inOpp[name]);
+            var i;
+            for (i = 0; i < inOpp.length; i++) {
+                temp = JSON.parse(inOpp[i]);
                 if (playername != temp.key && uniquename(temp.key)) {
                     var thisScene = [];
                     thisScene = thisScene.concat(game.scene.scenes);
-                    opponent[name] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(0.1);;
-                    opponent[name].name = temp.key;
-                    opponent[name].anims.load(temp.anims);
-                    opponent[name].anims.currentAnim = temp.anims;
-                    oppAnim[name] = temp.anims;
+                    opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(0.1);;
+                    opponent[temp.key].name = temp.key;
+                    opponent[temp.key].anims.load(temp.anims);
+                    opponent[temp.key].anims.currentAnim = temp.anims;
+                    oppAnim[temp.key] = temp.anims;
                 }
             }
         }

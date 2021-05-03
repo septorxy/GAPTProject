@@ -25,6 +25,7 @@ namespace WanderingWarlocks
             string key = state.key;
             if (type.Equals("newPlayer"))
             {
+                Console.WriteLine("Here");
                 IDatabase cache = ConnectionCache.GetDatabase();
                 cache.StringSet(key, inMessage.ToString());
                 cache.StringSet(Context.ConnectionId, key);
@@ -52,7 +53,7 @@ namespace WanderingWarlocks
             return Clients.All.SendAsync("broadcastMessage", type, inMessage, count);
         }
 
-        public Task getPlayers(object players)
+        public Task getPlayers(string[] players)
         {
             int counter = 0;
             IDatabase cache = ConnectionCache.GetDatabase();
@@ -62,6 +63,7 @@ namespace WanderingWarlocks
             foreach (String key in keys)
             {
                 players[counter] = cache.StringGet(key).ToString();
+                Console.WriteLine(players[counter]);
                 counter++;
             }
             return Clients.All.SendAsync("getPlayers", players);
@@ -69,7 +71,7 @@ namespace WanderingWarlocks
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            Console.WriteLine(exception + "Here");
+            //Console.WriteLine(exception + "Here");
             IDatabase cache = ConnectionCache.GetDatabase();
             string key = cache.StringGet(Context.ConnectionId);
             string[] keys = cache.StringGet("myKeys").ToString().Split(",");
