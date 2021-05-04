@@ -180,6 +180,11 @@ function preload() {
 function create() {
     myScene = this;
     this.opponents = opponent;
+    for (var sprite in this.opponents)
+    {
+        sprite.frame = 'Down-warlock-walkl';
+    }
+    
     this.anims.create({
         key: 'lwalk',
         frames:
