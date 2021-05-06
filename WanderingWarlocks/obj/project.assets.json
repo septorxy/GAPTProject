@@ -9302,19 +9302,37 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
+    "C:\\Users\\kriss\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
     "C:\\Users\\Owner\\.nuget\\packages\\": {}
+>>>>>>> iteration3.5_shooting
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
+      "projectUniqueName": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+      "projectName": "WanderingWarlocks",
+      "projectPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+      "packagesPath": "C:\\Users\\kriss\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\WanderingWarlocks\\obj\\",
+=======
       "projectUniqueName": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "projectName": "WanderingWarlocks",
       "projectPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\obj\\",
+>>>>>>> iteration3.5_shooting
       "projectStyle": "PackageReference",
       "configFilePaths": [
+<<<<<<< HEAD
+        "C:\\Users\\kriss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
         "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> iteration3.5_shooting
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9407,7 +9425,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
