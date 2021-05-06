@@ -366,6 +366,7 @@ function create() {
 
         connection.send('broadcastMessage', "newPlayer", outMessage, cacheCount);
     }
+    updated = true;
 
 
 }
