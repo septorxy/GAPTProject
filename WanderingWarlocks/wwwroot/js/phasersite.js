@@ -9,7 +9,8 @@ var temporary;
 
 var opponent = new Object();
 var oppAnim = new Object();
-//hello
+
+this.bulletGroup;
 
 var connection = new signalR.HubConnectionBuilder()
     .withUrl('/war')
@@ -80,17 +81,12 @@ function bindConnectionMessage() {
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
         if (type === "updatePlayer") {
+
             opponent[inMessage.key].x = inMessage.x;
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].anims.load(inMessage.anims);
-            //opponent[j].anims.isPlaying = true;
-            //opponent[j].speed = inMessage.speed;
-            //opponent[j].bool = inMessage.bool;
-            //opponent[j].direction = inMessage.direction;
 
-            //alert(opponent[j].name);
-
-                }
+        }
         if (type === "disconnection") {
             console.log("Before removing player: " + opponent[inMessage.key].toString());
 
@@ -99,6 +95,18 @@ function bindConnectionMessage() {
             delete opponent[inMessage.key];
 
             //console.log("After removing player: " + opponent.toString());
+        }
+        if (type === "shooting") {
+            //check if shooting is from opponent
+            if (opponent.hasOwnProperty(inMessage.key)) {
+
+                console.log("Anim passed: " + inMessage.anims);
+                var thisScene = [];
+                thisScene = thisScene.concat(game.scene.scenes);
+                thisScene[0].bulletGroup = new BulletGroup(thisScene[0]);
+                thisScene[0].bulletGroup.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.anims);
+
+            }
         }
     }
 
@@ -161,6 +169,13 @@ var config = {
         preload: preload,
         create: create,
         update: update
+    },
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false,
+            gravity: {y:0}
+        }
     }
 };
 
@@ -175,6 +190,7 @@ function preload() {
     //this.load.multiatlas('player', 'spritesheet.json');
     this.load.image('Down-warlock-walkl', 'https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png');
     this.load.atlas('warlock', 'https://spritestorage.blob.core.windows.net/warlock/warlock.png', 'https://spritestorage.blob.core.windows.net/warlock/warlock.json');
+    this.load.image('lightning', 'https://spritestorage.blob.core.windows.net/bullets/lightningBolt.png');
 
 }
 function create() {
@@ -366,8 +382,123 @@ function create() {
         connection.send('broadcastMessage', "newPlayer", outMessage, cacheCount);
     }
 
-
+    this.bulletGroup = new BulletGroup(this);
+    this.input.on('pointerdown', function (pointer) {
+        if (pointer.leftButtonDown()) {
+            //start shooting
+            this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.anims.currentAnim.key);
+            connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key), cacheCount);
+        }
+    }, this);
 }
+
+class Bullet extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'lightning');
+        this.scene = scene;
+    }
+
+    fire(x, y, animKey) {
+        this.body.reset(x, y);
+
+        this.setActive(true);
+        this.setVisible(true);
+
+        switch (animKey) {
+            case 'uwalk':
+                this.setVelocityY(-600);
+                break;
+            case 'urun':
+                this.setVelocityY(-600);
+                break;
+            case 'urwalk':
+                this.setVelocityX(600);
+                this.setVelocityY(-600);
+                break;
+            case 'urrun':
+                this.setVelocityX(600);
+                this.setVelocityY(-600);
+                break;
+            case 'drwalk':
+                this.setVelocityX(600);
+                this.setVelocityY(600);
+                break;
+            case 'drrun':
+                this.setVelocityX(600);
+                this.setVelocityY(600);
+                break;
+            case 'dwalk':
+                this.setVelocityY(600);
+                break;
+            case 'drun':
+                this.setVelocityY(600);
+                break;
+            case 'dlwalk':
+                this.setVelocityX(-600);
+                this.setVelocityY(600);
+                break;
+            case 'dlrun':
+                this.setVelocityX(-600);
+                this.setVelocityY(600);
+                break;
+            case 'ulwalk':
+                this.setVelocityX(-600);
+                this.setVelocityY(-600);
+                break;
+            case 'ulrun':
+                this.setVelocityX(-600);
+                this.setVelocityY(-600);
+                break;
+            case 'rwalk':
+                this.setVelocityX(600);
+                break;
+            case 'rrun':
+                this.setVelocityX(600);
+                break;
+            case 'lwalk':
+                this.setVelocityX(-600);
+                break;
+            case 'lrun':
+                this.setVelocityX(-600);
+                break;
+        }
+
+    }
+    /*
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+
+        if (this.y <= 0) {
+            this.setActive(false);
+            this.setVisible(false);
+        }
+    }
+    */
+}
+
+class BulletGroup extends Phaser.Physics.Arcade.Group {
+    constructor(scene) {
+        super(scene.physics.world, scene);
+
+        this.createMultiple({
+            classType: Bullet,
+            frameQuantity: 30,
+            active: false,
+            visible: false,
+            key: 'bullet',
+            setScale: { x: 0.5, y: 0.5 }
+        })
+    }
+
+    fireBullet(x, y, animKey) {
+        const bullet = this.getFirstDead(false); //false - we can only use 30 bullets
+        if (bullet) {
+            bullet.fire(x, y, animKey);
+            this.scene.player.anims.currentAnim.key;
+        }
+    }
+}
+
 function update() {
     
     var curX = this.player.x;
