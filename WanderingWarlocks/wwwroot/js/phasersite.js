@@ -6,6 +6,7 @@ var cacheCount = 0;
 var cacheInterval = 30;
 var begining = true;
 var temporary;
+var updated = true;
 
 var opponent = new Object();
 var oppAnim = new Object();
@@ -370,8 +371,10 @@ function create() {
 }
 function update() {
     
-    var curX = this.player.x;
-    var curY = this.player.y;
+    if (updated) {
+        var curX = this.player.x;
+        var curY = this.player.y;
+    }
     this.opponents = opponent;
     var i;
 
@@ -466,9 +469,13 @@ function update() {
         }
     }
 
-    if (curX != this.player.x || curY != this.player.y) {
+    if (curX > this.player.x + 10 || curX < this.player.x + -10 || curY > this.player.y + 10 || curY < this.player.y - 10) {
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
+        updated = true;
+    }
+    else {
+        updated = false;
     }
 
 }
