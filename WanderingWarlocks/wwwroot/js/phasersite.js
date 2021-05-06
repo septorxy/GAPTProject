@@ -469,7 +469,7 @@ function update() {
         }
     }
 
-    if (curX > this.player.x + 10 || curX < this.player.x + -10 || curY > this.player.y + 10 || curY < this.player.y - 10) {
+    if (curX > this.player.x + 5 || curX < this.player.x + -5 || curY > this.player.y +5 || curY < this.player.y - 5) {
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
         updated = true;
