@@ -20,7 +20,7 @@ namespace WanderingWarlocks
             if (type == "disconnection")
             {
                 inMessage = inMessage.ToString();
-                Console.WriteLine("Here");
+                //Console.WriteLine("Here");
             }
             string key = state.key;
             if (type.Equals("newPlayer"))
@@ -42,16 +42,16 @@ namespace WanderingWarlocks
             }
             else if (type.Equals("updatePlayer"))
             {
-                Console.WriteLine(count);
+                //Console.WriteLine(count);
                 if (count == interval)
                 {
                     IDatabase cache = ConnectionCache.GetDatabase();
                     cache.StringSet(key, inMessage.ToString());
-                    Console.WriteLine("Executed");
+                    //Console.WriteLine("Executed");
 
                 }
             }
-            return Clients.All.SendAsync("broadcastMessage", type, inMessage, count);
+            return Clients.AllExcept(Context.ConnectionId).SendAsync("broadcastMessage", type, inMessage, count);
         }
 
         public Task getPlayers(string[] players)
@@ -64,7 +64,7 @@ namespace WanderingWarlocks
             foreach (String key in keys)
             {
                 players[counter] = cache.StringGet(key).ToString();
-                Console.WriteLine(players[counter]);
+                //Console.WriteLine(players[counter]);
                 counter++;
             }
             return Clients.All.SendAsync("getPlayers", players);
