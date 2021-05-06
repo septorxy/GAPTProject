@@ -81,17 +81,12 @@ function bindConnectionMessage() {
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
         if (type === "updatePlayer") {
+
             opponent[inMessage.key].x = inMessage.x;
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].anims.load(inMessage.anims);
-            //opponent[j].anims.isPlaying = true;
-            //opponent[j].speed = inMessage.speed;
-            //opponent[j].bool = inMessage.bool;
-            //opponent[j].direction = inMessage.direction;
 
-            //alert(opponent[j].name);
-
-                }
+        }
         if (type === "disconnection") {
             console.log("Before removing player: " + opponent[inMessage.key].toString());
 
@@ -100,6 +95,18 @@ function bindConnectionMessage() {
             delete opponent[inMessage.key];
 
             //console.log("After removing player: " + opponent.toString());
+        }
+        if (type === "shooting") {
+            //check if shooting is from opponent
+            if (opponent.hasOwnProperty(inMessage.key)) {
+
+                console.log("Anim passed: " + inMessage.anims);
+                var thisScene = [];
+                thisScene = thisScene.concat(game.scene.scenes);
+                thisScene[0].bulletGroup = new BulletGroup(thisScene[0]);
+                thisScene[0].bulletGroup.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.anims);
+
+            }
         }
     }
 
@@ -374,7 +381,8 @@ function create() {
     this.input.on('pointerdown', function (pointer) {
         if (pointer.leftButtonDown()) {
             //start shooting
-            this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20);
+            this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.anims.currentAnim.key);
+            connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key), cacheCount);
         }
     }, this);
 }
@@ -385,13 +393,13 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
     }
 
-    fire(x, y) {
+    fire(x, y, animKey) {
         this.body.reset(x, y);
 
         this.setActive(true);
         this.setVisible(true);
 
-        switch (this.scene.player.anims.currentAnim.key) {
+        switch (animKey) {
             case 'uwalk':
                 this.setVelocityY(-600);
                 break;
@@ -477,10 +485,11 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
         })
     }
 
-    fireBullet(x, y) {
+    fireBullet(x, y, animKey) {
         const bullet = this.getFirstDead(false); //false - we can only use 30 bullets
         if (bullet) {
-            bullet.fire(x, y);
+            bullet.fire(x, y, animKey);
+            this.scene.player.anims.currentAnim.key;
         }
     }
 }
