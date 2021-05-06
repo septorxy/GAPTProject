@@ -7,6 +7,7 @@ var cacheInterval = 30;
 var begining = true;
 var temporary;
 var updated = true;
+var curX, curY;
 
 var opponent = new Object();
 var oppAnim = new Object();
@@ -373,8 +374,8 @@ function create() {
 function update() {
     
     if (updated) {
-        var curX = this.player.x;
-        var curY = this.player.y;
+        curX = this.player.x;
+        curY = this.player.y;
     }
     this.opponents = opponent;
     var i;
