@@ -6,9 +6,13 @@ var cacheCount = 0;
 var cacheInterval = 30;
 var begining = true;
 var temporary;
+var healthBar;
+var backgroundBar;
 
 var opponent = new Object();
 var oppAnim = new Object();
+var oppHealthBar = new Object();
+var oppHealthBack = new Object();
 
 this.bulletGroup;
 
@@ -78,6 +82,9 @@ function bindConnectionMessage() {
             oppAnim[inMessage.key] = inMessage.anims;
             //opponent[oCount].anims.isPlaying = true;
 
+            oppHealthBack[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBackground');
+            oppHealthBar[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBar');
+
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
         if (type === "updatePlayer") {
@@ -86,13 +93,27 @@ function bindConnectionMessage() {
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].anims.load(inMessage.anims);
 
+            var thisScene = [];
+            thisScene = thisScene.concat(game.scene.scenes);
+
+            oppHealthBack[inMessage.key].destroy();
+            oppHealthBar[inMessage.key].destroy();
+            oppHealthBack[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBackground');
+            oppHealthBar[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBar');
+
         }
         if (type === "disconnection") {
             console.log("Before removing player: " + opponent[inMessage.key].toString());
 
+            //remove sprite
             opponent[inMessage.key].destroy();
-
             delete opponent[inMessage.key];
+
+            //remove health bar
+            oppHealthBack[inMessage.key].destroy();
+            oppHealthBar[inMessage.key].destroy();
+            delete oppHealthBack[inMessage.key];
+            delete oppHealthBar[inMessage.key];
 
             //console.log("After removing player: " + opponent.toString());
         }
@@ -127,6 +148,9 @@ function bindConnectionMessage() {
                     opponent[temp.key].anims.load(temp.anims);
                     opponent[temp.key].anims.currentAnim = temp.anims;
                     oppAnim[temp.key] = temp.anims;
+
+                    oppHealthBack[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBackground');
+                    oppHealthBar[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBar');
                 }
             }
             begining = false;
@@ -191,6 +215,8 @@ function preload() {
     this.load.image('Down-warlock-walkl', 'https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png');
     this.load.atlas('warlock', 'https://spritestorage.blob.core.windows.net/warlock/warlock.png', 'https://spritestorage.blob.core.windows.net/warlock/warlock.json');
     this.load.image('lightning', 'https://spritestorage.blob.core.windows.net/bullets/lightningBolt.png');
+    this.load.image('healthBar', 'https://spritestorage.blob.core.windows.net/health-bar/healthbar.png');
+    this.load.image('healthBackground', 'https://spritestorage.blob.core.windows.net/health-bar/healthbackground.png');
 
 }
 function create() {
@@ -381,6 +407,26 @@ function create() {
 
         connection.send('broadcastMessage', "newPlayer", outMessage, cacheCount);
     }
+
+    this.player.health = 100;
+    this.player.maxHealth = 100;
+
+    backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
+    backgroundBar.fixedToCamera = true;
+
+    healthBar = this.add.image(this.player.x, this.player.y - 70, 'healthBar');
+    healthBar.fixedToCamera = true;
+
+    /*
+    player.events.onKilled.add(function () {
+        //killSound.play()
+        outMessage = sendMessage(this.player.x, this.player.y, this.player.name, this.player.anims.currentAnim.key);
+        connection.send('broadcastMessage', "disconnection", outMessage, cacheCount);
+
+        gameOver();
+
+    });
+    */
 
     this.bulletGroup = new BulletGroup(this);
     this.input.on('pointerdown', function (pointer) {
@@ -588,6 +634,15 @@ function update() {
             this.player.anims.stop();
         }
     }
+
+    /* If the player os shot:
+       healthBar.scale.setTo(player.health / player.maxHealth, 1);
+    */
+
+    backgroundBar.destroy();
+    healthBar.destroy();
+    backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
+    healthBar = this.add.image(this.player.x, this.player.y - 70, 'healthBar');
 
 
     for (var name in opponent) {
