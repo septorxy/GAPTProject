@@ -64,7 +64,7 @@ namespace WanderingWarlocks
                 endpoints.MapHub<WarHub>("/war");
                 endpoints.MapControllerRoute(
                    name: "default",
-                   pattern: "{controller=Home}/{action=Index}/{id?}");
+                   pattern: "{controller=Game}/{action=Game}/{id?}");
                 endpoints.MapRazorPages();
 
             });
