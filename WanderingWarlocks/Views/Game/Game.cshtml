@@ -1,5 +1,9 @@
-﻿@{ 
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     Layout = "~/Views/Shared/_LayoutG.cshtml";
 }
 
 <noscript>Please enable javascript to play this Game.</noscript>
+<p id="name">@User.Identity.Name</p>

@@ -6,6 +6,7 @@ var cacheCount = 0;
 var cacheInterval = 30;
 var begining = true;
 var temporary;
+var name;
 
 var opponent = new Object();
 var oppAnim = new Object();
@@ -34,8 +35,6 @@ function onConnectionError(error) {
     }
 }
 
-var name = window.prompt("Enter your name: ");
-
 function sendMessage(xIn, yIn, keyIn, animsIn) {
     var sendmessage = '{' +
         '"x": "' + xIn + '" ,' +
@@ -45,9 +44,6 @@ function sendMessage(xIn, yIn, keyIn, animsIn) {
         '}';
     return sendmessage;
 }
-
-
-
 
 //RECEIVE FROM HUB
 function bindConnectionMessage() {
@@ -150,9 +146,6 @@ function startGame() {
 }
 
 
-
-
-
 var config = {
     type: Phaser.AUTO,
     width: window.innerWidth - 20,
@@ -178,6 +171,7 @@ function preload() {
 
 }
 function create() {
+    name = document.getElementById("name").innerHTML;
     myScene = this;
     this.opponents = opponent;
     this.anims.create({
