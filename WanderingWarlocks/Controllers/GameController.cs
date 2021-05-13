@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WanderingWarlocks.Controllers
 {
-    [Authorize]
     public class GameController : Controller
     {
+        [Authorize]
         public IActionResult Game()
         {
             return View();

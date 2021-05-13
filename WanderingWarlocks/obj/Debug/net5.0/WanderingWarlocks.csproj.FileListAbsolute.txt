@@ -403,3 +403,4 @@ D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWar
 D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\WanderingWarlocks.genruntimeconfig.cache
 D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Game\Game.cshtml.g.cs
 D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Shared\_LayoutG.cshtml.g.cs
+D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Shared\_LayoutI.cshtml.g.cs
