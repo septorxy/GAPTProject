@@ -122,9 +122,10 @@ function bindConnectionMessage() {
                     
                     var thisScene = [];
                     thisScene = thisScene.concat(game.scene.scenes);
-                    opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(scale);;
+                    opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(scale);
                     opponent[temp.key].name = temp.key;
                     opponent[temp.key].angle = temp.angle;
+                    opponent[temp.key].setDepth(10);
                     console.log(opponent[temp.key].name, opponent[temp.key].x, opponent[temp.key].y );
                 }
             }
@@ -201,9 +202,7 @@ function create() {
     myScene = this;
     this.opponents = opponent;
 
-    for (var sprite in this.opponents) {
-        console.log("--this--" , sprite.name);
-    }
+    console.log(this.opponents);
 
 
   
