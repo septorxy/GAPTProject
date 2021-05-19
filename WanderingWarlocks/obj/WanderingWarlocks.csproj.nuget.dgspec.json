@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {}
   },
@@ -26,6 +27,19 @@
         "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\obj\\",
 >>>>>>> iteration3.5_shooting
+=======
+    "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+        "projectName": "WanderingWarlocks",
+        "projectPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+        "packagesPath": "C:\\Users\\liamg\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\obj\\",
+>>>>>>> Stashed changes
         "projectStyle": "PackageReference",
         "configFilePaths": [
 <<<<<<< HEAD

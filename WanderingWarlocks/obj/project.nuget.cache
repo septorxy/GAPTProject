@@ -1,9 +1,15 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
 <<<<<<< HEAD
   "dgSpecHash": "6rMFbMcgNYbZhZ3B4TR8v7qsUKN04nr43jblhrag39dFsskIskj0l9nIcXW3crQ1X+XiD4qAM5SM3d0D3j0/kA==",
   "success": true,
   "projectFilePath": "C:\\Users\\kriss\\Desktop\\GAPT\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+=======
+  "dgSpecHash": "wcu+ZzU4CELO5C1iiJxDPHV4mkFYksAzSbi0TPSIOWcNAe8H6t1no7+R+RZgWwklhogB82AJRBGyQoeTgYCTgA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+>>>>>>> Stashed changes
   "expectedPackageFiles": [
     "C:\\Users\\kriss\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\kriss\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\5.0.1\\microsoft.aspnetcore.connections.abstractions.5.0.1.nupkg.sha512",
