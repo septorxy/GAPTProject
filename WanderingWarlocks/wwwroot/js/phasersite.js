@@ -15,6 +15,7 @@ var curX, curY;
 var scale = 0.078;
 var hasShot = false;
 var maxHealth = 100;
+var damage = 10;
 
 //shooting 
 var healthBar;
@@ -85,6 +86,7 @@ function bindConnectionMessage() {
             opponent[inMessage.key].angle = inMessage.angle;
             oppHealthBack[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBackground');
             oppHealthBar[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBar');
+            oppHealthBar[inMessage.key].displayWidth = maxHealth;
             oppHealthBack[temp.key].setDepth(30);
             oppHealthBar[temp.key].setDepth(30);
 
@@ -135,16 +137,16 @@ function bindConnectionMessage() {
         }
         if (type === "health") {
             if (opponent.hasOwnProperty(inMessage.key)) {
-                opponent[inMessage.key].health = opponent[inMessage.key].health - 10;
-                oppHealthBar[inMessage.key].displayWidth = oppHealthBar[inMessage.key].displayWidth*(opponent[inMessage.key].health / maxHealth);
+                opponent[inMessage.key].health = opponent[inMessage.key].health - damage;
+                oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health ;
             }
             else if (playername == inMessage.key) {
                 
                 var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
                 if (thisScene[0].player != null) {
-                    thisScene[0].player.health = thisScene[0].player.health - 10;
-                    healthBar.displayWidth = healthBar.displayWidth*(thisScene[0].player.health / maxHealth);
+                    thisScene[0].player.health = thisScene[0].player.health - damage;
+                    healthBar.displayWidth = thisScene[0].player.health;
                 }
             }
         }
@@ -173,6 +175,7 @@ function bindConnectionMessage() {
                     opponent[temp.key].setDepth(10);
                     oppHealthBack[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBackground');
                     oppHealthBar[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBar');
+                    oppHealthBar[temp.key].displayWidth = maxHealth;
                     oppHealthBack[temp.key].setDepth(30);
                     oppHealthBar[temp.key].setDepth(30);
                     console.log(opponent[temp.key].name, opponent[temp.key].x, opponent[temp.key].y, opponent[temp.key].angle);
@@ -303,6 +306,7 @@ function create() {
     backgroundBar.fixedToCamera = true;
 
     healthBar = this.add.image(this.player.x, this.player.y - 70, 'healthBar');
+    healthBar.displayWidth = maxHealth;
     healthBar.fixedToCamera = true;
 
     backgroundBar.setDepth(30);
@@ -549,9 +553,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         this.setActive(false);
                         this.setVisible(false);
                         this.destroy();
-                        opponent[name].health = opponent[name].health - 10;
-                        oppHealthBar[name].displayWidth = oppHealthBar[name].displayWidth * (opponent[name].health / maxHealth);
-                        connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health), cacheCount);
+                        opponent[name].health = opponent[name].health - damage;
+                        oppHealthBar[name].displayWidth = opponent[name].health;
+                        //connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health), cacheCount);
                     }
                 }
             }//}
@@ -567,9 +571,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         this.setVisible(false);
                         this.destroy();
 
-                        thisScene[0].player.health = thisScene[0].player.health - 10;
-                    healthBar.displayWidth = healthBar.displayWidth*(thisScene[0].player.health / maxHealth);
-                        connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health+10), cacheCount);
+                        thisScene[0].player.health = thisScene[0].player.health - damage;
+                        healthBar.displayWidth = thisScene[0].player.health;
+                        //connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health+10), cacheCount);
 
                     }
         }
