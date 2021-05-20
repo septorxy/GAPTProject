@@ -256,7 +256,7 @@ function create() {
     
         interactivelayer.setCollisionByProperty({ Collide: true });
     
-        this.physics.add.collider(this.player, interactivelayer);
+    this.physics.add.collider(this.player, interactivelayer);
     
         this.player.setDepth(10);
         skylayer.setDepth(20);
@@ -341,7 +341,7 @@ function update() {
 
 
     for (var name in opponent) {
-        
+        //TODO
     }
 
     if (curX > this.player.x + 20 || curX < this.player.x + -20 || curY > this.player.y +20 || curY < this.player.y -20) {

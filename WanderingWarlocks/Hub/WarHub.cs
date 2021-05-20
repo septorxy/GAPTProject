@@ -23,7 +23,7 @@ namespace WanderingWarlocks
                 if (type == "disconnection")
                 {
                     inMessage = inMessage.ToString();
-                    //Console.WriteLine("Here");
+                    Console.WriteLine("disconnection");
                 }
                 string key = state.key;
 
@@ -79,9 +79,9 @@ namespace WanderingWarlocks
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            //Console.WriteLine(exception + "Here");
+            Console.WriteLine("OnDisconnectAsync");
             IDatabase cache = ConnectionCache.GetDatabase();
-            if (cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals(""))
+            if (!(cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals("")))
             {
                 string key = cache.StringGet(Context.ConnectionId);
                 string[] keys = cache.StringGet("myKeys").ToString().Split(",");
@@ -91,7 +91,7 @@ namespace WanderingWarlocks
                 cache.StringSet("myKeys", String.Join(",", keys));
                 var inMessage = cache.StringGet(key);
 
-                //Console.WriteLine(inMessage.ToString());
+                Console.WriteLine(inMessage.ToString());
                 await BroadcastMessage("disconnection", inMessage, 0);
             }
             else 
