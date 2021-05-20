@@ -118,15 +118,18 @@ function bindConnectionMessage() {
         }
         if (type === "shooting") {
             //check if shooting is from opponent
+
             if (opponent.hasOwnProperty(inMessage.key)) {
                 console.log(inMessage.key, "shot");
                 var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
-                thisScene[0].bulletGroup = new BulletGroup(thisScene[0], inMessage.key);
-                thisScene[0].bulletGroup.setDepth(10);
-                thisScene[0].bulletGroup.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.angle, inMessage.key);
-                thisScene[0].physics.add.collider(thisScene[0].bulletGroup, interactivelayer, bulletcallback);
-                hasShot = true;
+                if (thisScene[0] != null) {
+                    thisScene[0].bulletGroup = new BulletGroup(thisScene[0], inMessage.key);
+                    thisScene[0].bulletGroup.setDepth(10);
+                    thisScene[0].bulletGroup.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.angle, inMessage.key);
+                    thisScene[0].physics.add.collider(thisScene[0].bulletGroup, interactivelayer, bulletcallback);
+                    hasShot = true;
+                }
             }
         }
         if (type === "health") {
@@ -135,10 +138,13 @@ function bindConnectionMessage() {
                 oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health / opponent[inMessage.key].maxHealth;
             }
             else if (playername == inMessage.key) {
+                
                 var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
-                thisScene[0].player.health = thisScene[0].player.health - 10;
-                healthBar.displayWidth = thisScene[0].player.health / thisScene[0].player.maxHealth;
+                if (thisScene[0].player != null) {
+                    thisScene[0].player.health = thisScene[0].player.health - 10;
+                    healthBar.displayWidth = thisScene[0].player.health / thisScene[0].player.maxHealth;
+                }
             }
         }
     }
@@ -424,6 +430,10 @@ function update() {
     healthBar.y = this.player.y - 70;
 
     for (var name in opponent) {
+        oppHealthBack[name].x = opponent[name].x;
+        oppHealthBack[name].y = opponent[name].y - 70;
+        oppHealthBar[name].x = opponent[name].x;
+        oppHealthBar[name].y = opponent[name].y - 70;
         //TODO
     }
 
