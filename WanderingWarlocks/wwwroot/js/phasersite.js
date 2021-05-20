@@ -14,6 +14,7 @@ var updated = true;
 var curX, curY;
 var scale = 0.078;
 var hasShot = false;
+var maxHealth = 100;
 
 //shooting 
 var healthBar;
@@ -135,7 +136,7 @@ function bindConnectionMessage() {
         if (type === "health") {
             if (opponent.hasOwnProperty(inMessage.key)) {
                 opponent[inMessage.key].health = opponent[inMessage.key].health - 10;
-                oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health / opponent[inMessage.key].maxHealth;
+                oppHealthBar[inMessage.key].displayWidth = oppHealthBar[inMessage.key].displayWidth*(opponent[inMessage.key].health / maxHealth);
             }
             else if (playername == inMessage.key) {
                 
@@ -143,7 +144,7 @@ function bindConnectionMessage() {
                 thisScene = thisScene.concat(game.scene.scenes);
                 if (thisScene[0].player != null) {
                     thisScene[0].player.health = thisScene[0].player.health - 10;
-                    healthBar.displayWidth = thisScene[0].player.health / thisScene[0].player.maxHealth;
+                    healthBar.displayWidth = healthBar.displayWidth*(thisScene[0].player.health / maxHealth);
                 }
             }
         }
@@ -295,7 +296,6 @@ function create() {
     this.player.anims.load('drun');
 
     this.player.health = 100;
-    this.player.maxHealth = 100;
 
 
 
@@ -550,7 +550,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         this.setVisible(false);
                         this.destroy();
                         opponent[name].health = opponent[name].health - 10;
-                        oppHealthBar[name] = opponent[name].health / opponent[name].maxHealth;
+                        oppHealthBar[name].displayWidth = oppHealthBar[name].displayWidth * (opponent[name].health / maxHealth);
                         connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health), cacheCount);
                     }
                 }
@@ -568,7 +568,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         this.destroy();
 
                         thisScene[0].player.health = thisScene[0].player.health - 10;
-                        healthBar.displayWidth = thisScene[0].player.health / thisScene[0].player.maxHealth;
+                    healthBar.displayWidth = healthBar.displayWidth*(thisScene[0].player.health / maxHealth);
                         connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health+10), cacheCount);
 
                     }
