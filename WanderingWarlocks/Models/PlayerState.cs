@@ -8,14 +8,15 @@ namespace WanderingWarlocks.Models
         public string key { get; set; }
        
         public string angle { get; set;  }
+        public string health { get; set; }
 
-
-        public PlayerState(double x, double y, string key, string angle)
+        public PlayerState(double x, double y, string key, string angle, string health )
         {
             this.key = key;
             this.x = x;
             this.y = y;
             this.angle = angle;
+            this.health = health;
         }
 
     }
