@@ -6,8 +6,7 @@ namespace WanderingWarlocks.Models
         public double x { get; set; }
         public double y { get; set; }
         public string key { get; set; }
-       
-        public string angle { get; set;  }
+        public string angle { get; set; }
 
 
         public PlayerState(double x, double y, string key, string angle)

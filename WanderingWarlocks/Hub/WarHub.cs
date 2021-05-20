@@ -16,6 +16,7 @@ namespace WanderingWarlocks
 
         public Task BroadcastMessage(string type, object inMessage, int count)
         {
+            Console.WriteLine("Enterd BM");
             if (inMessage != null)
             {
                 PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
@@ -36,11 +37,13 @@ namespace WanderingWarlocks
                     if (cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals(""))
                     {
                         cache.StringSet("myKeys", key);
+                        Console.WriteLine(cache.StringGet("myKeys").ToString());
                     }
                     else
                     {
                         string keys = cache.StringGet("myKeys") + "," + key;
                         cache.StringSet("myKeys", keys);
+                        Console.WriteLine(cache.StringGet("myKeys").ToString());
                     }
                 }
 
@@ -83,6 +86,8 @@ namespace WanderingWarlocks
             IDatabase cache = ConnectionCache.GetDatabase();
             if (!(cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals("")))
             {
+                Console.WriteLine(cache.StringGet("myKeys").ToString());
+                Console.WriteLine("HereInside");
                 string key = cache.StringGet(Context.ConnectionId);
                 string[] keys = cache.StringGet("myKeys").ToString().Split(",");
                 var keyList = keys.ToList();

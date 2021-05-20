@@ -111,6 +111,7 @@ function bindConnectionMessage() {
 
     var playerCallback = function (inOpp) {
         console.log("entered playercallback");
+        console.log(inOpp)
         if (begining) {
             var temp;
             var i;
@@ -269,6 +270,7 @@ function create() {
 
     //this.cameras.main.setBackgroundColor('#2889d4');
     var outMessage = sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle);
+    console.log(outMessage.toString())
     if (outMessage) {
 
         connection.send('broadcastMessage', "newPlayer", outMessage, cacheCount);
