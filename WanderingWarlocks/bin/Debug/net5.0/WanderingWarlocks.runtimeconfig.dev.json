@@ -1,9 +1,14 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
+<<<<<<< HEAD
       "C:\\Users\\liamg\\.dotnet\\store\\|arch|\\|tfm|",
       "C:\\Users\\liamg\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+=======
+      "C:\\Users\\Owner\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Owner\\.nuget\\packages"
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
     ]
   }
 }

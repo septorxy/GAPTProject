@@ -9302,24 +9302,40 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\liamg\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+=======
+    "C:\\Users\\Owner\\.nuget\\packages\\": {}
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "projectName": "WanderingWarlocks",
       "projectPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "packagesPath": "C:\\Users\\liamg\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+      "projectName": "WanderingWarlocks",
+      "projectPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+      "packagesPath": "C:\\Users\\Owner\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\obj\\",
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\liamg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+=======
+        "C:\\Users\\Owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9415,5 +9431,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Owner\\OneDrive\\Desktop\\Cri Assignments\\GAPTProject\\WanderingWarlocks\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

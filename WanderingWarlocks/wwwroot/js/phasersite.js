@@ -8,13 +8,19 @@ var begining = true;
 var temporary;
 var healthBar;
 var backgroundBar;
+<<<<<<< HEAD
 var countBull = 0;
+=======
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
 
 var opponent = new Object();
 var oppAnim = new Object();
 var oppHealthBar = new Object();
 var oppHealthBack = new Object();
+<<<<<<< HEAD
 var bullets = new Object();
+=======
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
 
 this.bulletGroup;
 
@@ -670,7 +676,10 @@ function update() {
        healthBar.scale.setTo(player.health / player.maxHealth, 1);
     */
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c6622cc4c2c2a0bd80cd0a39dcec45b6390d309e
     backgroundBar.destroy();
     healthBar.destroy();
     backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
