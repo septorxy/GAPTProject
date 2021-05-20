@@ -123,7 +123,7 @@ function bindConnectionMessage() {
                     //thisScene.add(game.scene.scenes);
                     thisScene = thisScene.concat(game.scene.scenes);
                     
-                    opponent[temp.key] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-warlock-walkl').setScale(scale);
+                    opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(scale);
                     opponent[temp.key].name = temp.key;
                     opponent[temp.key].angle = temp.angle;
                     opponent[temp.key].setDepth(10);
