@@ -16,6 +16,7 @@ namespace WanderingWarlocks
 
         public Task BroadcastMessage(string type, object inMessage, int count)
         {
+            Console.WriteLine(inMessage.ToString());
             PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
             if (type == "disconnection")
             {
@@ -25,18 +26,18 @@ namespace WanderingWarlocks
             string key = state.key;
             if (type.Equals("newPlayer"))
             {
-                Console.WriteLine("HereAM");
                 IDatabase cache = ConnectionCache.GetDatabase();
                 cache.StringSet(key, inMessage.ToString());
+                Console.WriteLine(inMessage.ToString());
                 cache.StringSet(Context.ConnectionId, key);
-                if (cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals(""))
+                if (cache.StringGet("myKeys1").ToString() == null || cache.StringGet("myKeys1").ToString().Equals(""))
                 {
-                    cache.StringSet("myKeys", key);
+                    cache.StringSet("myKeys1", key);
                 }
                 else
                 {
-                    string keys = cache.StringGet("myKeys") + "," + key;
-                    cache.StringSet("myKeys", keys);
+                    string keys = cache.StringGet("myKeys1") + "," + key;
+                    cache.StringSet("myKeys1", keys);
                 }
 
             }
@@ -50,6 +51,11 @@ namespace WanderingWarlocks
                     //Console.WriteLine("Executed");
 
                 }
+            }else if (type.Equals("health"))
+            {
+                Console.WriteLine("HEALTH ENTERED " + inMessage.ToString());
+                IDatabase cache = ConnectionCache.GetDatabase();
+                cache.StringSet(key, inMessage.ToString());
             }
             return Clients.AllExcept(Context.ConnectionId).SendAsync("broadcastMessage", type, inMessage, count);
         }
@@ -58,8 +64,8 @@ namespace WanderingWarlocks
         {
             int counter = 0;
             IDatabase cache = ConnectionCache.GetDatabase();
-            if (cache.StringGet("myKeys").ToString() == null) { return Clients.All.SendAsync("getPlayers", players); }
-            string[] keys = cache.StringGet("myKeys").ToString().Split(",");
+            if (cache.StringGet("myKeys1").ToString() == null) { return Clients.All.SendAsync("getPlayers", players); }
+            string[] keys = cache.StringGet("myKeys1").ToString().Split(",");
             players = new string[keys.Length];
             foreach (String key in keys)
             {
@@ -73,16 +79,21 @@ namespace WanderingWarlocks
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             //Console.WriteLine(exception + "Here");
+            try { 
             IDatabase cache = ConnectionCache.GetDatabase();
             string key = cache.StringGet(Context.ConnectionId);
-            string[] keys = cache.StringGet("myKeys").ToString().Split(",");
+            string[] keys = cache.StringGet("myKeys1").ToString().Split(",");
             var keyList = keys.ToList();
             keyList.Remove(key);
             keys = keyList.ToArray();
-            cache.StringSet("myKeys", String.Join(",", keys));
+            cache.StringSet("myKeys1", String.Join(",", keys));
             var inMessage = cache.StringGet(key);
             //Console.WriteLine(inMessage.ToString());
             await BroadcastMessage("disconnection", inMessage, 0);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
             await base.OnDisconnectedAsync(exception);
         }
 
@@ -90,7 +101,7 @@ namespace WanderingWarlocks
         // {
         //    IDatabase cache = ConnectionCache.GetDatabase();
         //    string key = cache.StringGet(Context.ConnectionId);
-        //    string[] keys = cache.StringGet("myKeys").ToString().Split(",");
+        //    string[] keys = cache.StringGet("myKeys1").ToString().Split(",");
         //    var keyList = keys.ToList();
         //    var inMessage = cache.StringGet(key);
         //    await BroadcastMessage("newPlayer", inMessage, 0);

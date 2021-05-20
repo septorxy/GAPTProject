@@ -7,15 +7,17 @@ namespace WanderingWarlocks.Models
         public double y { get; set; }
         public string key { get; set; }
         public string anims { get; set; }
+        public int health { get; set; }
 
 
 
-        public PlayerState(double x, double y, string key, string anims)
+        public PlayerState(double x, double y, string key, string anims, int health)
         {
             this.key = key;
             this.x = x;
             this.y = y; 
             this.anims = anims;
+            this.health = health;
         }
 
     }
