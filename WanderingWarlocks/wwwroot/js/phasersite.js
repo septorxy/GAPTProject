@@ -495,6 +495,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                 this.setVelocityX(600);
                 this.setVelocityY(600);
                 break;
+            case -45:
+                this.setVelocityX(600);
+                this.setVelocityY(600);
+                break;
             case 0:
                 this.setVelocityY(600);
                 break;
