@@ -208,6 +208,9 @@ function create() {
     {
         opp.setTexture('Down-warlock-walkl');
     }
+    for (opp in opponents) {
+        opp.setTexture('Down-warlock-walkl');
+    }
 
     console.log(this.opponents);
 
