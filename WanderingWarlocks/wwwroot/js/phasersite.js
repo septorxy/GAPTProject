@@ -120,14 +120,16 @@ function bindConnectionMessage() {
                 temp = JSON.parse(inOpp[i]);
                 
                 if (playername != temp.key && uniquename(temp.key)) {
-                    
                     var thisScene = [];
+                    //thisScene.add(game.scene.scenes);
                     thisScene = thisScene.concat(game.scene.scenes);
+                    
                     opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(scale);
                     opponent[temp.key].name = temp.key;
                     opponent[temp.key].angle = temp.angle;
                     opponent[temp.key].setDepth(10);
-                    console.log(opponent[temp.key].name, opponent[temp.key].x, opponent[temp.key].y );
+                    
+                    console.log(opponent[temp.key].name, opponent[temp.key].x, opponent[temp.key].y, opponent[temp.key].angle );
                 }
             }
             begining = false;
@@ -202,6 +204,14 @@ function create() {
     
     myScene = this;
     this.opponents = opponent;
+
+    for (opp in this.opponents)
+    {
+        opp.setTexture('Down-warlock-walkl');
+    }
+    for (opp in opponent) {
+        opp.setTexture('Down-warlock-walkl');
+    }
 
     console.log(this.opponents);
 
