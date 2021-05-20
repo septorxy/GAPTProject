@@ -204,12 +204,12 @@ function create() {
     myScene = this;
     this.opponents = opponent;
 
-    for (opp in this.opponents)
+    for (var opp in this.opponents)
     {
-        opp.setTexture('Down-warlock-walkl');
+        this.opponents[opp].setTexture('Down-warlock-walkl');
     }
-    for (opp in opponent) {
-        opp.setTexture('Down-warlock-walkl');
+    for (var opp in opponent) {
+        opponent[opp].setTexture('Down-warlock-walkl');
     }
 
     console.log(this.opponents);
