@@ -138,7 +138,13 @@ function bindConnectionMessage() {
         if (type === "health") {
             if (opponent.hasOwnProperty(inMessage.key)) {
                 opponent[inMessage.key].health = opponent[inMessage.key].health - damage;
-                oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health ;
+                oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health;
+
+                if (opponent[inMessage.key].health <= 0)
+                {
+                    kill(opponent[inMessage.key]);
+                }
+
             }
             else if (playername == inMessage.key) {
                 
@@ -147,6 +153,10 @@ function bindConnectionMessage() {
                 if (thisScene[0].player != null) {
                     thisScene[0].player.health = thisScene[0].player.health - damage;
                     healthBar.displayWidth = thisScene[0].player.health;
+
+                    if (thisScene[0].player.health <= 0) {
+                        kill(thisScene[0].player);
+                    }
                 }
             }
         }
@@ -315,8 +325,7 @@ function create() {
     this.player.anims.load('drun');
 
     this.player.health = 100;
-
-
+  
 
     backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
     backgroundBar.fixedToCamera = true;
@@ -567,6 +576,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                         opponent[name].health = opponent[name].health - damage;
                         oppHealthBar[name].displayWidth = opponent[name].health;
+
+                        if (opponent[name].health <= 0) {
+                            kill(opponent[name]);
+                        }
                     }
                 }
             }//}
@@ -584,6 +597,11 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                         thisScene[0].player.health = thisScene[0].player.health - damage;
                         healthBar.displayWidth = thisScene[0].player.health;
+
+                    if (thisScene[0].player.health <= 0) {
+                        kill(thisScene[0].player);
+                    }
+
                         
                     }
         }
@@ -624,3 +642,51 @@ function bulletcallback(bullet, layer) {
     bullet.setActive(false);
     bullet.setVisible(false);
 }
+
+
+function kill(warlock)
+{
+
+    var thisScene = [];
+    thisScene = thisScene.concat(game.scene.scenes);
+    if (warlock.name in opponent) {
+        oppHealthBack[warlock.name].destroy();
+        oppHealthBar[warlock.name].destroy();
+        delete oppHealthBack[warlock.name];
+        delete oppHealthBar[warlock.name];
+
+        warlock.x = 4869;
+        warlock.y = 4869;
+        warlock.health = maxHealth;
+
+        
+        oppHealthBack[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
+        oppHealthBar[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
+        oppHealthBar[warlock.name].displayWidth = maxHealth;
+        oppHealthBack[warlock.name].setDepth(30);
+        oppHealthBar[warlock.name].setDepth(30);
+    } else if (warlock.name == playername)
+    {
+        healthBar.destroy();
+        backgroundBar.destroy();
+
+        warlock.x = 4869;
+        warlock.y = 4869;
+        warlock.health = maxHealth;
+
+      
+        backgroundBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
+        backgroundBar.fixedToCamera = true;
+
+        healthBar = thisScene[0].add.image(warlock.x, warlcok.y - 70, 'healthBar');
+        healthBar.displayWidth = maxHealth;
+        healthBar.fixedToCamera = true;
+
+        backgroundBar.setDepth(30);
+        healthBar.setDepth(30);
+    }
+    
+    
+
+}
+
