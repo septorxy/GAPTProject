@@ -266,6 +266,7 @@ function create() {
     for (var front in oppHealthBar)
     {
         oppHealthBar[front].setTexture('healthBar');
+        oppHealthBar[front].displayWidth = opponent[front].health;
     }
 
     for (var back in oppHealthBack)
@@ -451,7 +452,7 @@ function update() {
         //TODO
     }
 
-    if (curX > this.player.x + 20 || curX < this.player.x + -20 || curY > this.player.y + 20 || curY < this.player.y - 20) {
+    if (curX > this.player.x + 10 || curX < this.player.x + -10 || curY > this.player.y + 10 || curY < this.player.y - 10) {
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
         updated = true;
@@ -473,9 +474,13 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'lightning');
         this.scene = scene;
         this.shooter = "";
+        this.inX = x;
+        this.inY = y;
     }
 
     fire(x, y, angle, shooter) {
+        this.inX = x;
+        this.inY = y;
         hasShot = true;
         var ang;
         this.body.reset(x, y);
@@ -538,38 +543,24 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
 
-        //if (hasShot) {
-        //    if (this.shooter in opponent) {
-        //        var thisScene = [];
-        //        thisScene = thisScene.concat(game.scene.scenes);
-        //        if (this.x <= thisScene[0].player.x + 50 && this.x >= thisScene[0].player.x - 50 && this.y <= thisScene[0].player.y + 50 && this.y >= thisScene[0].player.x - 50) {
-        //                console.log("HIT" + name);
+        if (this.y <= this.inY - 1000 || this.y >=this.inY+1000 || this.x <=this.inX-1000 || this.x >= this.inX+1000) {
+            this.setActive(false);
+            this.setVisible(false);
+        }
 
-        //                this.setActive(false);
-        //                this.setVisible(false);
-        //                this.destroy();
 
-        //                thisScene[0].player.health = thisScene.player.health - 10;
-        //                healthBar.displayWidth = thisScene.player.health / thisScene.player.maxHealth;
-        //                connection.send('broadcastMessage', "health", sendMessage(thisScene.player.x, thisScene.player.y, thisScene.player.name, thisScene.player.angle, thisScene.player.health+10), cacheCount);
-
-        //            }
-
-        //    }
-        //    else {
         var hit = false;
             for (var name in opponent) {
                 if (this.shooter != name) {
-                    if (this.x <= parseInt(opponent[name].x) + 50 && this.x >= parseInt(opponent[name].x) - 50 && this.y <= parseInt(opponent[name].y) + 50 && this.y >= parseInt(opponent[name].y) - 50) {
+                    if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
                         hit = true;
                         console.log("HIT" + name);
 
                         this.setActive(false);
                         this.setVisible(false);
-                        this.destroy();
-                        opponent[name].health = opponent[name].health - damage;
-                        oppHealthBar[name].displayWidth = opponent[name].health;
-                        //connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health), cacheCount);
+                        //opponent[name].health = opponent[name].health - damage;
+                        //oppHealthBar[name].displayWidth = opponent[name].health;
+                        connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health+damage), cacheCount);
                     }
                 }
             }//}
@@ -578,21 +569,19 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
         {
             var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
-                if (this.x <= thisScene[0].player.x + 50 && this.x >= thisScene[0].player.x - 50 && this.y <= thisScene[0].player.y + 50 && this.y >= thisScene[0].player.x - 50) {
+                if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
                         console.log("HIT" + name);
 
                         this.setActive(false);
                         this.setVisible(false);
-                        this.destroy();
 
-                        thisScene[0].player.health = thisScene[0].player.health - damage;
-                        healthBar.displayWidth = thisScene[0].player.health;
-                        //connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health+10), cacheCount);
+                        //thisScene[0].player.health = thisScene[0].player.health - damage;
+                        //healthBar.displayWidth = thisScene[0].player.health;
+                        connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health+damage), cacheCount);
 
                     }
         }
 
-        //hasShot = false;
     }
 }
 
@@ -616,7 +605,7 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
     }
 
     fireBullet(x, y, angle, name) {
-        const bullet = this.getFirstDead(true); //false - we can only use 30 bullets
+        const bullet = this.getFirstDead(false); //false - we can only use 30 bullets
         if (bullet) {
             bullet.setDepth(10);
             bullet.fire(x, y, angle, name);
@@ -628,5 +617,4 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
 function bulletcallback(bullet, layer) {
     bullet.setActive(false);
     bullet.setVisible(false);
-    bullet.destroy();
 }
