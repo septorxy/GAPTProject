@@ -1,8 +1,20 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    Layout = "~/Views/Shared/_LayoutI.cshtml";
+}
+<div id="back">
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Wandering Warlocks!</h1>
+        <p>2D Top-Down Shooter made for Browsers</p>
+        @if (!SignInManager.IsSignedIn(User)) { 
+            <p>Please log in to play</p>}
+        
+        &nbsp;
+        <img src="~/img/6.gif" style="padding-top:2em"/>
+    </div>
 </div>

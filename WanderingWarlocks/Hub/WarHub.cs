@@ -16,42 +16,63 @@ namespace WanderingWarlocks
 
         public Task BroadcastMessage(string type, object inMessage, int count)
         {
-            PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
-            if (type == "disconnection")
+            Console.WriteLine("Enterd BM");
+            if (inMessage != null)
             {
-                inMessage = inMessage.ToString();
-                Console.WriteLine("Here");
-            }
-            string key = state.key;
-            if (type.Equals("newPlayer"))
-            {
-                Console.WriteLine("HereAM");
-                IDatabase cache = ConnectionCache.GetDatabase();
-                cache.StringSet(key, inMessage.ToString());
-                cache.StringSet(Context.ConnectionId, key);
-                if (cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals(""))
-                {
-                    cache.StringSet("myKeys", key);
-                }
-                else
-                {
-                    string keys = cache.StringGet("myKeys") + "," + key;
-                    cache.StringSet("myKeys", keys);
-                }
+                PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
 
-            }
-            else if (type.Equals("updatePlayer"))
-            {
-                Console.WriteLine(count);
-                if (count == interval)
+                if (type == "disconnection")
                 {
+                    inMessage = inMessage.ToString();
+                    Console.WriteLine("disconnection");
+                }
+                string key = state.key;
+
+                if (type.Equals("newPlayer"))
+                {
+                    Console.WriteLine("HereAM");
                     IDatabase cache = ConnectionCache.GetDatabase();
                     cache.StringSet(key, inMessage.ToString());
-                    Console.WriteLine("Executed");
+                    cache.StringSet(Context.ConnectionId, key);
+                    if (cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals(""))
+                    {
+                        cache.StringSet("myKeys", key);
+                        Console.WriteLine(cache.StringGet("myKeys").ToString());
+                    }
+                    else
+                    {
+                        string keys = cache.StringGet("myKeys") + "," + key;
+                        cache.StringSet("myKeys", keys);
+                        Console.WriteLine(cache.StringGet("myKeys").ToString());
+                    }
+                }
 
+
+                else if (type.Equals("updatePlayer"))
+                {
+                    //Console.WriteLine(count);
+                    if (count == interval)
+                    {
+                        IDatabase cache = ConnectionCache.GetDatabase();
+                        cache.StringSet(key, inMessage.ToString());
+                        //Console.WriteLine("Executed");
+
+                    }
+                }
+                else if (type.Equals("health"))
+                {
+                    //Console.WriteLine(count);
+                    if (count == interval)
+                    {
+                        IDatabase cache = ConnectionCache.GetDatabase();
+                        cache.StringSet(key, inMessage.ToString());
+                        //Console.WriteLine("Executed");
+
+                    }
                 }
             }
-            return Clients.All.SendAsync("broadcastMessage", type, inMessage, count);
+            return Clients.AllExcept(Context.ConnectionId).SendAsync("broadcastMessage", type, inMessage, count);
+
         }
 
         public Task getPlayers(string[] players)
@@ -64,7 +85,7 @@ namespace WanderingWarlocks
             foreach (String key in keys)
             {
                 players[counter] = cache.StringGet(key).ToString();
-                Console.WriteLine(players[counter]);
+                //Console.WriteLine(players[counter]);
                 counter++;
             }
             return Clients.All.SendAsync("getPlayers", players);
@@ -72,17 +93,27 @@ namespace WanderingWarlocks
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            //Console.WriteLine(exception + "Here");
+            Console.WriteLine("OnDisconnectAsync");
             IDatabase cache = ConnectionCache.GetDatabase();
-            string key = cache.StringGet(Context.ConnectionId);
-            string[] keys = cache.StringGet("myKeys").ToString().Split(",");
-            var keyList = keys.ToList();
-            keyList.Remove(key);
-            keys = keyList.ToArray();
-            cache.StringSet("myKeys", String.Join(",", keys));
-            var inMessage = cache.StringGet(key);
-            //Console.WriteLine(inMessage.ToString());
-            await BroadcastMessage("disconnection", inMessage, 0);
+            if (!(cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals("")))
+            {
+                Console.WriteLine(cache.StringGet("myKeys").ToString());
+                Console.WriteLine("HereInside");
+                string key = cache.StringGet(Context.ConnectionId);
+                string[] keys = cache.StringGet("myKeys").ToString().Split(",");
+                var keyList = keys.ToList();
+                keyList.Remove(key);
+                keys = keyList.ToArray();
+                cache.StringSet("myKeys", String.Join(",", keys));
+                var inMessage = cache.StringGet(key);
+
+                Console.WriteLine(inMessage.ToString());
+                await BroadcastMessage("disconnection", inMessage, 0);
+            }
+            else
+            {
+                await BroadcastMessage("disconnection", null, 0);
+            }
             await base.OnDisconnectedAsync(exception);
         }
 

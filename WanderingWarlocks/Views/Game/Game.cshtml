@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    Layout = "~/Views/Shared/_LayoutG.cshtml";
+}
+
+<noscript>Please enable javascript to play this Game.</noscript>
+<p id="name" hidden>@User.Identity.Name</p>
+<audio id="music" loop>
+    <source src="https://spritestorage.blob.core.windows.net/music/musicMagic.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
