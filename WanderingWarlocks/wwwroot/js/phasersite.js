@@ -14,6 +14,13 @@ var hasShot = false;
 var maxHealth = 100;
 var damage = 5;
 var firstMove = true;
+
+var maxSpawnX = 5534;
+var minSpawnY = 5149;
+var maxSpawnY = 3787;
+var minSpawnX = 4563;
+
+
 //shooting 
 var healthBar;
 var backgroundBar;
@@ -339,8 +346,9 @@ function create() {
         this.opponents[i].texture = 'Down-warlock-walkl';
         this.opponents[i].frame = 'Down-warlock-walkl';
     }*/
+  
 
-    this.player = this.physics.add.sprite(4869, 4869, 'Down-warlock-walkl').setScale(scale);
+    this.player = this.physics.add.sprite(getXspawn(), getYspawn(), 'Down-warlock-walkl').setScale(scale);
     this.player.name = name;
     playername = name;
     this.player.anims.load('dwalk');
@@ -695,8 +703,8 @@ function kill(warlock)
         delete oppHealthBack[warlock.name];
         delete oppHealthBar[warlock.name];
 
-        warlock.x = 4869;
-        warlock.y = 4869;
+        warlock.x = getXspawn();
+        warlock.y = getYspawn();
         warlock.health = maxHealth;
 
         
@@ -711,8 +719,8 @@ function kill(warlock)
         healthBar.destroy();
         backgroundBar.destroy();
 
-        warlock.x = 4869;
-        warlock.y = 4869;
+        warlock.x = getXspawn();
+        warlock.y = getYspawn();
         warlock.health = maxHealth;
 
       
@@ -732,3 +740,15 @@ function kill(warlock)
 
 }
 
+
+function getXspawn()
+{
+    var min = Math.ceil(minSpawnX);
+    var max = Math.floor(maxSpawnX);
+    return Math.floor(Math.random() * (max - min) + min);
+}
+function getYspawn() {
+    var min = Math.ceil(minSpawnY);
+    var max = Math.floor(maxSpawnY);
+    return Math.floor(Math.random() * (max - min) + min);
+}
