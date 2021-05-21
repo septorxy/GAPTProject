@@ -678,7 +678,7 @@ function kill(warlock)
         backgroundBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
         backgroundBar.fixedToCamera = true;
 
-        healthBar = thisScene[0].add.image(warlock.x, warlcok.y - 70, 'healthBar');
+        healthBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
         healthBar.displayWidth = maxHealth;
         healthBar.fixedToCamera = true;
 
