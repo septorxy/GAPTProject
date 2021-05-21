@@ -16,7 +16,7 @@ var scale = 0.078;
 var hasShot = false;
 var maxHealth = 100;
 var damage = 5;
-
+var firstMove = true;
 //shooting 
 var healthBar;
 var backgroundBar;
@@ -290,7 +290,7 @@ function create() {
     }
 
     console.log(this.opponents);
-
+        
 
     this.anims.create({
         key: 'dwalk',
@@ -325,8 +325,7 @@ function create() {
     this.player.anims.load('drun');
 
     this.player.health = 100;
-  
-
+    
     backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
     backgroundBar.fixedToCamera = true;
 
@@ -449,7 +448,7 @@ function update() {
         this.player.setVelocityY(-4 * runspeed);
     }
     else {
-        this.player.anims.stop();
+        this.player.anims.stop();    
     }
 
 
@@ -467,6 +466,10 @@ function update() {
     }
 
     if (curX > this.player.x + 10 || curX < this.player.x + -10 || curY > this.player.y + 10 || curY < this.player.y - 10) {
+        if (firstMove) {
+            document.getElementById('music').play();
+            firstMove = false;
+        }
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
         updated = true;
