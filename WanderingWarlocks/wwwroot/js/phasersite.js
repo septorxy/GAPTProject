@@ -257,21 +257,26 @@ function create() {
     this.opponents = opponent;
 
     for (var opp in this.opponents) {
+
         this.opponents[opp].setTexture('Down-warlock-walkl');
+        this.opponents[opp].setDepth(10);
     }
     for (var opp in opponent) {
         opponent[opp].setTexture('Down-warlock-walkl');
+        opponent[opp].setDepth(10);
     }
 
     for (var front in oppHealthBar)
     {
         oppHealthBar[front].setTexture('healthBar');
         oppHealthBar[front].displayWidth = opponent[front].health;
+        oppHealthBar[front].setDepth(30);
     }
 
     for (var back in oppHealthBack)
     {
         oppHealthBack[back].setTexture('healthBackground');
+        oppHealthBack[back].setDepth(30);
     }
 
     console.log(this.opponents);
