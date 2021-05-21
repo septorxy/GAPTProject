@@ -10,7 +10,7 @@ var temporary;
 var updated = true;
 var curX, curY;
 var scale = 0.078;
-var hasShot = false;
+var hasShot = true;
 var maxHealth = 100;
 var damage = 5;
 var firstMove = true;
@@ -373,7 +373,7 @@ function create() {
         if (pointer.leftButtonDown()) {
             //start shooting
             this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.angle, this.player.name);
-            hasShot = true;
+            //hasShot = true;
             connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health), cacheCount);
         }
     }, this);
@@ -595,9 +595,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
         if (this.y <= this.inY - 1000 || this.y >=this.inY+1000 || this.x <=this.inX-1000 || this.x >= this.inX+1000) {
             this.setActive(false);
             this.setVisible(false);
+            hasShot = false;
         }
 
-        if (hasShot) {
+        if (this.active == true) {
             var hit = false;
             for (var name in opponent) {
                 if (this.shooter != name) {
@@ -621,6 +622,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         else if (opponent[name].health <= 50) {
                             oppHealthBar[name].setTexture('Orange-health');
                         }
+
+                        hasShot = false;
 
                     }
                 }
@@ -648,9 +651,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                     else if (thisScene[0].player.health <= 50) {
                         healthBar.setTexture('Orange-health');
                     }
+
+                    hasShot = false;
                 }
             }
-            hasShot = false;
         }
     }
 }
