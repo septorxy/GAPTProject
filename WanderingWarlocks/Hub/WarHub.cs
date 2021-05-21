@@ -59,6 +59,17 @@ namespace WanderingWarlocks
 
                     }
                 }
+                else if (type.Equals("health"))
+                {
+                    //Console.WriteLine(count);
+                    if (count == interval)
+                    {
+                        IDatabase cache = ConnectionCache.GetDatabase();
+                        cache.StringSet(key, inMessage.ToString());
+                        //Console.WriteLine("Executed");
+
+                    }
+                }
             }
                 return Clients.AllExcept(Context.ConnectionId).SendAsync("broadcastMessage", type, inMessage, count);
          
