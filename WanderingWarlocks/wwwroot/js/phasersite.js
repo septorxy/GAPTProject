@@ -263,6 +263,16 @@ function create() {
         opponent[opp].setTexture('Down-warlock-walkl');
     }
 
+    for (var front in oppHealthBar)
+    {
+        oppHealthBar[front].setTexture('healthBar');
+    }
+
+    for (var back in oppHealthBack)
+    {
+        oppHealthBack[back].setTexture('healthBackground');
+    }
+
     console.log(this.opponents);
 
 
