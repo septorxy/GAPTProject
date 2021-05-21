@@ -14,5 +14,10 @@ namespace WanderingWarlocks.Controllers
         {
             return View();
         }
+
+        public IActionResult Instructions()
+        {
+            return View();
+        }
     }
 }
