@@ -558,8 +558,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                         this.setActive(false);
                         this.setVisible(false);
-                        //opponent[name].health = opponent[name].health - damage;
-                        //oppHealthBar[name].displayWidth = opponent[name].health;
+                        opponent[name].health = opponent[name].health - damage;
+                        oppHealthBar[name].displayWidth = opponent[name].health;
                         connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health+damage), cacheCount);
                     }
                 }
@@ -575,8 +575,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         this.setActive(false);
                         this.setVisible(false);
 
-                        //thisScene[0].player.health = thisScene[0].player.health - damage;
-                        //healthBar.displayWidth = thisScene[0].player.health;
+                        thisScene[0].player.health = thisScene[0].player.health - damage;
+                        healthBar.displayWidth = thisScene[0].player.health;
                         connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health+damage), cacheCount);
 
                     }
