@@ -80,7 +80,7 @@ function bindConnectionMessage() {
             }
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
-            opponent[inMessage.key] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-warlock-walkl').setScale(scale);
+            opponent[inMessage.key] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-opp-walkl').setScale(scale);
             opponent[inMessage.key].name = inMessage.key;
             opponent[inMessage.key].health = 100;
             opponent[inMessage.key].angle = inMessage.angle;
@@ -178,7 +178,7 @@ function bindConnectionMessage() {
                     //thisScene.add(game.scene.scenes);
                     thisScene = thisScene.concat(game.scene.scenes);
 
-                    opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-warlock-walkl').setScale(scale);
+                    opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-opp-walkl').setScale(scale);
                     opponent[temp.key].name = temp.key;
                     opponent[temp.key].angle = temp.angle;
                     opponent[temp.key].health = temp.health;
@@ -247,6 +247,9 @@ function preload() {
     this.load.image('Down-warlock-walkl', 'https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png');
     this.load.atlas('warlock', 'https://spritestorage.blob.core.windows.net/warlock/warlock.png', 'https://spritestorage.blob.core.windows.net/warlock/warlock.json');
 
+    this.load.image('Down-opp-walkl', 'https://spritestorage.blob.core.windows.net/warlock/Down-opp-walkl.png');
+    this.load.atlas('opponent', 'https://spritestorage.blob.core.windows.net/warlock/opponent.png', 'https://spritestorage.blob.core.windows.net/warlock/warlock.json');
+
     this.load.tilemapTiledJSON('map', 'https://spritestorage.blob.core.windows.net/map/Updated.json');
     this.load.image('tiles', 'https://spritestorage.blob.core.windows.net/map/TileSet.png');
 
@@ -268,11 +271,11 @@ function create() {
 
     for (var opp in this.opponents) {
 
-        this.opponents[opp].setTexture('Down-warlock-walkl');
+        this.opponents[opp].setTexture('Down-opp-walkl');
         this.opponents[opp].setDepth(10);
     }
     for (var opp in opponent) {
-        opponent[opp].setTexture('Down-warlock-walkl');
+        opponent[opp].setTexture('Down-opp-walkl');
         opponent[opp].setDepth(10);
     }
 
