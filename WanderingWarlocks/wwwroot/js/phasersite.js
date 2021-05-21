@@ -1,7 +1,4 @@
 ﻿
-//import Phaser from 'phaser';
-//import { Anims } from './anims';
-
 //Variables
 var playername;
 var runspeed = 1.5;
@@ -87,8 +84,9 @@ function bindConnectionMessage() {
             oppHealthBack[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBackground');
             oppHealthBar[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBar');
             oppHealthBar[inMessage.key].displayWidth = maxHealth;
-            oppHealthBack[temp.key].setDepth(30);
-            oppHealthBar[temp.key].setDepth(30);
+            oppHealthBack[inMessage.key].displayWidth = maxHealth + 2;
+            oppHealthBack[inMessage.key].setDepth(30);
+            oppHealthBar[inMessage.key].setDepth(30);
 
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
@@ -139,11 +137,20 @@ function bindConnectionMessage() {
             if (opponent.hasOwnProperty(inMessage.key)) {
                 opponent[inMessage.key].health = opponent[inMessage.key].health - damage;
                 oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health;
+                
 
                 if (opponent[inMessage.key].health <= 0)
                 {
                     kill(opponent[inMessage.key]);
                 }
+                else if (opponent[inMessage.key].health <= 20)
+                {
+                    oppHealthBar[inMessage.key].setTexture('Red-health');
+                }
+                else if (opponent[inMessage.key].health <= 50) {
+                    oppHealthBar[inMessage.key].setTexture('Orange-health');
+                }
+                
 
             }
             else if (playername == inMessage.key) {
@@ -156,6 +163,12 @@ function bindConnectionMessage() {
 
                     if (thisScene[0].player.health <= 0) {
                         kill(thisScene[0].player);
+                    }
+                    else if (thisScene[0].player.health <= 20) {
+                        healthBar.setTexture('Red-health');
+                    }
+                    else if (thisScene[0].player.health <= 50) {
+                        healthBar.setTexture('Orange-health');
                     }
                 }
             }
@@ -186,6 +199,7 @@ function bindConnectionMessage() {
                     oppHealthBack[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBackground');
                     oppHealthBar[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBar');
                     oppHealthBar[temp.key].displayWidth = maxHealth;
+                    oppHealthBack[temp.key].displayWidth = maxHealth + 2;
                     oppHealthBack[temp.key].setDepth(30);
                     oppHealthBar[temp.key].setDepth(30);
                     console.log(opponent[temp.key].name, opponent[temp.key].x, opponent[temp.key].y, opponent[temp.key].angle);
@@ -257,6 +271,10 @@ function preload() {
     this.load.image('healthBar', 'https://spritestorage.blob.core.windows.net/health-bar/healthbar.png');
     this.load.image('healthBackground', 'https://spritestorage.blob.core.windows.net/health-bar/healthbackground.png');
 
+    this.load.image('Orange-health', 'https://spritestorage.blob.core.windows.net/health-bar/orange-healthbar.png');
+    this.load.image('Red-health', 'https://spritestorage.blob.core.windows.net/health-bar/red-healthbar.png');
+
+
 
 }
 
@@ -289,6 +307,7 @@ function create() {
     for (var back in oppHealthBack)
     {
         oppHealthBack[back].setTexture('healthBackground');
+        oppHealthBack[back].displayWidth = maxHealth + 2;
         oppHealthBack[back].setDepth(30);
     }
 
@@ -331,6 +350,8 @@ function create() {
     
     backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
     backgroundBar.fixedToCamera = true;
+    backgroundBar.displayWidth = maxHealth + 2;
+
 
     healthBar = this.add.image(this.player.x, this.player.y - 70, 'healthBar');
     healthBar.displayWidth = maxHealth;
@@ -586,9 +607,16 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         if (opponent[name].health <= 0) {
                             kill(opponent[name]);
                         }
+                        else if (opponent[name].health <= 20) {
+                            oppHealthBar[name].setTexture('Red-health');
+                        }
+                        else if (opponent[name].health <= 50) {
+                            oppHealthBar[name].setTexture('Orange-health');
+                        }
+
                     }
                 }
-            }//}
+            }
         
         if (this.shooter != playername && !hit)
         {
@@ -606,6 +634,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                     if (thisScene[0].player.health <= 0) {
                         kill(thisScene[0].player);
+                    }
+                    else if (thisScene[0].player.health <= 20) {
+                        healthBar.setTexture('Red-health');
+                    }
+                    else if (thisScene[0].player.health <= 50) {
+                        healthBar.setTexture('Orange-health');
                     }
 
                         
@@ -669,6 +703,7 @@ function kill(warlock)
         oppHealthBack[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
         oppHealthBar[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
         oppHealthBar[warlock.name].displayWidth = maxHealth;
+        oppHealthBack[warlock.name].displayWidth = maxHealth + 2;
         oppHealthBack[warlock.name].setDepth(30);
         oppHealthBar[warlock.name].setDepth(30);
     } else if (warlock.name == playername)
@@ -683,6 +718,7 @@ function kill(warlock)
       
         backgroundBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
         backgroundBar.fixedToCamera = true;
+        backgroundBar.displayWidth = maxHealth + 2;
 
         healthBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
         healthBar.displayWidth = maxHealth;
