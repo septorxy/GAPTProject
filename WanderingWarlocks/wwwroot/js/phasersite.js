@@ -395,7 +395,6 @@ function create() {
     this.player.setDepth(10);
     skylayer.setDepth(20);
 
-
     // set bounds so the camera won't go outside the game world
     //this.cameras.main.setBounds(0, 0, game.width, game.height);
     // make the camera follow the player
@@ -494,6 +493,7 @@ function update() {
             document.getElementById('music').play();
             firstMove = false;
         }
+
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
         updated = true;
@@ -589,8 +589,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
             this.setVisible(false);
         }
 
-
-        var hit = false;
+        if (hasShot) {
+            var hit = false;
             for (var name in opponent) {
                 if (this.shooter != name) {
                     if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
@@ -617,20 +617,19 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                     }
                 }
             }
-        
-        if (this.shooter != playername && !hit)
-        {
-            var thisScene = [];
+
+            if (this.shooter != playername && !hit) {
+                var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
                 if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
-                        console.log("HIT" + name);
+                    console.log("HIT" + name);
 
-                        this.setActive(false);
-                        this.setVisible(false);
-                        connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage), cacheCount);
+                    this.setActive(false);
+                    this.setVisible(false);
+                    connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage), cacheCount);
 
-                        thisScene[0].player.health = thisScene[0].player.health - damage;
-                        healthBar.displayWidth = thisScene[0].player.health;
+                    thisScene[0].player.health = thisScene[0].player.health - damage;
+                    healthBar.displayWidth = thisScene[0].player.health;
 
                     if (thisScene[0].player.health <= 0) {
                         kill(thisScene[0].player);
@@ -641,11 +640,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                     else if (thisScene[0].player.health <= 50) {
                         healthBar.setTexture('Orange-health');
                     }
-
-                        
-                    }
+                }
+            }
+            hasShot = false;
         }
-
     }
 }
 
