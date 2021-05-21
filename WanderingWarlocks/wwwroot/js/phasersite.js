@@ -15,7 +15,7 @@ var curX, curY;
 var scale = 0.078;
 var hasShot = false;
 var maxHealth = 100;
-var damage = 10;
+var damage = 5;
 
 //shooting 
 var healthBar;
