@@ -52,13 +52,14 @@ function onConnectionError(error) {
     }
 }
 
-function sendMessage(xIn, yIn, keyIn, angle, health) {
+function sendMessage(xIn, yIn, keyIn, angle, health, kills) {
     var sendmessage = '{' +
         '"x": "' + xIn + '" ,' +
         '"y": "' + yIn + '" ,' +
         '"key": "' + keyIn + '",' +
         '"angle": "' + angle + '",' +
-        '"health": "' + health + '"' +
+        '"health": "' + health + '",' +
+        '"kills": "' + kills + '"' +
         '}';
     return sendmessage;
 }
@@ -85,6 +86,7 @@ function bindConnectionMessage() {
             opponent[inMessage.key].name = inMessage.key;
             opponent[inMessage.key].health = 100;
             opponent[inMessage.key].angle = inMessage.angle;
+            opponent[inMessage.key].kills = 0;
             oppHealthBack[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBackground');
             oppHealthBar[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBar');
             oppHealthBar[inMessage.key].displayWidth = maxHealth;
@@ -99,6 +101,8 @@ function bindConnectionMessage() {
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].health = inMessage.health;
             opponent[inMessage.key].angle = inMessage.angle;
+            opponent[inMessage.key].kills = inMessage.kills;
+            console.log(opponent[inMessage.key].kills);
 
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
@@ -197,6 +201,7 @@ function bindConnectionMessage() {
                     opponent[temp.key].name = temp.key;
                     opponent[temp.key].angle = temp.angle;
                     opponent[temp.key].health = temp.health;
+                    opponent[temp.key].kills = temp.kills;
                     opponent[temp.key].setDepth(10);
                     oppHealthBack[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBackground');
                     oppHealthBar[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBar');
@@ -348,6 +353,7 @@ function create() {
     this.player.anims.load('drun');
 
     this.player.health = 100;
+    this.player.kills = 0;
 
     backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
     backgroundBar.fixedToCamera = true;
@@ -367,8 +373,11 @@ function create() {
             //start shooting
             this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.angle, this.player.name);
             //hasShot = true;
-            connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health), cacheCount);
+            connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills), cacheCount);
         }
+    }, this);
+
+    this.input.on('pointerdown', function (pointer) {
     }, this);
 
 
@@ -402,7 +411,7 @@ function create() {
     //this.cameras.main.startFollow(this.player);
 
     //this.cameras.main.setBackgroundColor('#2889d4');
-    var outMessage = sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health);
+    var outMessage = sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills);
     if (outMessage) {
 
         connection.send('broadcastMessage', "newPlayer", outMessage, cacheCount);
@@ -495,7 +504,7 @@ function update() {
             firstMove = false;
         }
 
-        connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health), cacheCount);
+        connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills), cacheCount);
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
         updated = true;
     }
@@ -601,12 +610,18 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                         this.setActive(false);
                         this.setVisible(false);
-                        connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage), cacheCount);
+                        connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage, opponent[name].kills), cacheCount);
 
                         opponent[name].health = opponent[name].health - damage;
                         oppHealthBar[name].displayWidth = opponent[name].health;
 
                         if (opponent[name].health <= 0) {
+                            //var thisScene = [];
+                            //thisScene = thisScene.concat(game.scene.scenes);
+                            if (this.shooter == myScene.player.name) {
+                                myScene.player.kills += 1;
+                                connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
+                            }
                             kill(opponent[name]);
                         }
                         else if (opponent[name].health <= 20) {
@@ -630,7 +645,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                     this.setActive(false);
                     this.setVisible(false);
-                    connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage), cacheCount);
+                    connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage, thisScene[0].player.kills), cacheCount);
 
                     thisScene[0].player.health = thisScene[0].player.health - damage;
                     healthBar.displayWidth = thisScene[0].player.health;
