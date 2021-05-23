@@ -1366,3 +1366,6 @@ C:\Users\liamg\Source\Repos\septorxy\GAPTProject\WanderingWarlocks\obj\Debug\net
 C:\Users\liamg\Source\Repos\septorxy\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\ref\WanderingWarlocks.dll
 C:\Users\liamg\Source\Repos\septorxy\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\WanderingWarlocks.pdb
 C:\Users\liamg\Source\Repos\septorxy\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\WanderingWarlocks.genruntimeconfig.cache
+D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
+D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
+D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
