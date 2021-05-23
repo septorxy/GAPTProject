@@ -725,11 +725,13 @@ function kill(warlock, shooter) {
     var thisScene = [];
     if (shooter != null) {
         if (myScene.player.name == shooter) {
-            connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills + 1), cacheCount);
+            myScene.player.kills += 1;
+            console.log("Here " + shooter + " " + myScene.player.kills);
+            connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
         } else {
+            console.log("Here " + shooter + " " + opponent[shooter].kills);
             connection.send('broadcastMessage', "updatePlayer", sendMessage(opponent[shooter].x, opponent[shooter].y, opponent[shooter].name, opponent[shooter].angle, opponent[shooter].health + damage, opponent[shooter].kills + 1), cacheCount);
         }
-        
     }
     thisScene = thisScene.concat(game.scene.scenes);
     if (warlock.name in opponent) {
