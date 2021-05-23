@@ -13,7 +13,6 @@ var hasShot = true;
 var maxHealth = 100;
 var damage = 5;
 var firstMove = true;
-var keysDown = {};
 
 var maxSpawnX = 5534;
 var minSpawnY = 5149;
@@ -260,6 +259,7 @@ var config = {
 var game;
 
 var text;
+var textBack;
 var cursors;
 var keys;
 
@@ -283,6 +283,7 @@ function preload() {
     this.load.image('Orange-health', 'https://spritestorage.blob.core.windows.net/health-bar/orange-healthbar.png');
     this.load.image('Red-health', 'https://spritestorage.blob.core.windows.net/health-bar/red-healthbar.png');
 
+    this.load.image('leaderboard', 'https://spritestorage.blob.core.windows.net/background/LeaderboardBack.png');
 
 
 }
@@ -434,10 +435,14 @@ function create() {
         font: "25px Arial",
         align: "center"
     });
+    textBack = this.add.image(0,0,'leaderboard');
+    
     
     text.setPadding(15, 15);
     text.visible = false;
     text.setDepth(30);
+    textBack.visible = false;
+    textBack.setDepth(29);
 
 }
 function update() {
@@ -536,10 +541,14 @@ function update() {
         updateText();
         text.x = (this.player.x + window.innerWidth/2) - 400;
         text.y = (this.player.y - window.innerHeight / 2) + 20;
+        textBack.x = (this.player.x + window.innerWidth/2) - 400;
+        textBack.y = (this.player.y - window.innerHeight / 2) + 20;
+        textBack.visible = true;
         text.visible = true;
     }
     else {
         text.visible = false;
+        textBack.visible = false;
     }
 }
 
@@ -815,6 +824,7 @@ function updateText() {
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
+    textBack.setHeight(maxP *20);
     //return players.splice(0, maxP);
 }
 
