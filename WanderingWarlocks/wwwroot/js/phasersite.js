@@ -216,7 +216,7 @@ function bindConnectionMessage() {
     var killedCallback = function (inDead, inKiller) {
         var killer = JSON.parse(inKiller);
         var dead = JSON.parse(inDead);
-        opponent[killer.key].kills += 1;
+        opponent[killer.key].kills = opponent[killer.key].kills + 1;
     }
     connection.on('broadcastMessage', broadcastCallback, 0);
     connection.on('getPlayers', playerCallback, 0);
@@ -658,7 +658,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
                                     connection.send("kill", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
-                                    myScene.player.kills += 1;
+                                    myScene.player.kills = myScene.player.kills + 1;
                                 }
                                 kill(opponent[name]);
                             }
@@ -689,6 +689,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         healthBar.displayWidth = thisScene[0].player.health;
 
                         if (thisScene[0].player.health <= 0) {
+                            //connection.send("kill", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills), sendMessage(opponent[this.shooter].x, opponent[this.shooter].y, opponent[this.shooter].name, opponent[this.shooter].angle, opponent[this.shooter].health, opponent[this.shooter].kills));
+                            //opponent[this.shooter].kills += 1;
+                    
                             kill(thisScene[0].player);
                         }
                         else if (thisScene[0].player.health <= 20) {
@@ -841,9 +844,8 @@ function updateText() {
     text.setText("LEADERBOARD\n\n" + leads);
     textBack.displayHeight = (maxP *30) + 150;
     textBack.displayWidth = 250;
-    textBack.y = text.y; /*+ (textBack.displayHeight/2);*/
-    textBack.x = text.x;/* + (textBack.displayWidth/2);*/
-    
+    textBack.y = text.y - (textBack.displayHeight/2);
+    textBack.x = text.x - (textBack.displayWidth/2);    
     //return players.splice(0, maxP);
 }
 
