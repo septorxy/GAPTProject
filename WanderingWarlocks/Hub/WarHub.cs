@@ -90,6 +90,10 @@ namespace WanderingWarlocks
             return Clients.All.SendAsync("getPlayers", players);
         }
 
+        public Task Killed(object dead, object killer) =>
+            Clients.AllExcept(Context.ConnectionId).SendAsync("killed", dead, killer);
+        
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             Console.WriteLine("OnDisconnectAsync");
