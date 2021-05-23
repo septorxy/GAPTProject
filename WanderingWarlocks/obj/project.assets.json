@@ -10374,11 +10374,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+      "projectUniqueName": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "projectName": "WanderingWarlocks",
-      "projectPath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+      "projectPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "packagesPath": "C:\\Users\\liamg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\obj\\",
+      "outputPath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
