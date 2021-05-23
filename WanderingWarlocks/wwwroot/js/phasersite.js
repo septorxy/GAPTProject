@@ -810,6 +810,8 @@ function updateText() {
     players.sort(function (first, second) {
         return second[1] - first[1];
     });
+    
+    
 
     if (players.length >= 10) {
         var maxP = 10;
@@ -820,7 +822,23 @@ function updateText() {
     var i;
     var leads = "";
     for (i = 0; i < maxP; i++) {
-        leads = leads + players[i] + players[i].key + "\n";
+        var j = i+1;
+        if(j == 1 )
+        {
+            leads = leads + j + "st: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+        }
+        else if (j == 2)
+        {
+            leads = leads + j + "nd: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+        }
+        else if (j == 3)
+        {
+            leads = leads + j + "rd: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+        }
+        else
+        {
+            leads = leads + j + "th: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+        }
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
