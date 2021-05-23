@@ -13,6 +13,7 @@ var hasShot = true;
 var maxHealth = 100;
 var damage = 5;
 var firstMove = true;
+var keysDown = {};
 
 var maxSpawnX = 5534;
 var minSpawnY = 5149;
@@ -260,6 +261,7 @@ var game;
 
 var text;
 var cursors;
+var keys;
 
 function preload() {
     //this.load.atlas('player', 'warlock.png' , 'warlock.json');
@@ -385,6 +387,15 @@ function create() {
     //this.player.frame = 'Left-warlock-walkr.png';
 
     cursors = this.input.keyboard.createCursorKeys();
+    
+    keys = this.input.keyboard.addKeys(
+        {
+            W: 'W', 
+            A: 'A',
+            S: 'S', 
+            D: 'D',
+            Q: 'Q'
+        });
 
     camera = this.cameras.main;
     camera.startFollow(this.player);
@@ -421,9 +432,9 @@ function create() {
 
     text = this.add.text(0, 0, "", {
         font: "25px Arial",
-        align: "center",
-        backgroundColor: "#000000"
+        align: "center"
     });
+    
     text.setPadding(15, 15);
     text.visible = false;
     text.setDepth(30);
@@ -450,42 +461,42 @@ function update() {
         this.player.anims.play('dwalk', 10, true);
         runspeed = 80;
     }
-    if (cursors.up.isDown && cursors.left.isDown) {
+    if ((cursors.up.isDown || keys.W.isDown) && (cursors.left.isDown || keys.A.isDown)) {
 
         this.player.setAngle(135);
         this.player.setVelocityX(-Math.sqrt(8) * runspeed);
         this.player.setVelocityY(-Math.sqrt(8) * runspeed);
 
     }
-    else if (cursors.up.isDown && cursors.right.isDown) {
+    else if ((cursors.up.isDown || keys.W.isDown) && (cursors.right.isDown || keys.D.isDown)){
         this.player.setAngle(-135);
         this.player.setVelocityX(Math.sqrt(8) * runspeed);
         this.player.setVelocityY(-Math.sqrt(8) * runspeed);
     }
-    else if (cursors.down.isDown && cursors.left.isDown) {
+    else if ((cursors.down.isDown || keys.S.isDown) && (cursors.left.isDown|| keys.A.isDown)) {
 
         this.player.setAngle(45);
         this.player.setVelocityX(-Math.sqrt(8) * runspeed);
         this.player.setVelocityY(Math.sqrt(8) * runspeed);
     }
-    else if (cursors.down.isDown && cursors.right.isDown) {
+    else if ((cursors.down.isDown|| keys.S.isDown )&& (cursors.right.isDown|| keys.D.isDown)) {
         this.player.setAngle(-45);
         this.player.setVelocityX(Math.sqrt(8) * runspeed);
         this.player.setVelocityY(Math.sqrt(8) * runspeed);
     }
-    else if (cursors.left.isDown) {
+    else if (cursors.left.isDown || keys.A.isDown) {
         this.player.setAngle(90);
         this.player.setVelocityX(- 4 * runspeed);
     }
-    else if (cursors.right.isDown) {
+    else if (cursors.right.isDown || keys.D.isDown) {
         this.player.setAngle(-90);
         this.player.setVelocityX(4 * runspeed);
     }
-    else if (cursors.down.isDown) {
+    else if (cursors.down.isDown || keys.S.isDown) {
         this.player.setAngle(0);
         this.player.setVelocityY(4 * runspeed);
     }
-    else if (cursors.up.isDown) {
+    else if (cursors.up.isDown || keys.W.isDown) {
         this.player.setAngle(180);
         this.player.setVelocityY(-4 * runspeed);
     }
@@ -521,7 +532,7 @@ function update() {
         updated = false;
     }
 
-    if (cursors.space.isDown) {
+    if (cursors.space.isDown || keys.Q.isDown) {
         updateText();
         text.x = (this.player.x + window.innerWidth/2) - 400;
         text.y = (this.player.y - window.innerHeight / 2) + 20;
