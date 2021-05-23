@@ -824,7 +824,7 @@ function updateText() {
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
-    textBack.setHeight(maxP *20);
+    textBack.displayHeight = maxP *20;
     //return players.splice(0, maxP);
 }
 
