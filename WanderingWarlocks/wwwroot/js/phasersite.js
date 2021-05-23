@@ -147,10 +147,10 @@ function bindConnectionMessage() {
                 oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health;
 
 
-                if (opponent[inMessage.key].health <= 0) {
-                    kill(opponent[inMessage.key]);
-                }
-                else if (opponent[inMessage.key].health <= 20) {
+                //if (opponent[inMessage.key].health <= 0) {
+                //    kill(opponent[inMessage.key]);
+                //}
+                if (opponent[inMessage.key].health <= 20) {
                     oppHealthBar[inMessage.key].setTexture('Red-health');
                 }
                 else if (opponent[inMessage.key].health <= 50) {
@@ -167,10 +167,10 @@ function bindConnectionMessage() {
                     thisScene[0].player.health = thisScene[0].player.health - damage;
                     healthBar.displayWidth = thisScene[0].player.health;
 
-                    if (thisScene[0].player.health <= 0) {
-                        kill(thisScene[0].player);
-                    }
-                    else if (thisScene[0].player.health <= 20) {
+                    //if (thisScene[0].player.health <= 0) {
+                    //    kill(thisScene[0].player);
+                    //}
+                    if (thisScene[0].player.health <= 20) {
                         healthBar.setTexture('Red-health');
                     }
                     else if (thisScene[0].player.health <= 50) {
@@ -631,74 +631,75 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
+        if (myScene.player != null) {
+            if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
+                this.setActive(false);
+                this.setVisible(false);
+                hasShot = false;
+            }
 
-        if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
-            this.setActive(false);
-            this.setVisible(false);
-            hasShot = false;
-        }
+            if (this.active == true) {
+                var hit = false;
+                for (var name in opponent) {
+                    if (this.shooter != name) {
+                        if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
+                            hit = true;
+                            console.log("HIT" + name);
 
-        if (this.active == true) {
-            var hit = false;
-            for (var name in opponent) {
-                if (this.shooter != name) {
-                    if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
-                        hit = true;
+                            this.setActive(false);
+                            this.setVisible(false);
+                            connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage, opponent[name].kills), cacheCount);
+
+                            opponent[name].health = opponent[name].health - damage;
+                            oppHealthBar[name].displayWidth = opponent[name].health;
+
+                            if (opponent[name].health <= 0) {
+                                //var thisScene = [];
+                                //thisScene = thisScene.concat(game.scene.scenes);
+                                //if (this.shooter == myScene.player.name) {
+                                //    myScene.player.kills += 1;
+                                //    connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
+                                //}
+                                kill(opponent[name], this.shooter);
+                            }
+                            else if (opponent[name].health <= 20) {
+                                oppHealthBar[name].setTexture('Red-health');
+                            }
+                            else if (opponent[name].health <= 50) {
+                                oppHealthBar[name].setTexture('Orange-health');
+                            }
+
+                            hasShot = false;
+
+                        }
+                    }
+                }
+
+                if (this.shooter != playername && !hit) {
+                    var thisScene = [];
+                    thisScene = thisScene.concat(game.scene.scenes);
+                    if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
                         console.log("HIT" + name);
 
                         this.setActive(false);
                         this.setVisible(false);
-                        connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage, opponent[name].kills), cacheCount);
+                        connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage, thisScene[0].player.kills), cacheCount);
 
-                        opponent[name].health = opponent[name].health - damage;
-                        oppHealthBar[name].displayWidth = opponent[name].health;
+                        thisScene[0].player.health = thisScene[0].player.health - damage;
+                        healthBar.displayWidth = thisScene[0].player.health;
 
-                        if (opponent[name].health <= 0) {
-                            //var thisScene = [];
-                            //thisScene = thisScene.concat(game.scene.scenes);
-                            //if (this.shooter == myScene.player.name) {
-                            //    myScene.player.kills += 1;
-                            //    connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
-                            //}
-                            kill(opponent[name], this.shooter);
+                        if (thisScene[0].player.health <= 0) {
+                            kill(thisScene[0].player, this.shooter);
                         }
-                        else if (opponent[name].health <= 20) {
-                            oppHealthBar[name].setTexture('Red-health');
+                        else if (thisScene[0].player.health <= 20) {
+                            healthBar.setTexture('Red-health');
                         }
-                        else if (opponent[name].health <= 50) {
-                            oppHealthBar[name].setTexture('Orange-health');
+                        else if (thisScene[0].player.health <= 50) {
+                            healthBar.setTexture('Orange-health');
                         }
 
                         hasShot = false;
-
                     }
-                }
-            }
-
-            if (this.shooter != playername && !hit) {
-                var thisScene = [];
-                thisScene = thisScene.concat(game.scene.scenes);
-                if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
-                    console.log("HIT" + name);
-
-                    this.setActive(false);
-                    this.setVisible(false);
-                    connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage, thisScene[0].player.kills), cacheCount);
-
-                    thisScene[0].player.health = thisScene[0].player.health - damage;
-                    healthBar.displayWidth = thisScene[0].player.health;
-
-                    if (thisScene[0].player.health <= 0) {
-                        kill(thisScene[0].player, this.shooter);
-                    }
-                    else if (thisScene[0].player.health <= 20) {
-                        healthBar.setTexture('Red-health');
-                    }
-                    else if (thisScene[0].player.health <= 50) {
-                        healthBar.setTexture('Orange-health');
-                    }
-
-                    hasShot = false;
                 }
             }
         }
@@ -844,8 +845,8 @@ function updateText() {
     text.setText("LEADERBOARD\n\n" + leads);
     textBack.displayHeight = (maxP *30) + 150;
     textBack.displayWidth = 250;
-    textBack.y = text.y + (textBack.displayHeight/2);
-    textBack.x = text.x + (textBack.displayWidth/2);
+    textBack.y = text.y; /*+ (textBack.displayHeight/2);*/
+    textBack.x = text.x;/* + (textBack.displayWidth/2);*/
     
     //return players.splice(0, maxP);
 }
