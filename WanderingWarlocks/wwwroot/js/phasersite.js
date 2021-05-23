@@ -631,7 +631,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
-        if (myScene.player != null) {
+        if (myScene != null) {
             if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
                 this.setActive(false);
                 this.setVisible(false);
