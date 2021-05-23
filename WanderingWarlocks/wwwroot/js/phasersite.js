@@ -147,10 +147,10 @@ function bindConnectionMessage() {
                 oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health;
 
 
-                //if (opponent[inMessage.key].health <= 0) {
-                //    kill(opponent[inMessage.key]);
-                //}
-                if (opponent[inMessage.key].health <= 20) {
+                if (opponent[inMessage.key].health <= 0) {
+                    kill(opponent[inMessage.key]);
+                }
+                else if (opponent[inMessage.key].health <= 20) {
                     oppHealthBar[inMessage.key].setTexture('Red-health');
                 }
                 else if (opponent[inMessage.key].health <= 50) {
@@ -167,10 +167,10 @@ function bindConnectionMessage() {
                     thisScene[0].player.health = thisScene[0].player.health - damage;
                     healthBar.displayWidth = thisScene[0].player.health;
 
-                    //if (thisScene[0].player.health <= 0) {
-                    //    kill(thisScene[0].player);
-                    //}
-                    if (thisScene[0].player.health <= 20) {
+                    if (thisScene[0].player.health <= 0) {
+                        kill(thisScene[0].player);
+                    }
+                    else if (thisScene[0].player.health <= 20) {
                         healthBar.setTexture('Red-health');
                     }
                     else if (thisScene[0].player.health <= 50) {
