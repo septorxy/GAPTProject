@@ -636,11 +636,11 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         if (opponent[name].health <= 0) {
                             //var thisScene = [];
                             //thisScene = thisScene.concat(game.scene.scenes);
-                            if (this.shooter == myScene.player.name) {
-                                myScene.player.kills += 1;
-                                connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
-                            }
-                            kill(opponent[name]);
+                            //if (this.shooter == myScene.player.name) {
+                            //    myScene.player.kills += 1;
+                            //    connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
+                            //}
+                            kill(opponent[name], this.shooter);
                         }
                         else if (opponent[name].health <= 20) {
                             oppHealthBar[name].setTexture('Red-health');
@@ -669,7 +669,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                     healthBar.displayWidth = thisScene[0].player.health;
 
                     if (thisScene[0].player.health <= 0) {
-                        kill(thisScene[0].player);
+                        kill(thisScene[0].player, this.shooter);
                     }
                     else if (thisScene[0].player.health <= 20) {
                         healthBar.setTexture('Red-health');
@@ -720,9 +720,17 @@ function bulletcallback(bullet, layer) {
 }
 
 
-function kill(warlock) {
+function kill(warlock, shooter) {
 
     var thisScene = [];
+    if (shooter != null) {
+        if (myScene.player.name == shooter) {
+            connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills + 1), cacheCount);
+        } else {
+            connection.send('broadcastMessage', "updatePlayer", sendMessage(opponent[shooter].x, opponent[shooter].y, opponent[shooter].name, opponent[shooter].angle, opponent[shooter].health + damage, opponent[shooter].kills + 1), cacheCount);
+        }
+        
+    }
     thisScene = thisScene.concat(game.scene.scenes);
     if (warlock.name in opponent) {
         oppHealthBack[warlock.name].destroy();
