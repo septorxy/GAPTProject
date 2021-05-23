@@ -811,8 +811,8 @@ function updateText() {
         return second[1] - first[1];
     });
 
-    if (players.length >= 5) {
-        var maxP = 5;
+    if (players.length >= 10) {
+        var maxP = 10;
     } else {
         var maxP = players.length;
     }
@@ -820,12 +820,13 @@ function updateText() {
     var i;
     var leads = "";
     for (i = 0; i < maxP; i++) {
-        leads = leads + players[i] + "\n";
+        leads = leads + players[i] + players[i].key + "\n";
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
     textBack.displayHeight = (maxP *25) + 150;
-    textBack.displayWidth = 500;
+    textBack.y = textBack.y- (textBack.displayHeight/2);
+    textBack.displayWidth = 250;
     //return players.splice(0, maxP);
 }
 
