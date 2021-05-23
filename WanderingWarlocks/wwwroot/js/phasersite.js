@@ -437,12 +437,12 @@ function create() {
     });
     textBack = this.add.image(0,0,'leaderboard');
     
-    
-    text.setPadding(15, 15);
+     text.setPadding(15, 15);
     text.visible = false;
     text.setDepth(30);
     textBack.visible = false;
     textBack.setDepth(29);
+      
 
 }
 function update() {
@@ -842,9 +842,11 @@ function updateText() {
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
-    textBack.displayHeight = (maxP *25) + 150;
-    textBack.y = textBack.y- (textBack.displayHeight/2);
+    textBack.displayHeight = (maxP *30) + 150;
     textBack.displayWidth = 250;
+    textBack.y = textBack.y + (textBack.displayHeight/2);
+    textBack.x = textBack.x + (textBack.displayWidth/2);
+    
     //return players.splice(0, maxP);
 }
 
