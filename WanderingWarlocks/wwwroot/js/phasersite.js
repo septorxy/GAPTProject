@@ -258,7 +258,7 @@ var config = {
 
 var game;
 
-
+var text;
 var cursors;
 
 function preload() {
@@ -318,6 +318,7 @@ function create() {
 
     console.log(this.opponents);
 
+    
 
     this.anims.create({
         key: 'dwalk',
@@ -418,6 +419,14 @@ function create() {
     }
     updated = true;
 
+    text = this.add.text(0, 0, "", {
+        font: "25px Arial",
+        align: "center",
+        backgroundColor: "#000000"
+    });
+    text.setPadding(15, 15);
+    text.visible = false;
+    text.setDepth(30);
 
 }
 function update() {
@@ -512,6 +521,15 @@ function update() {
         updated = false;
     }
 
+    if (cursors.space.isDown) {
+        updateText();
+        text.x = (this.player.x + window.innerWidth/2) - 400;
+        text.y = (this.player.y - window.innerHeight / 2) + 20;
+        text.visible = true;
+    }
+    else {
+        text.visible = false;
+    }
 }
 
 
@@ -748,6 +766,36 @@ function kill(warlock) {
 
 }
 
+function updateText() {
+    var playersTemp = new Object();
+    playersTemp[myScene.player.name] = myScene.player.kills;
+    for (var opp in opponent) {
+        playersTemp[opponent[opp].name] = opponent[opp].kills;
+    }
+
+    var players = Object.keys(playersTemp).map(function (key) {
+        return [key, playersTemp[key]];
+    });
+
+    players.sort(function (first, second) {
+        return second[1] - first[1];
+    });
+
+    if (players.length >= 5) {
+        var maxP = 5;
+    } else {
+        var maxP = players.length;
+    }
+
+    var i;
+    var leads = "";
+    for (i = 0; i < maxP; i++) {
+        leads = leads + players[i] + "\n";
+    }
+
+    text.setText("LEADERBOARD\n\n" + leads);
+    //return players.splice(0, maxP);
+}
 
 function getXspawn() {
     var min = Math.ceil(minSpawnX);
