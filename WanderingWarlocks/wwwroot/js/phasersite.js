@@ -220,7 +220,7 @@ function bindConnectionMessage() {
     }
     connection.on('broadcastMessage', broadcastCallback, 0);
     connection.on('getPlayers', playerCallback, 0);
-    connection.on('killed', killedCallBack, 0);
+    connection.on('killed', killedCallback, 0);
     //connection.on('echo', messageCallback);
     connection.onclose(onConnectionError);
 }
