@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FkonopjCv8GmaS7YV/k4dsj1tcr3+1ZhUUgrOfw/N/MzxoS9g53144YVYuXXb2enfYe8tMy+coIFCUt6cEvD8A==",
+  "dgSpecHash": "wcu+ZzU4CELO5C1iiJxDPHV4mkFYksAzSbi0TPSIOWcNAe8H6t1no7+R+RZgWwklhogB82AJRBGyQoeTgYCTgA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
+  "projectFilePath": "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\liamg\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\liamg\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\5.0.1\\microsoft.aspnetcore.connections.abstractions.5.0.1.nupkg.sha512",

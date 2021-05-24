@@ -21,7 +21,7 @@ namespace WanderingWarlocks.Models
         {
             return new Lazy<ConnectionMultiplexer>(() =>
             {
-                string cacheConnection = "CurrGameStorage.redis.cache.windows.net:6380,password=GCcEDg7KkTyivkDGHKRUHBI776eSvn1+5CevihAVSl8=,ssl=True,abortConnect=False";
+                string cacheConnection = "RedisWarlock.redis.cache.windows.net:6380,password=hnRrj2GByy7zCw2xcEOZ6SULqa5L8YoYA8UWYF5ZKOY=,ssl=True,abortConnect=False";
                 return ConnectionMultiplexer.Connect(cacheConnection);
             });
         }
