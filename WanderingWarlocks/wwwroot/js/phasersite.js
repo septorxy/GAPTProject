@@ -633,12 +633,14 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
-        if (myScene != null) {
+        
             if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
                 this.setActive(false);
                 this.setVisible(false);
                 hasShot = false;
-            }
+        }
+
+        if (delta % 20) {
 
             if (this.active == true) {
                 var hit = false;
@@ -674,34 +676,36 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         }
                     }
                 }
+                if (myScene != null) {
 
-                if (this.shooter != playername && !hit) {
-                    var thisScene = [];
-                    thisScene = thisScene.concat(game.scene.scenes);
-                    if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
-                        console.log("HIT" + name);
+                    if (this.shooter != playername && !hit) {
+                        var thisScene = [];
+                        thisScene = thisScene.concat(game.scene.scenes);
+                        if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
+                            console.log("HIT" + name);
 
-                        this.setActive(false);
-                        this.setVisible(false);
-                        connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage, thisScene[0].player.kills), cacheCount);
+                            this.setActive(false);
+                            this.setVisible(false);
+                            connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage, thisScene[0].player.kills), cacheCount);
 
-                        thisScene[0].player.health = thisScene[0].player.health - damage;
-                        healthBar.displayWidth = thisScene[0].player.health;
+                            thisScene[0].player.health = thisScene[0].player.health - damage;
+                            healthBar.displayWidth = thisScene[0].player.health;
 
-                        if (thisScene[0].player.health <= 0) {
-                            //connection.send("kill", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills), sendMessage(opponent[this.shooter].x, opponent[this.shooter].y, opponent[this.shooter].name, opponent[this.shooter].angle, opponent[this.shooter].health, opponent[this.shooter].kills));
-                            //opponent[this.shooter].kills += 1;
-                    
-                            kill(thisScene[0].player);
+                            if (thisScene[0].player.health <= 0) {
+                                //connection.send("kill", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills), sendMessage(opponent[this.shooter].x, opponent[this.shooter].y, opponent[this.shooter].name, opponent[this.shooter].angle, opponent[this.shooter].health, opponent[this.shooter].kills));
+                                //opponent[this.shooter].kills += 1;
+
+                                kill(thisScene[0].player);
+                            }
+                            else if (thisScene[0].player.health <= 20) {
+                                healthBar.setTexture('Red-health');
+                            }
+                            else if (thisScene[0].player.health <= 50) {
+                                healthBar.setTexture('Orange-health');
+                            }
+
+                            hasShot = false;
                         }
-                        else if (thisScene[0].player.health <= 20) {
-                            healthBar.setTexture('Red-health');
-                        }
-                        else if (thisScene[0].player.health <= 50) {
-                            healthBar.setTexture('Orange-health');
-                        }
-
-                        hasShot = false;
                     }
                 }
             }
