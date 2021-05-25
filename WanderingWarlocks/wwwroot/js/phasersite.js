@@ -130,7 +130,7 @@ function bindConnectionMessage() {
             //check if shooting is from opponent
 
             if (opponent.hasOwnProperty(inMessage.key)) {
-                console.log(inMessage.key, "shot");
+                //console.log(inMessage.key, "shot");
                 var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
                 if (thisScene[0] != null) {
@@ -150,6 +150,7 @@ function bindConnectionMessage() {
 
                 if (opponent[inMessage.key].health <= 0) {
                     kill(opponent[inMessage.key]);
+                    console.log("If this is the only message. Something is wrong");
                 }
                 else if (opponent[inMessage.key].health <= 20) {
                     oppHealthBar[inMessage.key].setTexture('Red-health');
