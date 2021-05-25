@@ -670,11 +670,11 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                             this.setActive(false);
                             this.setVisible(false);
-                            connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage, opponent[name].kills), cacheCount);
-
+                            console.log("before health");
                             opponent[name].health = opponent[name].health - damage;
                             oppHealthBar[name].displayWidth = opponent[name].health;
 
+                            
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
                                     console.log("CORRECT");
@@ -691,6 +691,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             else if (opponent[name].health <= 50) {
                                 oppHealthBar[name].setTexture('Orange-health');
                             }
+                            connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage, opponent[name].kills), cacheCount);
+                            console.log("after health");
 
                             hasShot = false;
 
