@@ -115,8 +115,8 @@ function bindConnectionMessage() {
             oppHealthBar[inMessage.key].x = inMessage.x;
             oppHealthBar[inMessage.key].y = inMessage.y - 70;
 
-            usernames[inMessage.key].x = usernames[inMessage.key].x - ((inMessage.key.length / 2) * 10);
-            usernames[inMessage.key].y = usernames[inMessage.key].y - 100;
+            usernames[inMessage.key].x = opponent[inMessage.key].x - ((inMessage.key.length / 2) * 10);
+            usernames[inMessage.key].y = opponent[inMessage.key].y - 100;
 
         }
         if (type === "disconnection") {
