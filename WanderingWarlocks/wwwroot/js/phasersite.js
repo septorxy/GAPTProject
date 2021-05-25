@@ -218,7 +218,7 @@ function bindConnectionMessage() {
         var killer = JSON.parse(inKiller);
         //var dead = JSON.parse(inDead);
         console.log("inKilledCallBack")
-        opponent[killer.key].kills = opponent[killer.key].kills + 1;
+        opponent[killer.key].kills = parseInt(opponent[killer.key].kills) + parseInt(1);
     }
     connection.on('broadcastMessage', broadcastCallback, 0);
     connection.on('getPlayers', playerCallback, 0);
@@ -677,9 +677,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
                                     console.log("CORRECT");
-                                    connection.send("killed", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
+                                    connection.send('killed', sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
                                     console.log(myScene.player.kills);
-                                    myScene.player.kills = myScene.player.kills + 1;
+                                    myScene.player.kills = parseInt(myScene.player.kills) + parseInt(1);
                                     console.log(myScene.player.kills);
                                 }
                                 kill(opponent[name]);
