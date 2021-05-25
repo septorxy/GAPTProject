@@ -677,7 +677,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
                                     console.log("CORRECT");
-                                    connection.send("kill", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
+                                    connection.send("killed", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
                                     console.log(myScene.player.kills);
                                     myScene.player.kills = myScene.player.kills + 1;
                                     console.log(myScene.player.kills);
