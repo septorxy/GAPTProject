@@ -674,7 +674,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             opponent[name].health = opponent[name].health - damage;
                             oppHealthBar[name].displayWidth = opponent[name].health;
 
-                            
+                            console.log(opponent[name].health)
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
                                     console.log("CORRECT");
