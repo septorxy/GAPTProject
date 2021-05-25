@@ -58,17 +58,7 @@ namespace WanderingWarlocks
 
                     }
                 }
-                else if (type.Equals("health"))
-                {
-                    //Console.WriteLine(count);
-                    if (count == interval)
-                    {
-                        IDatabase cache = ConnectionCache.GetDatabase();
-                        cache.StringSet(key, inMessage.ToString());
-                        //Console.WriteLine("Executed");
-
-                    }
-                }
+                
             }
             return Clients.AllExcept(Context.ConnectionId).SendAsync("broadcastMessage", type, inMessage, count);
 
@@ -90,9 +80,19 @@ namespace WanderingWarlocks
             return Clients.All.SendAsync("getPlayers", players);
         }
 
-        public Task Killed(object dead, object killer) =>
-            Clients.AllExcept(Context.ConnectionId).SendAsync("killed", dead, killer);
-        
+        public Task Hit(object shooterState, object damagedState)
+        {
+            if (shooterState != null && damagedState!=null){
+                PlayerState shooter = JsonConvert.DeserializeObject<PlayerState>(shooterState.ToString());
+                PlayerState damaged = JsonConvert.DeserializeObject<PlayerState>(damagedState.ToString());
+                IDatabase cache = ConnectionCache.GetDatabase();
+                cache.StringSet(shooter.key, shooter.ToString());
+                cache.StringSet(damaged.key, damaged.ToString());
+            }
+
+            return Clients.AllExcept(Context.ConnectionId).SendAsync("hit", shooterState, damagedState);
+        }
+
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -108,7 +108,7 @@ namespace WanderingWarlocks
                 keys = keyList.ToArray();
                 cache.StringSet("myKeys", String.Join(",", keys));
                 var inMessage = cache.StringGet(key);
-                 
+
                 Console.WriteLine(inMessage.ToString());
                 await BroadcastMessage("disconnection", inMessage, 0);
             }

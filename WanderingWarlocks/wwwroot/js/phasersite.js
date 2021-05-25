@@ -11,7 +11,7 @@ var curX, curY;
 var scale = 0.078;
 var hasShot = true;
 var maxHealth = 100;
-var damage = 5;
+var damage = 10;
 var canShoot = true;
 var firstMove = true;
 
@@ -29,6 +29,7 @@ var backgroundBar;
 //Dictionaries
 var opponent = new Object();
 var oppAnim = new Object();
+var usernames = new Object();
 
 //shooting
 var oppHealthBar = new Object();
@@ -65,9 +66,6 @@ function sendMessage(xIn, yIn, keyIn, angle, health, kills) {
     return sendmessage;
 }
 
-
-
-
 //RECEIVE FROM HUB
 function bindConnectionMessage() {
     var broadcastCallback = function (type, inJSON) {
@@ -95,6 +93,10 @@ function bindConnectionMessage() {
             oppHealthBack[inMessage.key].setDepth(30);
             oppHealthBar[inMessage.key].setDepth(30);
 
+            usernames[inMessage.key] = thisScene[0].add.text(opponent[inMessage.key].x - ((inMessage.key.length / 2) * 10), opponent[inMessage.key].y - 100, inMessage.key);
+            usernames[inMessage.key].alpha = 0.5;
+            usernames[inMessage.key].setDepth(30);
+
             console.log("After added new player: " + opponent[inMessage.key].toString());
         }
         if (type === "updatePlayer") {
@@ -112,6 +114,10 @@ function bindConnectionMessage() {
             oppHealthBack[inMessage.key].y = inMessage.y - 70;
             oppHealthBar[inMessage.key].x = inMessage.x;
             oppHealthBar[inMessage.key].y = inMessage.y - 70;
+
+            usernames[inMessage.key].x = usernames[inMessage.key].x - ((inMessage.key.length / 2) * 10);
+            usernames[inMessage.key].y = usernames[inMessage.key].y - 100;
+
         }
         if (type === "disconnection") {
 
@@ -122,8 +128,10 @@ function bindConnectionMessage() {
             //remove health bar
             oppHealthBack[inMessage.key].destroy();
             oppHealthBar[inMessage.key].destroy();
+            usernames[inMessage.key].destroy();
             delete oppHealthBack[inMessage.key];
             delete oppHealthBar[inMessage.key];
+            delete usernames[inMessage.key];
 
         }
         if (type === "shooting") {
@@ -134,50 +142,11 @@ function bindConnectionMessage() {
                 var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
                 if (thisScene[0] != null) {
-                    thisScene[0].bulletGroup = new BulletGroup(thisScene[0], inMessage.key);
-                    thisScene[0].bulletGroup.setDepth(10);
-                    thisScene[0].bulletGroup.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.angle, inMessage.key);
-                    thisScene[0].physics.add.collider(thisScene[0].bulletGroup, interactivelayer, bulletcallback);
+                    thisScene[0].bulletGroupOpp = new BulletGroupOpp(thisScene[0], inMessage.key);
+                    thisScene[0].bulletGroupOpp.setDepth(10);
+                    thisScene[0].bulletGroupOpp.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.angle, inMessage.key);
+                    thisScene[0].physics.add.collider(thisScene[0].bulletGroupOpp, interactivelayer, bulletcallback);
                     hasShot = true;
-                }
-            }
-        }
-        if (type === "health") {
-            if (opponent.hasOwnProperty(inMessage.key)) {
-                opponent[inMessage.key].health = opponent[inMessage.key].health - damage;
-                oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health;
-
-                console.log(opponent[name].health + "  inHealth");
-                if (opponent[inMessage.key].health <= 0) {
-                    kill(opponent[inMessage.key]);
-                    console.log("If this is the only message. Something is wrong");
-                }
-                else if (opponent[inMessage.key].health <= 20) {
-                    oppHealthBar[inMessage.key].setTexture('Red-health');
-                }
-                else if (opponent[inMessage.key].health <= 50) {
-                    oppHealthBar[inMessage.key].setTexture('Orange-health');
-                }
-
-
-            }
-            else if (playername == inMessage.key) {
-
-                var thisScene = [];
-                thisScene = thisScene.concat(game.scene.scenes);
-                if (thisScene[0].player != null) {
-                    thisScene[0].player.health = thisScene[0].player.health - damage;
-                    healthBar.displayWidth = thisScene[0].player.health;
-
-                    if (thisScene[0].player.health <= 0) {
-                        kill(thisScene[0].player);
-                    }
-                    else if (thisScene[0].player.health <= 20) {
-                        healthBar.setTexture('Red-health');
-                    }
-                    else if (thisScene[0].player.health <= 50) {
-                        healthBar.setTexture('Orange-health');
-                    }
                 }
             }
         }
@@ -208,6 +177,11 @@ function bindConnectionMessage() {
                     oppHealthBack[temp.key].displayWidth = maxHealth + 2;
                     oppHealthBack[temp.key].setDepth(30);
                     oppHealthBar[temp.key].setDepth(30);
+
+
+                    usernames[temp.key] = thisScene[0].add.text(opponent[temp.key].x - ((temp.key.length / 2) * 10), opponent[temp.key].y - 100, temp.key);
+                    usernames[temp.key].alpha = 0.5;
+                    usernames[temp.key].setDepth(30);
                     console.log(opponent[temp.key].name, opponent[temp.key].x, opponent[temp.key].y, opponent[temp.key].angle);
                 }
             }
@@ -215,15 +189,75 @@ function bindConnectionMessage() {
         }
 
     }
-    var killedCallback = function (inDead, inKiller) {
-        var killer = JSON.parse(inKiller);
-        //var dead = JSON.parse(inDead);
-        console.log("inKilledCallBack")
-        opponent[killer.key].kills = parseInt(opponent[killer.key].kills) + parseInt(1);
+
+    var hitCallback = function (inShooterJSON, inDamagedJSON) {
+        var inShooter = JSON.parse(inShooterJSON);
+        var inDamaged = JSON.parse(inDamagedJSON);
+
+        opponent[inShooter.key].x = parseFloat(inShooter.x);
+        opponent[inShooter.key].y = parseFloat(inShooter.y);
+        opponent[inShooter.key].angle = inShooter.angle;
+        opponent[inShooter.key].health = inShooter.health;
+        opponent[inShooter.key].kills = inShooter.kills;
+
+        console.log("IN HIT CALLBACK");
+
+        if (inDamaged.key == playername) {
+            var thisScene = [];
+            thisScene = thisScene.concat(game.scene.scenes);
+            thisScene[0].player.health = inDamaged.health;
+            healthBar.displayWidth = thisScene[0].player.health;
+            thisScene[0].player.x = parseFloat(inDamaged.x);
+            thisScene[0].player.y = parseFloat(inDamaged.y);
+            thisScene[0].player.angle = inDamaged.angle;
+            thisScene[0].player.kills = inDamaged.kills;
+
+            //if (myScene.player.health <= 0) {
+            //     kill(opponent[name]);
+            //}
+            //else 
+            if (thisScene[0].player.health <= 20) {
+                healthBar.setTexture('Red-health');
+            }
+            else if (thisScene[0].player.health <= 50) {
+                healthBar.setTexture('Orange-health');
+            }
+            else
+            {
+                healthBar.setTexture('healthBar');
+            }
+
+        }
+        else {
+            opponent[name].health = inDamaged.health;
+            oppHealthBar.displayWidth = myScene.player.health;
+            opponent[name].x = parseFloat(inDamaged.x);
+            opponent[name].y = parseFloat(inDamaged.y);
+            opponent[name].angle = inDamaged.angle;
+            opponent[name].kills = inDamaged.kills;
+
+            //if (myScene.player.health <= 0) {
+            //     kill(opponent[name]);
+            //}
+            //else 
+            if (opponent[name].health <= 20) {
+                oppHealthBar[name].setTexture('Red-health');
+            }
+            else if (opponent[name].health <= 50) {
+                oppHealthBar[name].setTexture('Orange-health');
+            }
+            else {
+                oppHealthBar[name].setTexture('healthBar');
+            }
+        }
+
+
     }
+
+
     connection.on('broadcastMessage', broadcastCallback, 0);
     connection.on('getPlayers', playerCallback, 0);
-    connection.on('killed', killedCallback, 0);
+    connection.on('hit', hitCallback, 0);
     //connection.on('echo', messageCallback);
     connection.onclose(onConnectionError);
 }
@@ -267,28 +301,29 @@ var text;
 var textBack;
 var cursors;
 var keys;
+var username;
 
 function preload() {
     //this.load.atlas('player', 'warlock.png' , 'warlock.json');
     //this.load.path = 'sprites/';
     //this.load.multiatlas('player', 'spritesheet.json');
-    this.load.image('Down-warlock-walkl', 'https://spritestorage.blob.core.windows.net/warlock/Down-warlock-walkl.png');
-    this.load.atlas('warlock', 'https://spritestorage.blob.core.windows.net/warlock/warlock.png', 'https://spritestorage.blob.core.windows.net/warlock/warlock.json');
+    this.load.image('Down-warlock-walkl', 'https://warlockstorageacc.blob.core.windows.net/warlock/Down-warlock-walkl.png');
+    this.load.atlas('warlock', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.png', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.json');
 
-    this.load.image('Down-opp-walkl', 'https://spritestorage.blob.core.windows.net/warlock/Down-opp-walkl.png');
-    this.load.atlas('opponent', 'https://spritestorage.blob.core.windows.net/warlock/opponent.png', 'https://spritestorage.blob.core.windows.net/warlock/warlock.json');
+    this.load.image('Down-opp-walkl', 'https://warlockstorageacc.blob.core.windows.net/warlock/Down-opp-walkl.png');
+    this.load.atlas('opponent', 'https://warlockstorageacc.blob.core.windows.net/warlock/opponent.png', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.json');
 
-    this.load.tilemapTiledJSON('map', 'https://spritestorage.blob.core.windows.net/map/Updated.json');
-    this.load.image('tiles', 'https://spritestorage.blob.core.windows.net/map/TileSet.png');
+    this.load.tilemapTiledJSON('map', 'https://warlockstorageacc.blob.core.windows.net/map/Updated.json');
+    this.load.image('tiles', 'https://warlockstorageacc.blob.core.windows.net/map/TileSet.png');
 
-    this.load.image('lightning', 'https://spritestorage.blob.core.windows.net/bullets/lightningBolt.png');
-    this.load.image('healthBar', 'https://spritestorage.blob.core.windows.net/health-bar/healthbar.png');
-    this.load.image('healthBackground', 'https://spritestorage.blob.core.windows.net/health-bar/healthbackground.png');
+    this.load.image('lightning', 'https://warlockstorageacc.blob.core.windows.net/bullets/lightningBolt.png');
+    this.load.image('healthBar', 'https://warlockstorageacc.blob.core.windows.net/health-bar/healthbar.png');
+    this.load.image('healthBackground', 'https://warlockstorageacc.blob.core.windows.net/health-bar/healthbackground.png');
 
-    this.load.image('Orange-health', 'https://spritestorage.blob.core.windows.net/health-bar/orange-healthbar.png');
-    this.load.image('Red-health', 'https://spritestorage.blob.core.windows.net/health-bar/red-healthbar.png');
+    this.load.image('Orange-health', 'https://warlockstorageacc.blob.core.windows.net/health-bar/orange-healthbar.png');
+    this.load.image('Red-health', 'https://warlockstorageacc.blob.core.windows.net/health-bar/red-healthbar.png');
 
-    this.load.image('leaderboard', 'https://spritestorage.blob.core.windows.net/background/LeaderboardBack.png');
+    this.load.image('leaderboard', 'https://warlockstorageacc.blob.core.windows.net/background/LeaderboardBack.png');
 
 
 }
@@ -326,7 +361,7 @@ function create() {
 
     //console.log(this.opponents);
 
-    
+
 
     this.anims.create({
         key: 'dwalk',
@@ -373,11 +408,14 @@ function create() {
     healthBar.displayWidth = maxHealth;
     healthBar.fixedToCamera = true;
 
+    username = this.add.text(this.player.x - ((playername.length / 2) * 10), this.player.y - 100, playername);
+    username.alpha = 0.5;
+    username.setDepth(30);
     backgroundBar.setDepth(30);
     healthBar.setDepth(30);
 
     this.bulletGroup = new BulletGroup(this);
-    
+
 
 
 
@@ -385,12 +423,12 @@ function create() {
     //this.player.frame = 'Left-warlock-walkr.png';
 
     cursors = this.input.keyboard.createCursorKeys();
-    
+
     keys = this.input.keyboard.addKeys(
         {
-            W: 'W', 
+            W: 'W',
             A: 'A',
-            S: 'S', 
+            S: 'S',
             D: 'D',
             Q: 'Q'
         });
@@ -398,7 +436,7 @@ function create() {
     camera = this.cameras.main;
     camera.startFollow(this.player);
 
-    
+
     this.input.on('pointerdown', function (pointer) {
         if (pointer.leftButtonDown()) {
             //start shooting
@@ -410,7 +448,7 @@ function create() {
             }
         }
     }, this);
-    
+
 
 
     var map = this.make.tilemap({ key: 'map' });
@@ -446,14 +484,14 @@ function create() {
         font: "25px Arial",
         align: "center"
     });
-    textBack = this.add.image(0,0,'leaderboard');
-    
-     text.setPadding(15, 15);
+    textBack = this.add.image(0, 0, 'leaderboard');
+
+    text.setPadding(15, 15);
     text.visible = false;
     text.setDepth(30);
     textBack.visible = false;
     textBack.setDepth(29);
-      
+
 
 }
 function update() {
@@ -492,18 +530,18 @@ function update() {
         this.player.setVelocityY(-Math.sqrt(8) * runspeed);
 
     }
-    else if ((cursors.up.isDown || keys.W.isDown) && (cursors.right.isDown || keys.D.isDown)){
+    else if ((cursors.up.isDown || keys.W.isDown) && (cursors.right.isDown || keys.D.isDown)) {
         this.player.setAngle(-135);
         this.player.setVelocityX(Math.sqrt(8) * runspeed);
         this.player.setVelocityY(-Math.sqrt(8) * runspeed);
     }
-    else if ((cursors.down.isDown || keys.S.isDown) && (cursors.left.isDown|| keys.A.isDown)) {
+    else if ((cursors.down.isDown || keys.S.isDown) && (cursors.left.isDown || keys.A.isDown)) {
 
         this.player.setAngle(45);
         this.player.setVelocityX(-Math.sqrt(8) * runspeed);
         this.player.setVelocityY(Math.sqrt(8) * runspeed);
     }
-    else if ((cursors.down.isDown|| keys.S.isDown )&& (cursors.right.isDown|| keys.D.isDown)) {
+    else if ((cursors.down.isDown || keys.S.isDown) && (cursors.right.isDown || keys.D.isDown)) {
         this.player.setAngle(-45);
         this.player.setVelocityX(Math.sqrt(8) * runspeed);
         this.player.setVelocityY(Math.sqrt(8) * runspeed);
@@ -533,6 +571,9 @@ function update() {
     backgroundBar.y = this.player.y - 70;
     healthBar.x = this.player.x;
     healthBar.y = this.player.y - 70;
+    username.x = this.player.x - ((playername.length / 2)*10);
+    username.y = this.player.y-100;
+
 
     for (var name in opponent) {
         oppHealthBack[name].x = opponent[name].x;
@@ -559,22 +600,18 @@ function update() {
         updateText();
     }
 
-    if ( keys.Q.isDown) {
-          
-        text.x = (this.player.x + window.innerWidth/2) - 400;
+    if (keys.Q.isDown) {
+
+        text.x = (this.player.x + window.innerWidth / 2) - 400;
         text.y = (this.player.y - window.innerHeight / 2) + 20;
-        textBack.x = (this.player.x + window.innerWidth/2) - 400;
+        textBack.x = (this.player.x + window.innerWidth / 2) - 400;
         textBack.y = (this.player.y - window.innerHeight / 2) + 20;
         textBack.visible = !textBack.visible;
         text.visible = !text.visible;
         keys.Q.isDown = false;
     }
-   
+
 }
-
-
-
-
 
 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
@@ -651,38 +688,30 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
-        
-            if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
-                this.setActive(false);
-                this.setVisible(false);
-                hasShot = false;
+
+        if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
+            this.setActive(false);
+            this.setVisible(false);
+            hasShot = false;
         }
 
         if (delta % 20) {
 
             if (this.active == true) {
                 var hit = false;
-                for (var name in opponent) {
-                    if (this.shooter != name) {
+                if (this.shooter == playername) {
+                    for (var name in opponent) {
                         if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
                             hit = true;
-                            //console.log("HIT" + name);
+                            console.log("HIT" + name);
 
                             this.setActive(false);
                             this.setVisible(false);
-                            console.log("before health");
                             opponent[name].health = opponent[name].health - damage;
                             oppHealthBar[name].displayWidth = opponent[name].health;
 
-                            console.log(opponent[name].health + "  inShot");
                             if (opponent[name].health <= 0) {
-                                if (this.shooter == myScene.player.name) {
-                                    console.log("CORRECT");
-                                    connection.send('killed', sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
-                                    console.log(myScene.player.kills);
-                                    myScene.player.kills = parseInt(myScene.player.kills) + parseInt(1);
-                                    console.log(myScene.player.kills);
-                                }
+                                myScene.player.kills = parseInt(myScene.player.kills) + parseInt(1);
                                 kill(opponent[name]);
                             }
                             else if (opponent[name].health <= 20) {
@@ -691,46 +720,28 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             else if (opponent[name].health <= 50) {
                                 oppHealthBar[name].setTexture('Orange-health');
                             }
-                            connection.send('broadcastMessage', "health", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health + damage, opponent[name].kills), cacheCount);
-                            console.log("after health");
+
+                            console.log("shooter: " + myScene.player.x + " , " + myScene.player.y);
+                            console.log("damaged: " + opponent[name].x + " , " + opponent[name].y);
+
+
+                            var shooterState = sendMessage(parseFloat(myScene.player.x), parseFloat(myScene.player.y), myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills);
+                            var damagedState = sendMessage(parseFloat(opponent[name].x), parseFloat(opponent[name].y), opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills);
+
+
+
+                            connection.send('hit', shooterState, damagedState);
+
+                            console.log("shooter: " + myScene.player.x + " , " + myScene.player.y);
+                            console.log("damaged: " + opponent[name].x + " , " + opponent[name].y);
 
                             hasShot = false;
 
                         }
+
                     }
                 }
-                if (myScene != null) {
 
-                    if (this.shooter != playername && !hit) {
-                        var thisScene = [];
-                        thisScene = thisScene.concat(game.scene.scenes);
-                        if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
-                            /*console.log("HIT" + name);*/
-
-                            this.setActive(false);
-                            this.setVisible(false);
-                            connection.send('broadcastMessage', "health", sendMessage(thisScene[0].player.x, thisScene[0].player.y, thisScene[0].player.name, thisScene[0].player.angle, thisScene[0].player.health + damage, thisScene[0].player.kills), cacheCount);
-
-                            thisScene[0].player.health = thisScene[0].player.health - damage;
-                            healthBar.displayWidth = thisScene[0].player.health;
-
-                            if (thisScene[0].player.health <= 0) {
-                                //connection.send("kill", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills), sendMessage(opponent[this.shooter].x, opponent[this.shooter].y, opponent[this.shooter].name, opponent[this.shooter].angle, opponent[this.shooter].health, opponent[this.shooter].kills));
-                                //opponent[this.shooter].kills += 1;
-                                console.log("Entered Sec if: " + myScene.player)
-                                kill(thisScene[0].player);
-                            }
-                            else if (thisScene[0].player.health <= 20) {
-                                healthBar.setTexture('Red-health');
-                            }
-                            else if (thisScene[0].player.health <= 50) {
-                                healthBar.setTexture('Orange-health');
-                            }
-
-                            hasShot = false;
-                        }
-                    }
-                }
             }
         }
     }
@@ -743,7 +754,7 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
         //        this.shooter = name;
         this.createMultiple({
             classType: Bullet,
-            frameQuantity: 30,
+            frameQuantity: 15,
             active: false,
             visible: false,
             key: 'bullet',
@@ -760,6 +771,147 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
     }
 }
 
+class BulletGroupOpp extends Phaser.Physics.Arcade.Group {
+    constructor(scene) {
+        super(scene.physics.world, scene);
+        //        this.shooter = name;
+        this.createMultiple({
+            classType: BulletOpp,
+            frameQuantity: 15,
+            active: false,
+            visible: false,
+            key: 'bullet',
+            setScale: { x: 0.5, y: 0.5 }
+        });
+    }
+
+    fireBullet(x, y, angle, name) {
+        const bullet = this.getFirstDead(false); //false - we can only use 30 bullets
+        if (bullet) {
+            bullet.setDepth(10);
+            bullet.fire(x, y, angle, name);
+        }
+    }
+}
+
+class BulletOpp extends Phaser.Physics.Arcade.Sprite {
+
+    constructor(scene, x, y) {
+        super(scene, x, y, 'lightning');
+        this.scene = scene;
+        this.shooter = "";
+        this.inX = x;
+        this.inY = y;
+    }
+
+    fire(x, y, angle, shooter) {
+        this.inX = x;
+        this.inY = y;
+        hasShot = true;
+        var ang;
+        this.body.reset(x, y);
+
+        this.shooter = shooter;
+
+        this.setDepth(10);
+        this.setActive(true);
+        this.setVisible(true);
+
+        if (typeof (angle) == "string") {
+            ang = parseInt(angle);
+        }
+        else {
+            ang = angle;
+        }
+
+        switch (ang) {
+            case -180:
+                this.setVelocityY(-600);
+                break;
+            case -135:
+                this.setVelocityX(600);
+                this.setVelocityY(-600);
+                break;
+            case -45.00000000000006:
+                this.setVelocityX(600);
+                this.setVelocityY(600);
+                break;
+            case -45:
+                this.setVelocityX(600);
+                this.setVelocityY(600);
+                break;
+            case 0:
+                this.setVelocityY(600);
+                break;
+            case 45:
+                this.setVelocityX(-600);
+                this.setVelocityY(600);
+                break;
+            case 135:
+                this.setVelocityX(-600);
+                this.setVelocityY(-600);
+                break;
+            case -90:
+                this.setVelocityX(600);
+                break;
+            case 90:
+                this.setVelocityX(-600);
+
+                break;
+
+        }
+
+
+
+
+    }
+
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+
+        if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
+            this.setActive(false);
+            this.setVisible(false);
+            hasShot = false;
+        }
+
+        if (delta % 20) {
+
+            if (this.active == true) {
+                var hit = false;
+                for (var name in opponent) {
+                    if (this.shooter != name) {
+                        if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
+                            hit = true;
+
+                            this.setActive(false);
+                            this.setVisible(false);
+
+                            hasShot = false;
+
+                        }
+                    }
+                }
+                if (myScene != null) {
+
+                    if (this.shooter != playername && !hit) {
+                        var thisScene = [];
+                        thisScene = thisScene.concat(game.scene.scenes);
+                        if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.y - 40) {
+
+                            this.setActive(false);
+                            this.setVisible(false);
+
+                            hasShot = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 
 function bulletcallback(bullet, layer) {
     bullet.setActive(false);
@@ -767,19 +919,10 @@ function bulletcallback(bullet, layer) {
 }
 
 
-function kill(warlock/*, shooter*/) {
+function kill(warlock) {
 
     var thisScene = [];
-    //if (shooter != null) {
-    //    if (myScene.player.name == shooter) {
-    //        myScene.player.kills += 1;
-    //        console.log("Here " + shooter + " " + myScene.player.kills);
-    //        connection.send('broadcastMessage', "updatePlayer", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health + damage, myScene.player.kills), cacheCount);
-    //    } else {
-    //        console.log("Here " + shooter + " " + opponent[shooter].kills);
-    //        connection.send('broadcastMessage', "updatePlayer", sendMessage(opponent[shooter].x, opponent[shooter].y, opponent[shooter].name, opponent[shooter].angle, opponent[shooter].health + damage, opponent[shooter].kills + 1), cacheCount);
-    //    }
-    //}
+
     thisScene = thisScene.concat(game.scene.scenes);
     if (warlock.name in opponent) {
         oppHealthBack[warlock.name].destroy();
@@ -791,6 +934,8 @@ function kill(warlock/*, shooter*/) {
         warlock.y = getYspawn();
         warlock.health = maxHealth;
 
+        usernames[warlock.name].x = warlock.x - ((warlock.name.length / 2) * 10);
+        usernames[warlock.name].y = warlock.y - 100;
 
         oppHealthBack[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
         oppHealthBar[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
@@ -798,26 +943,29 @@ function kill(warlock/*, shooter*/) {
         oppHealthBack[warlock.name].displayWidth = maxHealth + 2;
         oppHealthBack[warlock.name].setDepth(30);
         oppHealthBar[warlock.name].setDepth(30);
-    } else if (warlock.name == playername) {
-        healthBar.destroy();
-        backgroundBar.destroy();
-
-        warlock.x = getXspawn();
-        warlock.y = getYspawn();
-        warlock.health = maxHealth;
 
 
-        backgroundBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
-        backgroundBar.fixedToCamera = true;
-        backgroundBar.displayWidth = maxHealth + 2;
-
-        healthBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
-        healthBar.displayWidth = maxHealth;
-        healthBar.fixedToCamera = true;
-
-        backgroundBar.setDepth(30);
-        healthBar.setDepth(30);
     }
+    // else if (warlock.name == playername) {
+    //    healthBar.destroy();
+    //    backgroundBar.destroy();
+
+    //    warlock.x = getXspawn();
+    //    warlock.y = getYspawn();
+    //    warlock.health = maxHealth;
+
+
+    //    backgroundBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
+    //    backgroundBar.fixedToCamera = true;
+    //    backgroundBar.displayWidth = maxHealth + 2;
+
+    //    healthBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
+    //    healthBar.displayWidth = maxHealth;
+    //    healthBar.fixedToCamera = true;
+
+    //    backgroundBar.setDepth(30);
+    //    healthBar.setDepth(30);
+    //}
 
 
 
@@ -837,8 +985,8 @@ function updateText() {
     players.sort(function (first, second) {
         return second[1] - first[1];
     });
-    
-    
+
+
 
     if (players.length >= 10) {
         var maxP = 10;
@@ -849,30 +997,26 @@ function updateText() {
     var i;
     var leads = "";
     for (i = 0; i < maxP; i++) {
-        var j = i+1;
-        if(j == 1 )
-        {
-            leads = leads + j + "st: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
+        var j = i + 1;
+        if (j == 1) {
+            leads = leads + j + "st: " + players[i][1] + " kills " + players[i][0] + "\n";
         }
-        else if (j == 2)
-        {
-            leads = leads + j + "nd: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
+        else if (j == 2) {
+            leads = leads + j + "nd: " + players[i][1] + " kills " + players[i][0] + "\n";
         }
-        else if (j == 3)
-        {
-            leads = leads + j + "rd: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
+        else if (j == 3) {
+            leads = leads + j + "rd: " + players[i][1] + " kills " + players[i][0] + "\n";
         }
-        else
-        {
-            leads = leads + j + "th: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
+        else {
+            leads = leads + j + "th: " + players[i][1] + " kills " + players[i][0] + "\n";
         }
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
-    textBack.displayHeight = (maxP *30) + 150;
+    textBack.displayHeight = (maxP * 30) + 150;
     textBack.displayWidth = 250;
-    textBack.y = text.y + (textBack.displayHeight/2);
-    textBack.x = text.x + (textBack.displayWidth/2) - 5;    
+    textBack.y = text.y + (textBack.displayHeight / 2);
+    textBack.x = text.x + (textBack.displayWidth / 2) - 5;
     //return players.splice(0, maxP);
 }
 
@@ -888,7 +1032,6 @@ function getYspawn() {
 }
 
 
-function setShot()
-{
+function setShot() {
     canShoot = true;
 }
