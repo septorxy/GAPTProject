@@ -147,7 +147,7 @@ function bindConnectionMessage() {
                 opponent[inMessage.key].health = opponent[inMessage.key].health - damage;
                 oppHealthBar[inMessage.key].displayWidth = opponent[inMessage.key].health;
 
-
+                console.log(opponent[name].health + "  inHealth");
                 if (opponent[inMessage.key].health <= 0) {
                     kill(opponent[inMessage.key]);
                     console.log("If this is the only message. Something is wrong");
@@ -674,7 +674,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             opponent[name].health = opponent[name].health - damage;
                             oppHealthBar[name].displayWidth = opponent[name].health;
 
-                            console.log(opponent[name].health);
+                            console.log(opponent[name].health + "  inShot");
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
                                     console.log("CORRECT");
