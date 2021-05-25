@@ -12,6 +12,7 @@ var scale = 0.078;
 var hasShot = true;
 var maxHealth = 100;
 var damage = 5;
+var canShoot = true;
 var firstMove = true;
 
 var maxSpawnX = 5534;
@@ -73,10 +74,10 @@ function bindConnectionMessage() {
         var inMessage = JSON.parse(inJSON);
         if (!type) { return; }
         if (type === "newPlayer") {
-            console.log("Before added new player: " + opponent[inMessage.key]/*.toString()*/);
+            //console.log("Before added new player: " + opponent[inMessage.key]/*.toString()*/);
 
-            console.log("key: " + inMessage.key);
-            console.log("player name: " + playername);
+            //console.log("key: " + inMessage.key);
+            //console.log("player name: " + playername);
             if (inMessage.key == playername) {
                 return;
             }
@@ -102,7 +103,7 @@ function bindConnectionMessage() {
             opponent[inMessage.key].health = inMessage.health;
             opponent[inMessage.key].angle = inMessage.angle;
             opponent[inMessage.key].kills = inMessage.kills;
-            console.log(opponent[inMessage.key].kills);
+            //console.log(opponent[inMessage.key].kills);
 
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
@@ -215,7 +216,8 @@ function bindConnectionMessage() {
     }
     var killedCallback = function (inDead, inKiller) {
         var killer = JSON.parse(inKiller);
-        var dead = JSON.parse(inDead);
+        //var dead = JSON.parse(inDead);
+        console.log("inKilledCallBack")
         opponent[killer.key].kills = opponent[killer.key].kills + 1;
     }
     connection.on('broadcastMessage', broadcastCallback, 0);
@@ -321,7 +323,7 @@ function create() {
         oppHealthBack[back].setDepth(30);
     }
 
-    console.log(this.opponents);
+    //console.log(this.opponents);
 
     
 
@@ -374,17 +376,9 @@ function create() {
     healthBar.setDepth(30);
 
     this.bulletGroup = new BulletGroup(this);
-    this.input.on('pointerdown', function (pointer) {
-        if (pointer.leftButtonDown()) {
-            //start shooting
-            this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.angle, this.player.name);
-            //hasShot = true;
-            connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills), cacheCount);
-        }
-    }, this);
+    
 
-    this.input.on('pointerdown', function (pointer) {
-    }, this);
+
 
 
     //this.player.frame = 'Left-warlock-walkr.png';
@@ -402,6 +396,20 @@ function create() {
 
     camera = this.cameras.main;
     camera.startFollow(this.player);
+
+    
+    this.input.on('pointerdown', function (pointer) {
+        if (pointer.leftButtonDown()) {
+            //start shooting
+            if (canShoot) {
+                this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.angle, this.player.name);
+                canShoot = false;
+                setTimeout(setShot, 500);
+                connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills), cacheCount);
+            }
+        }
+    }, this);
+    
 
 
     var map = this.make.tilemap({ key: 'map' });
@@ -456,6 +464,14 @@ function update() {
     this.opponents = opponent;
     var i;
 
+    if (cursors.space.isDown) {
+        if (canShoot) {
+            this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.angle, this.player.name);
+            canShoot = false;
+            setTimeout(setShot, 500);
+            connection.send('broadcastMessage', "shooting", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills), cacheCount);
+        }
+    }
 
 
     this.player.setVelocity(0);
@@ -538,20 +554,21 @@ function update() {
     else {
         updated = false;
     }
-
-    if (cursors.space.isDown || keys.Q.isDown) {
+    if (textBack.visible) {
         updateText();
+    }
+
+    if ( keys.Q.isDown) {
+          
         text.x = (this.player.x + window.innerWidth/2) - 400;
         text.y = (this.player.y - window.innerHeight / 2) + 20;
         textBack.x = (this.player.x + window.innerWidth/2) - 400;
         textBack.y = (this.player.y - window.innerHeight / 2) + 20;
-        textBack.visible = true;
-        text.visible = true;
+        textBack.visible = !textBack.visible;
+        text.visible = !text.visible;
+        keys.Q.isDown = false;
     }
-    else {
-        text.visible = false;
-        textBack.visible = false;
-    }
+   
 }
 
 
@@ -648,7 +665,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                     if (this.shooter != name) {
                         if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
                             hit = true;
-                            console.log("HIT" + name);
+                            //console.log("HIT" + name);
 
                             this.setActive(false);
                             this.setVisible(false);
@@ -659,6 +676,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
                             if (opponent[name].health <= 0) {
                                 if (this.shooter == myScene.player.name) {
+                                    console.log("CORRECT");
                                     connection.send("kill", sendMessage(opponent[name].x, opponent[name].y, opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills), sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills));
                                     myScene.player.kills = myScene.player.kills + 1;
                                 }
@@ -682,7 +700,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                         var thisScene = [];
                         thisScene = thisScene.concat(game.scene.scenes);
                         if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.x - 40) {
-                            console.log("HIT" + name);
+                            /*console.log("HIT" + name);*/
 
                             this.setActive(false);
                             this.setVisible(false);
@@ -694,7 +712,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                             if (thisScene[0].player.health <= 0) {
                                 //connection.send("kill", sendMessage(myScene.player.x, myScene.player.y, myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills), sendMessage(opponent[this.shooter].x, opponent[this.shooter].y, opponent[this.shooter].name, opponent[this.shooter].angle, opponent[this.shooter].health, opponent[this.shooter].kills));
                                 //opponent[this.shooter].kills += 1;
-
+                                console.log("Entered Sec if: " + myScene.player)
                                 kill(thisScene[0].player);
                             }
                             else if (thisScene[0].player.health <= 20) {
@@ -829,27 +847,27 @@ function updateText() {
         var j = i+1;
         if(j == 1 )
         {
-            leads = leads + j + "st: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+            leads = leads + j + "st: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
         }
         else if (j == 2)
         {
-            leads = leads + j + "nd: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+            leads = leads + j + "nd: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
         }
         else if (j == 3)
         {
-            leads = leads + j + "rd: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+            leads = leads + j + "rd: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
         }
         else
         {
-            leads = leads + j + "th: " + players[i][1] + "kills "  +  players[i][0]+ "\n";
+            leads = leads + j + "th: " + players[i][1] + " kills "  +  players[i][0]+ "\n";
         }
     }
 
     text.setText("LEADERBOARD\n\n" + leads);
     textBack.displayHeight = (maxP *30) + 150;
     textBack.displayWidth = 250;
-    textBack.y = text.y - (textBack.displayHeight/2);
-    textBack.x = text.x - (textBack.displayWidth/2);    
+    textBack.y = text.y + (textBack.displayHeight/2);
+    textBack.x = text.x + (textBack.displayWidth/2) - 5;    
     //return players.splice(0, maxP);
 }
 
@@ -862,4 +880,10 @@ function getYspawn() {
     var min = Math.ceil(minSpawnY);
     var max = Math.floor(maxSpawnY);
     return Math.floor(Math.random() * (max - min) + min);
+}
+
+
+function setShot()
+{
+    canShoot = true;
 }
