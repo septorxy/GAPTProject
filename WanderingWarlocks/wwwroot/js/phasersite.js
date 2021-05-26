@@ -63,6 +63,10 @@ connection.start()
 
 function onConnectionError(error) {
     if (error && error.message) {
+        if (DEBUG)
+        {
+            console.log("ENTERED hub onconnectionError");
+        }
         console.error(error.message);
     }
 }
@@ -161,6 +165,10 @@ function bindConnectionMessage() {
         }
         if (type === "disconnection") {
 
+            if (DEBUG)
+            {
+                console.log("Disconnection signal received for player: " + inMessage.key);
+            }
             //remove sprite
             opponent[inMessage.key].destroy();
             delete opponent[inMessage.key];
