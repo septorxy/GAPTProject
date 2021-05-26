@@ -1214,8 +1214,13 @@ function updateText() {
 
     var i;
     var leads = "";
+    var maxlength = 0;
     for (i = 0; i < maxP; i++) {
         var j = i + 1;
+        if (players[i][0].length > maxlength)
+        {
+            maxlength = players[i][0].length;
+        }
         if (j == 1) {
             leads = leads + j + "st: " + players[i][1] + " kills " + players[i][0] + "\n";
         }
@@ -1229,12 +1234,14 @@ function updateText() {
             leads = leads + j + "th: " + players[i][1] + " kills " + players[i][0] + "\n";
         }
     }
-
+    text.x = text.x - (maxlength * 5);
     text.setText("LEADERBOARD\n\n" + leads);
+    
     textBack.displayHeight = (maxP * 30) + 150;
-    textBack.displayWidth = 250;
+    textBack.displayWidth = (maxlength * 20) + (14 * 10);
+    
     textBack.y = text.y + (textBack.displayHeight / 2);
-    textBack.x = text.x + (textBack.displayWidth / 2) - 5;
+    textBack.x = text.x + (textBack.displayWidth / 2) - 10;
     //return players.splice(0, maxP);
 }
 
