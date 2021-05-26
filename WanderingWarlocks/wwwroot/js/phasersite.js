@@ -14,6 +14,8 @@ var maxHealth = 100;
 var damage = 10;
 var canShoot = true;
 var firstMove = true;
+var mask;
+var maskOff = true;
 
 var maxSpawnX = 5534;
 var minSpawnY = 5149;
@@ -205,12 +207,22 @@ function bindConnectionMessage() {
         if (inDamaged.key == playername) {
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
+            
+            
             thisScene[0].player.health = inDamaged.health;
             healthBar.displayWidth = thisScene[0].player.health;
             thisScene[0].player.x = parseFloat(inDamaged.x);
             thisScene[0].player.y = parseFloat(inDamaged.y);
             thisScene[0].player.angle = inDamaged.angle;
             thisScene[0].player.kills = inDamaged.kills;
+            if (maskOff) {
+                maskOff = false;
+                mask = thisScene[0].add.graphics();
+                mask.setDepth(35);
+                mask.fillStyle(0xFF0000, 0.2);
+                mask.fillRect(thisScene[0].player.x - (window.innerWidth / 2), thisScene[0].player.y - (window.innerHeight / 2), window.innerWidth + 10, window.innerHeight + 10);
+                setTimeout(endmask, 175);
+            }
 
             //if (myScene.player.health <= 0) {
             //     kill(opponent[name]);
@@ -304,10 +316,77 @@ var keys;
 var username;
 
 function preload() {
+
+    
+    
+    var width = this.cameras.main.width;
+    var height = this.cameras.main.height;
+    
+    var progressBox = this.add.graphics();
+    var progressBar = this.add.graphics();
+    progressBox.fillStyle(0x8D5524);
+    progressBox.fillRect((width / 2) - (160), (height / 2) - 30, 320, 50);
+
+    
+    var loadingText = this.make.text({
+        x: width / 2,
+        y: height / 2 - 50,
+        text: 'Loading...',
+        style: {
+            font: '20px monospace',
+            fill: '#ffffff'
+        }
+    });
+    loadingText.setOrigin(0.5, 0.5);
+
+    var percentText = this.make.text({
+        x: width / 2,
+        y: height / 2 - 5,
+        text: '0%',
+        style: {
+            font: '18px monospace',
+            fill: '#ffffff'
+        }
+    });
+    percentText.setOrigin(0.5, 0.5);
+
+    var assetText = this.make.text({
+        x: width / 2,
+        y: height / 2 + 50,
+        text: '',
+        style: {
+            font: '18px monospace',
+            fill: '#ffffff'
+        }
+    });
+
+    assetText.setOrigin(0.5, 0.5);
+
+    this.load.on('progress', function (value) {
+        percentText.setText(parseInt(value * 100) + '%');
+        progressBar.clear();
+        progressBar.fillStyle(0x069a55);
+        progressBar.fillRect((width / 2) + 10 - 160, (height / 2) - 20, 300 * value, 30);
+    });
+
+    this.load.on('fileprogress', function (file) {
+        assetText.setText('Loading asset: ' + file.key);
+    });
+
+    this.load.on('complete', function () {
+        progressBar.destroy();
+        progressBox.destroy();
+        loadingText.destroy();
+        percentText.destroy();
+        //loading.destroy();
+        assetText.destroy();
+    });
+
     //this.load.atlas('player', 'warlock.png' , 'warlock.json');
     //this.load.path = 'sprites/';
     //this.load.multiatlas('player', 'spritesheet.json');
     this.load.image('Down-warlock-walkl', 'https://warlockstorageacc.blob.core.windows.net/warlock/Down-warlock-walkl.png');
+
     this.load.atlas('warlock', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.png', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.json');
 
     this.load.image('Down-opp-walkl', 'https://warlockstorageacc.blob.core.windows.net/warlock/Down-opp-walkl.png');
@@ -324,6 +403,9 @@ function preload() {
     this.load.image('Red-health', 'https://warlockstorageacc.blob.core.windows.net/health-bar/red-healthbar.png');
 
     this.load.image('leaderboard', 'https://warlockstorageacc.blob.core.windows.net/background/LeaderboardBack.png');
+
+    
+    
 
 
 }
@@ -389,7 +471,7 @@ function create() {
         this.opponents[i].frame = 'Down-warlock-walkl';
     }*/
 
-
+    //this.loading.destroy();
     this.player = this.physics.add.sprite(getXspawn(), getYspawn(), 'Down-warlock-walkl').setScale(scale);
     this.player.name = name;
     playername = name;
@@ -572,7 +654,28 @@ function update() {
     healthBar.x = this.player.x;
     healthBar.y = this.player.y - 70;
     username.x = this.player.x - ((playername.length / 2)*10);
-    username.y = this.player.y-100;
+    username.y = this.player.y - 100;
+    
+    if (!maskOff)
+    {
+        mask.destroy();
+        mask = this.add.graphics();
+        mask.setDepth(35);
+        mask.fillStyle(0xFF0000, 0.2);
+        mask.fillRect(this.player.x - (window.innerWidth / 2), this.player.y - (window.innerHeight / 2), window.innerWidth + 10, window.innerHeight + 10);
+
+    }
+
+    if (textBack.visible)
+    {
+        text.x = (this.player.x + window.innerWidth / 2) - 400;
+        text.y = (this.player.y - window.innerHeight / 2) + 20;
+        textBack.x = (this.player.x + window.innerWidth / 2) - 400;
+        textBack.y = (this.player.y - window.innerHeight / 2) + 20;
+
+    } 
+
+    
 
 
     for (var name in opponent) {
@@ -1034,4 +1137,10 @@ function getYspawn() {
 
 function setShot() {
     canShoot = true;
+}
+
+function endmask()
+{
+    mask.destroy();
+    maskOff = true;
 }
