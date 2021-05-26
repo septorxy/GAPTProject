@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,22 @@ namespace WanderingWarlocks.Controllers
 {
     public class GameController : Controller
     {
+        
+
         [Authorize]
-        public IActionResult Game()
+        public IActionResult Play()
         {
-            return View();
+            CookieOptions option = new CookieOptions();
+            if (Request.Cookies["instrCookie"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                option.Expires = DateTime.Now.AddMonths(3);
+                Response.Cookies.Append("instrCookie", "seen", option);
+                return RedirectToAction("Instructions");
+            }
         }
 
         public IActionResult Instructions()

@@ -86,3 +86,21 @@ body {
     line-height: 60px; /* Vertically center the text there */
     background-color: white;
 }
+
+#playBtn {
+    background-color: #069a55;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: inherit;
+    transition-duration: 0.4s;
+}
+
+#playBtn:hover {
+    background-color: white;
+    color: #069a55;
+}
