@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\WanderingWarlocks",
+    "\\WanderingWarlocks\\Controllers",
+    "\\WanderingWarlocks\\Data",
+    "\\WanderingWarlocks\\Hub",
+    "\\WanderingWarlocks\\Views",
+    "\\WanderingWarlocks\\wwwroot",
+    "\\WanderingWarlocks\\wwwroot\\js"
   ],
   "SelectedNode": "\\WanderingWarlocks.sln",
   "PreviewInSolutionExplorer": false

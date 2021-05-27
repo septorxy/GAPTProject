@@ -16,7 +16,6 @@ namespace WanderingWarlocks
 
         public Task BroadcastMessage(string type, object inMessage, int count)
         {
-            Console.WriteLine("Enterd BM");
             if (inMessage != null)
             {
                 PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
@@ -59,17 +58,7 @@ namespace WanderingWarlocks
 
                     }
                 }
-                else if (type.Equals("health"))
-                {
-                    //Console.WriteLine(count);
-                    if (count == interval)
-                    {
-                        IDatabase cache = ConnectionCache.GetDatabase();
-                        cache.StringSet(key, inMessage.ToString());
-                        //Console.WriteLine("Executed");
-
-                    }
-                }
+                
             }
             return Clients.AllExcept(Context.ConnectionId).SendAsync("broadcastMessage", type, inMessage, count);
 
@@ -91,6 +80,20 @@ namespace WanderingWarlocks
             return Clients.All.SendAsync("getPlayers", players);
         }
 
+        public Task Hit(object shooterState, object damagedState)
+        {
+            if (shooterState != null && damagedState!=null){
+                PlayerState shooter = JsonConvert.DeserializeObject<PlayerState>(shooterState.ToString());
+                PlayerState damaged = JsonConvert.DeserializeObject<PlayerState>(damagedState.ToString());
+                IDatabase cache = ConnectionCache.GetDatabase();
+                cache.StringSet(shooter.key, shooter.ToString());
+                cache.StringSet(damaged.key, damaged.ToString());
+            }
+
+            return Clients.AllExcept(Context.ConnectionId).SendAsync("hit", shooterState, damagedState);
+        }
+
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             Console.WriteLine("OnDisconnectAsync");
@@ -98,7 +101,6 @@ namespace WanderingWarlocks
             if (!(cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals("")))
             {
                 Console.WriteLine(cache.StringGet("myKeys").ToString());
-                Console.WriteLine("HereInside");
                 string key = cache.StringGet(Context.ConnectionId);
                 string[] keys = cache.StringGet("myKeys").ToString().Split(",");
                 var keyList = keys.ToList();

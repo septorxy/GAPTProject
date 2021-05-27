@@ -33,16 +33,16 @@
     ".NETCoreApp,Version=v5.0": {
       "WanderingWarlocks/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "5.0.5",
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "5.0.6",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.6",
           "Microsoft.AspNetCore.Identity.UI": "5.0.6",
-          "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "5.0.5",
-          "Microsoft.Azure.SignalR": "1.8.0",
+          "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "5.0.6",
+          "Microsoft.Azure.SignalR": "1.8.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.6",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.6",
           "Microsoft.Extensions.Caching.Redis": "2.2.0",
           "Microsoft.Extensions.Configuration.UserSecrets": "5.0.0",
-          "Microsoft.IdentityModel.Protocols": "6.10.0",
+          "Microsoft.IdentityModel.Protocols": "6.11.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
           "Newtonsoft.Json": "13.0.1",
           "System.Configuration.ConfigurationManager": "5.0.0",
@@ -373,14 +373,14 @@
           "lib/net5.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.5": {
+      "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.6": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Relational": "5.0.6"
         },
         "runtime": {
           "lib/net5.0/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll": {
-            "assemblyVersion": "5.0.5.0",
-            "fileVersion": "5.0.521.16708"
+            "assemblyVersion": "5.0.6.0",
+            "fileVersion": "5.0.621.22305"
           }
         },
         "compile": {
@@ -472,31 +472,31 @@
           "lib/net5.0/Microsoft.AspNetCore.Identity.UI.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.5": {
+      "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.6": {
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "5.0.5",
-          "Microsoft.CodeAnalysis.Razor": "5.0.5"
+          "Microsoft.AspNetCore.Razor.Language": "5.0.6",
+          "Microsoft.CodeAnalysis.Razor": "5.0.6"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll": {
-            "assemblyVersion": "5.0.5.0",
-            "fileVersion": "5.0.521.16708"
+            "assemblyVersion": "5.0.6.0",
+            "fileVersion": "5.0.621.22305"
           }
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.5": {
+      "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.6": {
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "5.0.5",
-          "Microsoft.CodeAnalysis.Razor": "5.0.5",
+          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "5.0.6",
+          "Microsoft.CodeAnalysis.Razor": "5.0.6",
           "Microsoft.Extensions.DependencyModel": "5.0.0"
         },
         "runtime": {
           "lib/net5.0/Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll": {
-            "assemblyVersion": "5.0.5.0",
-            "fileVersion": "5.0.521.16708"
+            "assemblyVersion": "5.0.6.0",
+            "fileVersion": "5.0.621.22305"
           }
         },
         "compile": {
@@ -508,11 +508,11 @@
           "Microsoft.AspNetCore.Html.Abstractions": "2.2.0"
         }
       },
-      "Microsoft.AspNetCore.Razor.Language/5.0.5": {
+      "Microsoft.AspNetCore.Razor.Language/5.0.6": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll": {
-            "assemblyVersion": "5.0.5.0",
-            "fileVersion": "5.0.521.16708"
+            "assemblyVersion": "5.0.6.0",
+            "fileVersion": "5.0.621.22305"
           }
         },
         "compile": {
@@ -540,11 +540,11 @@
           "lib/netstandard2.0/Microsoft.Azure.Services.AppAuthentication.dll": {}
         }
       },
-      "Microsoft.Azure.SignalR/1.8.0": {
+      "Microsoft.Azure.SignalR/1.8.1": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Connections.Client": "5.0.1",
           "Microsoft.Azure.Services.AppAuthentication": "1.5.0",
-          "Microsoft.Azure.SignalR.Protocols": "1.8.0",
+          "Microsoft.Azure.SignalR.Protocols": "1.8.1",
           "Microsoft.Extensions.Http": "2.1.0",
           "Microsoft.Identity.Client": "4.14.0",
           "Microsoft.Rest.ClientRuntime": "2.3.21",
@@ -552,12 +552,12 @@
         },
         "runtime": {
           "lib/net5.0/Microsoft.Azure.SignalR.Common.dll": {
-            "assemblyVersion": "1.8.0.0",
-            "fileVersion": "1.8.0.0"
+            "assemblyVersion": "1.8.1.0",
+            "fileVersion": "1.8.1.0"
           },
           "lib/net5.0/Microsoft.Azure.SignalR.dll": {
-            "assemblyVersion": "1.8.0.0",
-            "fileVersion": "1.8.0.0"
+            "assemblyVersion": "1.8.1.0",
+            "fileVersion": "1.8.1.0"
           }
         },
         "compile": {
@@ -565,7 +565,7 @@
           "lib/net5.0/Microsoft.Azure.SignalR.dll": {}
         }
       },
-      "Microsoft.Azure.SignalR.Protocols/1.8.0": {
+      "Microsoft.Azure.SignalR.Protocols/1.8.1": {
         "dependencies": {
           "Microsoft.AspNetCore.Connections.Abstractions": "5.0.1",
           "Microsoft.Azure.Services.AppAuthentication": "1.5.0",
@@ -583,8 +583,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Azure.SignalR.Protocols.dll": {
-            "assemblyVersion": "1.8.0.0",
-            "fileVersion": "1.8.0.0"
+            "assemblyVersion": "1.8.1.0",
+            "fileVersion": "1.8.1.0"
           }
         },
         "compile": {
@@ -777,16 +777,16 @@
           "lib/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.Workspaces.dll": {}
         }
       },
-      "Microsoft.CodeAnalysis.Razor/5.0.5": {
+      "Microsoft.CodeAnalysis.Razor/5.0.6": {
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "5.0.5",
+          "Microsoft.AspNetCore.Razor.Language": "5.0.6",
           "Microsoft.CodeAnalysis.CSharp": "3.8.0",
           "Microsoft.CodeAnalysis.Common": "3.8.0"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.dll": {
-            "assemblyVersion": "5.0.5.0",
-            "fileVersion": "5.0.521.16708"
+            "assemblyVersion": "5.0.6.0",
+            "fileVersion": "5.0.621.22305"
           }
         },
         "compile": {
@@ -1236,7 +1236,7 @@
       },
       "Microsoft.IdentityModel.JsonWebTokens/5.6.0": {
         "dependencies": {
-          "Microsoft.IdentityModel.Tokens": "6.10.0",
+          "Microsoft.IdentityModel.Tokens": "6.11.1",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
@@ -1249,26 +1249,26 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.JsonWebTokens.dll": {}
         }
       },
-      "Microsoft.IdentityModel.Logging/6.10.0": {
+      "Microsoft.IdentityModel.Logging/6.11.1": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Logging.dll": {
-            "assemblyVersion": "6.10.0.0",
-            "fileVersion": "6.10.0.20330"
+            "assemblyVersion": "6.11.1.0",
+            "fileVersion": "6.11.1.20521"
           }
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Logging.dll": {}
         }
       },
-      "Microsoft.IdentityModel.Protocols/6.10.0": {
+      "Microsoft.IdentityModel.Protocols/6.11.1": {
         "dependencies": {
-          "Microsoft.IdentityModel.Logging": "6.10.0",
-          "Microsoft.IdentityModel.Tokens": "6.10.0"
+          "Microsoft.IdentityModel.Logging": "6.11.1",
+          "Microsoft.IdentityModel.Tokens": "6.11.1"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Protocols.dll": {
-            "assemblyVersion": "6.10.0.0",
-            "fileVersion": "6.10.0.20330"
+            "assemblyVersion": "6.11.1.0",
+            "fileVersion": "6.11.1.20521"
           }
         },
         "compile": {
@@ -1277,7 +1277,7 @@
       },
       "Microsoft.IdentityModel.Protocols.OpenIdConnect/5.6.0": {
         "dependencies": {
-          "Microsoft.IdentityModel.Protocols": "6.10.0",
+          "Microsoft.IdentityModel.Protocols": "6.11.1",
           "Newtonsoft.Json": "13.0.1",
           "System.IdentityModel.Tokens.Jwt": "5.6.0"
         },
@@ -1291,16 +1291,16 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll": {}
         }
       },
-      "Microsoft.IdentityModel.Tokens/6.10.0": {
+      "Microsoft.IdentityModel.Tokens/6.11.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
-          "Microsoft.IdentityModel.Logging": "6.10.0",
+          "Microsoft.IdentityModel.Logging": "6.11.1",
           "System.Security.Cryptography.Cng": "4.5.0"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {
-            "assemblyVersion": "6.10.0.0",
-            "fileVersion": "6.10.0.20330"
+            "assemblyVersion": "6.11.1.0",
+            "fileVersion": "6.11.1.20521"
           }
         },
         "compile": {
@@ -1411,10 +1411,10 @@
       },
       "Microsoft.VisualStudio.Web.CodeGeneration.Templating/5.0.2": {
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "5.0.5",
+          "Microsoft.AspNetCore.Razor.Language": "5.0.6",
           "Microsoft.AspNetCore.Razor.Runtime": "2.2.0",
           "Microsoft.CodeAnalysis.CSharp": "3.8.0",
-          "Microsoft.CodeAnalysis.Razor": "5.0.5",
+          "Microsoft.CodeAnalysis.Razor": "5.0.6",
           "Microsoft.VisualStudio.Web.CodeGeneration.Utils": "5.0.2"
         },
         "runtime": {
@@ -1963,7 +1963,7 @@
       "System.IdentityModel.Tokens.Jwt/5.6.0": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "5.6.0",
-          "Microsoft.IdentityModel.Tokens": "6.10.0",
+          "Microsoft.IdentityModel.Tokens": "6.11.1",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
@@ -4340,12 +4340,12 @@
       "path": "microsoft.aspnetcore.cryptography.keyderivation/5.0.6",
       "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.5.0.6.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.5": {
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore/5.0.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hLHIDC6sB6rTt8CpPLzNXJmj6JIk2hFGOw8B8QXpmJ2VuhHHvswi1ZhlOzdgTg8ADvYGW76TROtwbVsCFQHl7w==",
-      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/5.0.5",
-      "hashPath": "microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.5.nupkg.sha512"
+      "sha512": "sha512-CfbSbq3cyYpAzotftmFzjCBih5wczuxK7MRtZLA/i1TEs96/63cejPn0R2+zDmOp4BJg1lhitAh3hG1hCCgpmA==",
+      "path": "microsoft.aspnetcore.diagnostics.entityframeworkcore/5.0.6",
+      "hashPath": "microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.6.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "type": "package",
@@ -4389,19 +4389,19 @@
       "path": "microsoft.aspnetcore.identity.ui/5.0.6",
       "hashPath": "microsoft.aspnetcore.identity.ui.5.0.6.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.5": {
+    "Microsoft.AspNetCore.Mvc.Razor.Extensions/5.0.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wj6Q8mcbL8xDS47axjojDiB0nBhRekBl2Ng/v9Hnk0TxxqD5eMxn6OeKELJjLkQqW6P4vCmdAiBEYLGAr5P/8g==",
-      "path": "microsoft.aspnetcore.mvc.razor.extensions/5.0.5",
-      "hashPath": "microsoft.aspnetcore.mvc.razor.extensions.5.0.5.nupkg.sha512"
+      "sha512": "sha512-yygv2vC+GejwDytyW+AfX3zXb4/j1+980S5IoIVvidPh967yDfI5ZSy04O/0KAI72BdsLCchNfM6LFx4bCC27A==",
+      "path": "microsoft.aspnetcore.mvc.razor.extensions/5.0.6",
+      "hashPath": "microsoft.aspnetcore.mvc.razor.extensions.5.0.6.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.5": {
+    "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation/5.0.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-nzYMwt6zGvpWFD4RdMnPyJGzHgXusCjx6jOqGyJ+goZHi9QhzS94dUOyQ5Q3aULAC4Qh2B0p5Gx7V+7RJdr1XA==",
-      "path": "microsoft.aspnetcore.mvc.razor.runtimecompilation/5.0.5",
-      "hashPath": "microsoft.aspnetcore.mvc.razor.runtimecompilation.5.0.5.nupkg.sha512"
+      "sha512": "sha512-TvAUI37XKXCBJc17bCWJLFa7ljA9w1wT4mdr+l9t+r76HYL6j4pNX/4UCbkAryqh4htJlbOBQRUFNZK2PUqhhg==",
+      "path": "microsoft.aspnetcore.mvc.razor.runtimecompilation/5.0.6",
+      "hashPath": "microsoft.aspnetcore.mvc.razor.runtimecompilation.5.0.6.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor/2.2.0": {
       "type": "package",
@@ -4410,12 +4410,12 @@
       "path": "microsoft.aspnetcore.razor/2.2.0",
       "hashPath": "microsoft.aspnetcore.razor.2.2.0.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Razor.Language/5.0.5": {
+    "Microsoft.AspNetCore.Razor.Language/5.0.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wh4JC/1sWxythiEEUKacWqZWNWnx6Kbmpj6FhYc28zV2VAV1+c9Ii1y7fmRefZciJpI/b25bm7c8icT72g2O9g==",
-      "path": "microsoft.aspnetcore.razor.language/5.0.5",
-      "hashPath": "microsoft.aspnetcore.razor.language.5.0.5.nupkg.sha512"
+      "sha512": "sha512-nrkAnHCRt6DrxCJ7DwZX+PjBJffR8GAL6IkXcZIAlJ61rBKC2vzobk5STDhnL0PU7PwpRZMShilmTqWOvPxFbQ==",
+      "path": "microsoft.aspnetcore.razor.language/5.0.6",
+      "hashPath": "microsoft.aspnetcore.razor.language.5.0.6.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Runtime/2.2.0": {
       "type": "package",
@@ -4431,19 +4431,19 @@
       "path": "microsoft.azure.services.appauthentication/1.5.0",
       "hashPath": "microsoft.azure.services.appauthentication.1.5.0.nupkg.sha512"
     },
-    "Microsoft.Azure.SignalR/1.8.0": {
+    "Microsoft.Azure.SignalR/1.8.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-R7Af7726lk/rxSXgmrkHxKuduv80n0S1iEjWdSvlVPyqPgPWRNgY4TzjZYxj1W361s0Dk+nYEfCwsCKPJIeKeQ==",
-      "path": "microsoft.azure.signalr/1.8.0",
-      "hashPath": "microsoft.azure.signalr.1.8.0.nupkg.sha512"
+      "sha512": "sha512-9SWKe1DZYT6aBiMbgbibB3l5ZBPd2FKXWclRIwqwqIs/iu+SFYmYXWv1szkoc2gRnjQHHjY/ptB7L8KDHjCCUQ==",
+      "path": "microsoft.azure.signalr/1.8.1",
+      "hashPath": "microsoft.azure.signalr.1.8.1.nupkg.sha512"
     },
-    "Microsoft.Azure.SignalR.Protocols/1.8.0": {
+    "Microsoft.Azure.SignalR.Protocols/1.8.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-M1aoRIesv3xUj6XJ4cTEEC1AB6Rtors3BGSF2aL+f2IvSQvn98SFagEUrjW9GovkUSiJZdsv+0477qTzhQuWTw==",
-      "path": "microsoft.azure.signalr.protocols/1.8.0",
-      "hashPath": "microsoft.azure.signalr.protocols.1.8.0.nupkg.sha512"
+      "sha512": "sha512-mOuVLg6Zwky/D8zMr+nHnuB+xOdoe3MwGsMcQq/kZhZfZQRg+zO5BwzfA0cQyEj7zjeVWICvXvkBTACwbeqLqQ==",
+      "path": "microsoft.azure.signalr.protocols/1.8.1",
+      "hashPath": "microsoft.azure.signalr.protocols.1.8.1.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",
@@ -4480,12 +4480,12 @@
       "path": "microsoft.codeanalysis.csharp.workspaces/3.8.0",
       "hashPath": "microsoft.codeanalysis.csharp.workspaces.3.8.0.nupkg.sha512"
     },
-    "Microsoft.CodeAnalysis.Razor/5.0.5": {
+    "Microsoft.CodeAnalysis.Razor/5.0.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UYfBFE6dWkFXAIZlc/p8DYawHAPdfPdWBcX5Zrvx8WxYV74qdomARTyDDArKfbfm2MMi2oIReNjabPrBz4T42w==",
-      "path": "microsoft.codeanalysis.razor/5.0.5",
-      "hashPath": "microsoft.codeanalysis.razor.5.0.5.nupkg.sha512"
+      "sha512": "sha512-gY95qNMQarYTokEB4q5hYkXcwIziqdjhzsweuYw0TSYZ3rpN5OmduGXpCNQ6JU5Z3dWxWHy6dRqeO2b83OHYmw==",
+      "path": "microsoft.codeanalysis.razor/5.0.6",
+      "hashPath": "microsoft.codeanalysis.razor.5.0.6.nupkg.sha512"
     },
     "Microsoft.CodeAnalysis.Workspaces.Common/3.8.0": {
       "type": "package",
@@ -4739,19 +4739,19 @@
       "path": "microsoft.identitymodel.jsonwebtokens/5.6.0",
       "hashPath": "microsoft.identitymodel.jsonwebtokens.5.6.0.nupkg.sha512"
     },
-    "Microsoft.IdentityModel.Logging/6.10.0": {
+    "Microsoft.IdentityModel.Logging/6.11.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zbcwV6esnNzhZZ/VP87dji6VrUBLB5rxnZBkDMqNYpyG+nrBnBsbm4PUYLCBMUflHCM9EMLDG0rLnqqT+l0ldA==",
-      "path": "microsoft.identitymodel.logging/6.10.0",
-      "hashPath": "microsoft.identitymodel.logging.6.10.0.nupkg.sha512"
+      "sha512": "sha512-8G/kXAoKVCvTJyB4Ld8me4oDV/E9uWD+Rk86JBy7nfYpzVsrxvqG5svSlwaIltQFjVD5VOHwq1o+9kMw3Q7tGg==",
+      "path": "microsoft.identitymodel.logging/6.11.1",
+      "hashPath": "microsoft.identitymodel.logging.6.11.1.nupkg.sha512"
     },
-    "Microsoft.IdentityModel.Protocols/6.10.0": {
+    "Microsoft.IdentityModel.Protocols/6.11.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-DFyXD0xylP+DknCT3hzJ7q/Q5qRNu0hO/gCU90O0ATdR0twZmlcuY9RNYaaDofXKVbzcShYNCFCGle2G/o8mkg==",
-      "path": "microsoft.identitymodel.protocols/6.10.0",
-      "hashPath": "microsoft.identitymodel.protocols.6.10.0.nupkg.sha512"
+      "sha512": "sha512-2Bu9Y0munbF0cJfRn+Dra3XnnRvLG0UbIV29MrHKVqlfl5Ag5rmyMMFwfcQpp04kDaphgL4yUJY8pAsULNzIdw==",
+      "path": "microsoft.identitymodel.protocols/6.11.1",
+      "hashPath": "microsoft.identitymodel.protocols.6.11.1.nupkg.sha512"
     },
     "Microsoft.IdentityModel.Protocols.OpenIdConnect/5.6.0": {
       "type": "package",
@@ -4760,12 +4760,12 @@
       "path": "microsoft.identitymodel.protocols.openidconnect/5.6.0",
       "hashPath": "microsoft.identitymodel.protocols.openidconnect.5.6.0.nupkg.sha512"
     },
-    "Microsoft.IdentityModel.Tokens/6.10.0": {
+    "Microsoft.IdentityModel.Tokens/6.11.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-qbf1NslutDB4oLrriYTJpy7oB1pbh2ej2lEHd2IPDQH9C74ysOdhU5wAC7KoXblldbo7YsNR2QYFOqQM/b0Rsg==",
-      "path": "microsoft.identitymodel.tokens/6.10.0",
-      "hashPath": "microsoft.identitymodel.tokens.6.10.0.nupkg.sha512"
+      "sha512": "sha512-B7vWX+WevuluZDjsf4Br2Zb7k20ps1D3RMX/J8DKsrkzJ4F3fcsLIEknI98JNYKPlN9VcqEZ1qeeEKEuwU3XcA==",
+      "path": "microsoft.identitymodel.tokens/6.11.1",
+      "hashPath": "microsoft.identitymodel.tokens.6.11.1.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/5.0.0": {
       "type": "package",
