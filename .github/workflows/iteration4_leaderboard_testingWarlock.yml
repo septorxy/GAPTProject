@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'testingWarlock'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_13f750a813174c30a8e472a80c6094d4 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_3a452e4261614215862e4ffa91577d63 }}
         package: .
