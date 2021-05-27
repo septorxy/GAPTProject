@@ -20,7 +20,7 @@ namespace WanderingWarlocks
             {
                 PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
 
-                if (type == "disconnection")
+                if (type.Equals("disconnection"))
                 {
                     inMessage = inMessage.ToString();
                     Console.WriteLine("disconnection");
@@ -86,8 +86,8 @@ namespace WanderingWarlocks
                 PlayerState shooter = JsonConvert.DeserializeObject<PlayerState>(shooterState.ToString());
                 PlayerState damaged = JsonConvert.DeserializeObject<PlayerState>(damagedState.ToString());
                 IDatabase cache = ConnectionCache.GetDatabase();
-                cache.StringSet(shooter.key, shooter.ToString());
-                cache.StringSet(damaged.key, damaged.ToString());
+                cache.StringSet(shooter.key, shooterState.ToString());
+                cache.StringSet(damaged.key, damagedState.ToString());
             }
 
             return Clients.AllExcept(Context.ConnectionId).SendAsync("hit", shooterState, damagedState);
@@ -109,7 +109,7 @@ namespace WanderingWarlocks
                 cache.StringSet("myKeys", String.Join(",", keys));
                 var inMessage = cache.StringGet(key);
 
-                Console.WriteLine(inMessage.ToString());
+                Console.WriteLine("Disconnected from cache: " + inMessage.ToString());
                 await BroadcastMessage("disconnection", inMessage, 0);
             }
             else
