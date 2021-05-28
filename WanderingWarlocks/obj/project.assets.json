@@ -10368,19 +10368,12 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
     "C:\\Users\\liamg\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
-=======
-    "C:\\Users\\user\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
->>>>>>> 22bd7912f13f81ec4e1c8f516f4c2c5cdb256317
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
       "projectName": "WanderingWarlocks",
       "projectPath": "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
@@ -10394,23 +10387,6 @@
         "C:\\Users\\liamg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-=======
-      "projectUniqueName": "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
-      "projectName": "WanderingWarlocks",
-      "projectPath": "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
-      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\obj\\",
-      "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
-      "configFilePaths": [
-        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
->>>>>>> 22bd7912f13f81ec4e1c8f516f4c2c5cdb256317
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -10511,13 +10487,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

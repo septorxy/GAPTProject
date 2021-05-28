@@ -1,12 +1,7 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {}
-=======
-<<<<<<< HEAD
-    "C:\\Users\\liamg\\Source\\Repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {}
->>>>>>> 22bd7912f13f81ec4e1c8f516f4c2c5cdb256317
   },
   "projects": {
     "C:\\Users\\liamg\\source\\repos\\septorxy\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {
@@ -25,29 +20,6 @@
           "C:\\Users\\liamg\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-=======
-    "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
-        "projectName": "WanderingWarlocks",
-        "projectPath": "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\WanderingWarlocks.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Documents\\Code\\GAPTProject\\WanderingWarlocks\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
->>>>>>> b253433fe3a1c3d623684d213ca4af0db7f1d37b
         ],
         "originalTargetFrameworks": [
           "net5.0"
