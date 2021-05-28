@@ -896,7 +896,6 @@ C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razo
 C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
 C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
-C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Game\Game.cshtml.g.cs
 C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Game\Instructions.cshtml.g.cs
 C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
@@ -1375,3 +1374,4 @@ D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWar
 D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\WanderingWarlocks.pdb
 D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\WanderingWarlocks.genruntimeconfig.cache
 D:\Users\Luke Grixti\Documents\University\Yr2 Sem2\GAPT\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Game\Play.cshtml.g.cs
+C:\Users\user\Documents\Code\GAPTProject\WanderingWarlocks\obj\Debug\net5.0\Razor\Views\Game\Play.cshtml.g.cs
