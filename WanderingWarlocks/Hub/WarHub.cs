@@ -40,9 +40,22 @@ namespace WanderingWarlocks
                     }
                     else
                     {
-                        string keys = cache.StringGet("myKeys") + "," + key;
-                        cache.StringSet("myKeys", keys);
-                        Console.WriteLine(cache.StringGet("myKeys").ToString());
+                        bool exists = false;
+                        string[] keysArr = cache.StringGet("myKeys").ToString().Split(",");
+                        for (int i = 0; i < keysArr.Length; i++)
+                        {
+                            if (keysArr[i].Equals(key))
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists)
+                        {
+                            string keys = cache.StringGet("myKeys") + "," + key;
+                            cache.StringSet("myKeys", keys);
+                            Console.WriteLine(cache.StringGet("myKeys").ToString());
+                        }
                     }
                 }
 
