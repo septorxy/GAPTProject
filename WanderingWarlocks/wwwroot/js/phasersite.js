@@ -714,12 +714,14 @@ function update() {
 
     if (DEBUG)
     {
+        //In DEBUG mode key P logs the player's x and y coordinate
         if (keys.P.isDown)
         {
             console.log("Player: " + this.player.x + " , " + this.player.y );
         }
     }
-
+    
+    //Sets the prev x and y coordinates ever 10 frames 
     if (updated) {
         curX = this.player.x;
         curY = this.player.y;
@@ -728,7 +730,7 @@ function update() {
     var i;
 
     
-
+    //Shoots if space bar is down 
     if (cursors.space.isDown) {
         if (canShoot) {
             this.bulletGroup.fireBullet(this.player.x - 20, this.player.y - 20, this.player.angle, this.player.name);
@@ -738,10 +740,11 @@ function update() {
         }
     }
 
-
+    //Resets velocit
     this.player.setVelocity(0);
     this.player.velocity = 0;
 
+    //Check for running and updates animation
     if (cursors.shift.isDown) {
         this.player.anims.play('drun', 10, true);
         runspeed = 150;
@@ -754,6 +757,8 @@ function update() {
 
         this.player.velocity = 80;
     }
+    
+    //Handles player angle and speed depending on what keys are being pressed in what combinations
     if ((cursors.up.isDown || keys.W.isDown) && (cursors.left.isDown || keys.A.isDown)) {
 
         this.player.setAngle(135);
@@ -799,7 +804,7 @@ function update() {
         this.player.velocity = 0;
     }
 
-
+    //Updates healthbar and username
     backgroundBar.x = this.player.x;
     backgroundBar.y = this.player.y - 70;
     healthBar.x = this.player.x;
@@ -807,6 +812,7 @@ function update() {
     username.x = this.player.x - ((playername.length / 2)*10);
     username.y = this.player.y - 100;
     
+    //If a mask is active updates the mask's location
     if (!maskOff)
     {
         mask.destroy();
@@ -817,6 +823,7 @@ function update() {
 
     }
 
+    //If leaderboard is active update location of the leaderboard
     if (textBack.visible)
     {
         text.x = (this.player.x + window.innerWidth / 2) - 400;
@@ -826,34 +833,39 @@ function update() {
 
     }
 
+    //Update opponent healthbars 
     for (var name in opponent) {
         
         oppHealthBack[name].x = opponent[name].x;
         oppHealthBack[name].y = opponent[name].y - 70;
         oppHealthBar[name].x = opponent[name].x;
         oppHealthBar[name].y = opponent[name].y - 70;
-        
-        
-
     }
 
+    
+    //checks if player moved 10 frames
     if (curX > this.player.x + 10 || curX < this.player.x + -10 || curY > this.player.y + 10 || curY < this.player.y - 10) {
+        //Plays music on first step
         if (firstMove) {
             document.getElementById('music').play();
             firstMove = false;
         }
-
+        //Send update player message
         connection.send('broadcastMessage', "updatePlayer", sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills, this.player.velocity), cacheCount);
+        //sets cache count to update cache at a set interval
         if (cacheCount < cacheInterval) { cacheCount++; } else { cacheCount = 0; }
         updated = true;
     }
     else {
         updated = false;
     }
+    
+    //Update leaderboard text if it is visible
     if (textBack.visible) {
         updateText();
     }
 
+    //Toggle leaderboard on key Q
     if (keys.Q.isDown) {
 
         text.x = (this.player.x + window.innerWidth / 2) - 400;
