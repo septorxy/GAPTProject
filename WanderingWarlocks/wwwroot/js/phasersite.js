@@ -879,7 +879,7 @@ function update() {
 
 }
 
-
+//bullet class of player that sets the properties of the bullet when created 
 class Bullet extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y) {
@@ -889,7 +889,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
         this.inX = x;
         this.inY = y;
     }
-
+    
+    //fire method called when player wants to shoot, makes the bullet visible on screen and sets the bullet's velocity and angle
     fire(x, y, angle, shooter) {
         this.inX = x;
         this.inY = y;
@@ -910,6 +911,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
             ang = angle;
         }
 
+        //fires the bullet at the angle that the player is currently in
         switch (ang) {
             case -180:
                 this.setVelocityY(4 *-150);
@@ -947,41 +949,48 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
         }
 
-
-
-
     }
 
+    //function that runs every time before the update function
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
 
+        //checks if the bullet has travelled a certain length, if so removes it from the screen
         if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
             this.setActive(false);
             this.setVisible(false);
             hasShot = false;
         }
 
+        //the following code is executed every 20 frames for optimisation purposes
         if (delta % 20) {
 
             if (this.active == true) {
                 var hit = false;
                 if (this.shooter == playername) {
+
+                    //if the bullet is still visible and the player has shot, check if the bullet has hit an opponent
                     for (var name in opponent) {
                         if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
                             hit = true;
                             if (DEBUG) {
                                 console.log("HIT" + name);
                             }
-
+                            
+                            //remove bullet from the game
                             this.setActive(false);
                             this.setVisible(false);
+
+                            //decrease opponent's health and update the health bar
                             opponent[name].health = opponent[name].health - damage;
                             oppHealthBar[name].displayWidth = opponent[name].health;
 
+                            //checks if opponent is killed, if so update the player's kills and respawn opponent with full health
                             if (opponent[name].health <= 0) {
                                 myScene.player.kills = parseInt(myScene.player.kills) + parseInt(1);
                                 kill(opponent[name]);
                             }
+                            //changes the colour of the health bar to red and displays blood splatter if opponent's health is less than 20
                             else if (opponent[name].health <= 20) {
                                 oppHealthBar[name].setTexture('Red-health');
                                 bloodsplats[bloodcount] = myScene.add.image(opponent[name].x, opponent[name].y, 'blood').setScale((maxHealth - opponent[name].health) / 100);
@@ -989,6 +998,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                                 setTimeout(removeBlood, 2000, bloodcount);
                                 bloodcount++;
                             }
+                            //changes the colour of the health bar to orange and displays blood splatter if opponent's health is less than 50
                             else if (opponent[name].health <= 50) {
                                 oppHealthBar[name].setTexture('Orange-health');
                                 bloodsplats[bloodcount] = myScene.add.image(opponent[name].x, opponent[name].y, 'blood').setScale((maxHealth - opponent[name].health) / 100);
@@ -1001,12 +1011,13 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
                                 console.log("damaged: " + opponent[name].x + " , " + opponent[name].y);
                             }
 
-
+                            //creates the JSON object with the player's updated state
                             var shooterState = sendMessage(parseFloat(myScene.player.x), parseFloat(myScene.player.y), myScene.player.name, myScene.player.angle, myScene.player.health, myScene.player.kills, myScene.player.velocity);
+                            //creates the JSON object with the opponent's updated state
                             var damagedState = sendMessage(parseFloat(opponent[name].x), parseFloat(opponent[name].y), opponent[name].name, opponent[name].angle, opponent[name].health, opponent[name].kills, opponent[name].velocity);
 
 
-
+                            //send the message to the hub with opponent's and player's updated states
                             connection.send('hit', shooterState, damagedState);
 
                             if (DEBUG) {
@@ -1026,11 +1037,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
     }
 }
 
-
+//class defining the player's group of bullets so they can be created and manipulated when the player shoots
 class BulletGroup extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
         super(scene.physics.world, scene);
-        //        this.shooter = name;
         this.createMultiple({
             classType: Bullet,
             frameQuantity: 15,
@@ -1040,20 +1050,21 @@ class BulletGroup extends Phaser.Physics.Arcade.Group {
             setScale: { x: 0.5, y: 0.5 }
         });
     }
-
+    
+    //method that is called whenever the player wants to shoots a bullet
     fireBullet(x, y, angle, name) {
-        const bullet = this.getFirstDead(false); //false - we can only use 30 bullets
-        if (bullet) {
+        const bullet = this.getFirstDead(false);         if (bullet) {
             bullet.setDepth(10);
+            //fire method in the bullet class is called and the player's  coordinates, angle and name are passed
             bullet.fire(x, y, angle, name);
         }
     }
 }
 
+//class defining the opponent's group of bullets so they can be created and manipulated when the opponent shoots
 class BulletGroupOpp extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
         super(scene.physics.world, scene);
-        //        this.shooter = name;
         this.createMultiple({
             classType: BulletOpp,
             frameQuantity: 15,
@@ -1064,15 +1075,22 @@ class BulletGroupOpp extends Phaser.Physics.Arcade.Group {
         });
     }
 
+    //method that is called whenever the opponent wants to shoots a bullet
     fireBullet(x, y, angle, name) {
-        const bullet = this.getFirstDead(false); //false - we can only use 30 bullets
-        if (bullet) {
+        const bullet = this.getFirstDead(false);         if (bullet) {
             bullet.setDepth(10);
+            //fire method in the bullet class is called and the opponent's coordinates, angle and name are passed
             bullet.fire(x, y, angle, name);
         }
     }
 }
 
+/*
+bullet class of opponent that sets the properties of the bullet when created - different
+ bullet classes are necessary because the player bullet does functionality like changing the
+ health bar and increasing the kills while the opponent's bullet is just for showing the bullets
+on screen
+*/
 class BulletOpp extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene, x, y) {
@@ -1083,6 +1101,7 @@ class BulletOpp extends Phaser.Physics.Arcade.Sprite {
         this.inY = y;
     }
 
+     //fire method called when opponent wants to shoot, makes the bullet visible on screen and sets the bullet's velocity and angle
     fire(x, y, angle, shooter) {
         this.inX = x;
         this.inY = y;
@@ -1103,6 +1122,7 @@ class BulletOpp extends Phaser.Physics.Arcade.Sprite {
             ang = angle;
         }
 
+        //fires the bullet at the angle that the opponent is currently in
         switch (ang) {
             case -180:
                 this.setVelocityY(4 * -150);
@@ -1145,24 +1165,30 @@ class BulletOpp extends Phaser.Physics.Arcade.Sprite {
 
     }
 
+    //function that runs every time before the update function
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
 
+        //checks if the bullet has travelled a certain length, if so removes it from the screen
         if (this.y <= this.inY - 1000 || this.y >= this.inY + 1000 || this.x <= this.inX - 1000 || this.x >= this.inX + 1000) {
             this.setActive(false);
             this.setVisible(false);
             hasShot = false;
         }
 
+        //the following code is executed every 20 frames for optimisation purposes
         if (delta % 20) {
 
             if (this.active == true) {
                 var hit = false;
+
+                    //if the bullet is still visible and the opponent has shot, check if the bullet has hit another opponent
                 for (var name in opponent) {
                     if (this.shooter != name) {
                         if (this.x <= parseInt(opponent[name].x) + 40 && this.x >= parseInt(opponent[name].x) - 40 && this.y <= parseInt(opponent[name].y) + 40 && this.y >= parseInt(opponent[name].y) - 40) {
                             hit = true;
 
+                            //remove bullet from the game
                             this.setActive(false);
                             this.setVisible(false);
 
@@ -1176,6 +1202,8 @@ class BulletOpp extends Phaser.Physics.Arcade.Sprite {
                     if (this.shooter != playername && !hit) {
                         var thisScene = [];
                         thisScene = thisScene.concat(game.scene.scenes);
+
+                        //check if an opponent's bullet has hit the player, if so remove the bullet from the screen
                         if (this.x <= thisScene[0].player.x + 40 && this.x >= thisScene[0].player.x - 40 && this.y <= thisScene[0].player.y + 40 && this.y >= thisScene[0].player.y - 40) {
 
                             this.setActive(false);
@@ -1193,29 +1221,37 @@ class BulletOpp extends Phaser.Physics.Arcade.Sprite {
 
 
 function bulletcallback(bullet, layer) {
+    //remove bullet from the game
     bullet.setActive(false);
     bullet.setVisible(false);
 }
 
-
+//this method is called whenever the player's/opponent's health goes below 0
 function kill(warlock) {
 
     var thisScene = [];
 
     thisScene = thisScene.concat(game.scene.scenes);
+
+    //if the warlock that is killed is an opponent  
     if (warlock.name in opponent) {
+
+        //remove the healthbar from the screen
         oppHealthBack[warlock.name].destroy();
         oppHealthBar[warlock.name].destroy();
         delete oppHealthBack[warlock.name];
         delete oppHealthBar[warlock.name];
 
+        //respawn the warlock to a new location and set its health to 100
         warlock.x = getXspawn();
         warlock.y = getYspawn();
         warlock.health = maxHealth;
 
+        //display the username in the player's new location
         usernames[warlock.name].x = warlock.x - ((warlock.name.length / 2) * 10);
         usernames[warlock.name].y = warlock.y - 100;
 
+        //display the health bar in the player's new location with full health
         oppHealthBack[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
         oppHealthBar[warlock.name] = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
         oppHealthBar[warlock.name].displayWidth = maxHealth;
@@ -1225,54 +1261,37 @@ function kill(warlock) {
 
 
     }
-    // else if (warlock.name == playername) {
-    //    healthBar.destroy();
-    //    backgroundBar.destroy();
-
-    //    warlock.x = getXspawn();
-    //    warlock.y = getYspawn();
-    //    warlock.health = maxHealth;
-
-
-    //    backgroundBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBackground');
-    //    backgroundBar.fixedToCamera = true;
-    //    backgroundBar.displayWidth = maxHealth + 2;
-
-    //    healthBar = thisScene[0].add.image(warlock.x, warlock.y - 70, 'healthBar');
-    //    healthBar.displayWidth = maxHealth;
-    //    healthBar.fixedToCamera = true;
-
-    //    backgroundBar.setDepth(30);
-    //    healthBar.setDepth(30);
-    //}
-
-
 
 }
 
+//This method is called to set the text for the leaderboard
 function updateText() {
+    //populate playersTemp dictionary with the kills of all of the players in the game
     var playersTemp = new Object();
     playersTemp[myScene.player.name] = myScene.player.kills;
     for (var opp in opponent) {
         playersTemp[opponent[opp].name] = opponent[opp].kills;
     }
 
+    //converts the map to an array
     var players = Object.keys(playersTemp).map(function (key) {
         return [key, playersTemp[key]];
     });
 
+    //sort player display according to most kills
     players.sort(function (first, second) {
         return second[1] - first[1];
     });
 
-
-
+    /* setting the value of maxP to the number of players in the game, if it is more 
+    than 10 maxP is set to 10 (used to display top 10 players on leaderboard)*/
     if (players.length >= 10) {
         var maxP = 10;
     } else {
         var maxP = players.length;
     }
 
+    //the following code displays the leaderboard and information inside it and formats it accordingly 
     var i;
     var leads = "";
     var maxlength = 0;
@@ -1303,9 +1322,11 @@ function updateText() {
     
     textBack.y = text.y + (textBack.displayHeight / 2);
     textBack.x = text.x + (textBack.displayWidth / 2) - 10;
-    //return players.splice(0, maxP);
 }
 
+/* The following two methods return the X and Y coordinate of the player's/opponent's 
+new location and assures that it is in the area of the castle but not on the castle itself.
+ This method is called when a player/opponent is killed */
 function getXspawn() {
     var min = Math.ceil(minSpawnX);
     var max = Math.floor(maxSpawnX);
@@ -1328,17 +1349,19 @@ function getYspawn() {
     return ret;
 }
 
-
+//called in timeout after shooting to limit amout of shots a person can do at a time
 function setShot() {
     canShoot = true;
 }
 
+//called in timeout after mask is set to destroy mask after a set amount of time
 function endmask()
 {
     mask.destroy();
     maskOff = true;
 }
 
+//called in timeout after bloodsplat created to remove bloodsplat after a certain amount of time
 function removeBlood(bloodID)
 {
     bloodsplats[bloodID].destroy();
