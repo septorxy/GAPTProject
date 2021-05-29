@@ -1,9 +1,14 @@
-﻿@{
+<!--
+    View for Instructions page
+-->
+
+@{
     Layout = "~/Views/Shared/_LayoutI.cshtml";
 }
 
 <h1>How to Play</h1>
 
+<!--Instructions accompanied by a Gif for clarity-->
 <div class="text-center" style="padding-top:2em; padding-bottom: 4em">
     <h2>Use WASD or Arrow Keys to move<br />Hold Shift to run</h2>
     <img src="~/img/8.gif" />
@@ -15,6 +20,6 @@
     <img src="~/img/11.gif" />
     <h2 style="padding-bottom:1em">Climb up the leaderboard!</h2>
     <a asp-area="" asp-controller="Game" asp-action="Play">
-        <button id="playBtn">PLAY</button>
+        <button id="playBtn">PLAY</button> <!--Play button so that the User does not have to scroll to the top-->
     </a>
 </div>
