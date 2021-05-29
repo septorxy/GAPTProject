@@ -1,53 +1,17 @@
-﻿@using Microsoft.AspNetCore.Identity
+<!--
+    View for the game page, with data injection used for User management
+-->
+
+@using Microsoft.AspNetCore.Identity 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
     Layout = "~/Views/Shared/_LayoutG.cshtml";
 }
 
-<noscript>Please enable javascript to play this Game.</noscript>
-<p id="name" hidden>@User.Identity.Name</p>
-<audio id="music" loop>
+<noscript>Please enable javascript to play this Game.</noscript> <!--In case client doesn't have JS enabled-->
+<p id="name" hidden>@User.Identity.Name</p> <!--Putting the username in a hidden element to be accessed by the JS-->
+<audio id="music" loop> <!--Audio to be played as background music during the game-->
     <source src="https://warlockstorageacc.blob.core.windows.net/music/musicMagic.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
-
-<div id="myModal" class="modal" style="display: none">
-    <div class="content" style="font-size:larger; color: white">
-        <h2 id="modal-title">Leaderboard</h2>
-        <ul>
-            <li id="1"></li>
-            <li id="2"></li>
-            <li id="3"></li>
-            <li id="4"></li>
-            <li id="5"></li>
-        </ul>
-    </div>
-</div>
-
-<script>
-    /*var modal = document.getElementById("myModal");
-
-    document.addEventListener('keydown', (event) => {
-        var keyname = event.key;
-        if (keyname === 'q') {
-            var scores = getPlayerLeaders();
-            var i;
-            for (i = 0; i < scores.length; i++) {
-                document.getElementById(i+1).innerHTML = scores[i];
-            }
-            modal.style.display = "block";
-        }
-    }, false);
-
-    document.addEventListener('keyup', (event) => {
-        var keyname = event.key;
-        if (keyname === 'q') {
-            modal.style.display = "none";
-            var i;
-            for (i = 0; i < 5; i++) {
-                document.getElementById(i + 1).innerHTML = "";
-            }
-        }
-    }, false);*/
-</script>
