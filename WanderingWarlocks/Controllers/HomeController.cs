@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+/*Default Controller provided by MVC */
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
