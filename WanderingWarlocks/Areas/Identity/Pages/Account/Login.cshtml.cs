@@ -1,4 +1,6 @@
-﻿using System;
+/*Modified to use Username field instead of Email*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -45,7 +47,7 @@ namespace WanderingWarlocks.Areas.Identity.Pages.Account
         {
             [Required]
             [DataType(DataType.Text)]
-            public string UserName { get; set; }
+            public string UserName { get; set; } //Using username instead of email
 
             [Required]
             [DataType(DataType.Password)]
