@@ -1,4 +1,6 @@
-﻿using System;
+/*Modified to add username separately from email*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -49,7 +51,7 @@ namespace WanderingWarlocks.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Username")]
-            public string UserName { get; set; }
+            public string UserName { get; set; } //Adding the username field to the input model
             
             [Required]
             [EmailAddress]
