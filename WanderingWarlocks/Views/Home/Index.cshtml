@@ -1,4 +1,8 @@
-﻿@using Microsoft.AspNetCore.Identity
+<!--
+    Home page for the project, meant to capture the feel and aesthetic of the game by using cobblestone as a background and having a gif of a warlock on-screen
+-->
+
+@using Microsoft.AspNetCore.Identity <!--Dependency Injections for User Management-->
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -7,16 +11,17 @@
 @{
     Layout = "~/Views/Shared/_LayoutI.cshtml";
 }
+
 <div id="back">
     <div class="text-center">
         <h1 class="display-4">Welcome to Wandering Warlocks!</h1>
         <p>2D Top-Down Shooter made for Browsers</p>
-        @if (!SignInManager.IsSignedIn(User)) { 
+        @if (!SignInManager.IsSignedIn(User)) { <!--Notifies users who aren't signed in that they need to be logged in to play-->
             <p>Please log in to play</p>}
         
         &nbsp;
         <a asp-area="" asp-controller="Game" asp-action="Play">
-            <img src="~/img/6.gif" style="padding-top:2em" />
+            <img src="~/img/6.gif" style="padding-top:2em" /> <!--Gif which redirects to the game-->
         </a>
-</div>
+    </div>
 </div>
