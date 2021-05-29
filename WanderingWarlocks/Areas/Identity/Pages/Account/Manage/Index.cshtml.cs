@@ -41,7 +41,7 @@ namespace WanderingWarlocks.Areas.Identity.Pages.Account.Manage
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Username")]
-            public string UserName { get; set; }
+            public string UserName { get; set; } //Adding UserName to the default page
         }
 
         private async Task LoadAsync(WanderingWarlocks.Models.ApplicationUser user)
