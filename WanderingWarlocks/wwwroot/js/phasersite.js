@@ -21,6 +21,17 @@ var firstMove = true;
 var mask;
 var maskOff = true;
 
+
+var map;
+var interactivelayer;
+
+var game;
+var text;
+var textBack;
+var cursors;
+var keys;
+var username;
+
 var maxSpawnX = 5534;
 var minSpawnY = 5149;
 var maxSpawnY = 3787;
@@ -229,20 +240,26 @@ function bindConnectionMessage() {
         if (DEBUG) {
             console.log("entered playercallback");
         }
+        
+        //If at beginning of game
         if (begining) {
             var temp;
             var i;
             if (DEBUG) {
                 console.log(inOpp.length);
             }
+            
+            //Loop through array and handle each JSON signifying an opponent
             for (i = 0; i < inOpp.length; i++) {
                 temp = JSON.parse(inOpp[i]);
 
+                //Making sure the opponent is not the player themself and the name is not already saved 
                 if (playername != temp.key && uniquename(temp.key)) {
+                    //Get scene
                     var thisScene = [];
-                    //thisScene.add(game.scene.scenes);
                     thisScene = thisScene.concat(game.scene.scenes);
 
+                    //Add and set opponent object 
                     opponent[temp.key] = thisScene[0].add.sprite(temp.x, temp.y, 'Down-opp-walkl').setScale(scale);
                     opponent[temp.key].name = temp.key;
                     opponent[temp.key].angle = temp.angle;
@@ -251,6 +268,8 @@ function bindConnectionMessage() {
                     opponent[temp.key].kills = temp.kills;
                     opponent[temp.key].playing = false;
                     opponent[temp.key].setDepth(10);
+                    
+                    //Add and set opponent Health bar
                     oppHealthBack[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBackground');
                     oppHealthBar[temp.key] = thisScene[0].add.image(temp.x, temp.y - 70, 'healthBar');
                     oppHealthBar[temp.key].displayWidth = maxHealth;
@@ -258,7 +277,7 @@ function bindConnectionMessage() {
                     oppHealthBack[temp.key].setDepth(30);
                     oppHealthBar[temp.key].setDepth(30);
 
-
+                    //Add and set opponent username
                     usernames[temp.key] = thisScene[0].add.text(opponent[temp.key].x - ((temp.key.length / 2) * 10), opponent[temp.key].y - 100, temp.key);
                     usernames[temp.key].alpha = 0.5;
                     usernames[temp.key].setDepth(30);
@@ -271,11 +290,13 @@ function bindConnectionMessage() {
         }
 
     }
-
+    
+    //Function for when a hit happens
     var hitCallback = function (inShooterJSON, inDamagedJSON) {
         var inShooter = JSON.parse(inShooterJSON);
         var inDamaged = JSON.parse(inDamagedJSON);
-
+        
+        //updating the shooter data
         opponent[inShooter.key].x = parseFloat(inShooter.x);
         opponent[inShooter.key].y = parseFloat(inShooter.y);
         opponent[inShooter.key].angle = inShooter.angle;
@@ -285,31 +306,31 @@ function bindConnectionMessage() {
         if (DEBUG) {
             console.log("IN HIT CALLBACK");
         }
-
+        
+        //Check if this player is hit
         if (inDamaged.key == playername) {
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
             
-            
+            //update player details
             thisScene[0].player.health = inDamaged.health;
             healthBar.displayWidth = thisScene[0].player.health;
             thisScene[0].player.x = parseFloat(inDamaged.x);
             thisScene[0].player.y = parseFloat(inDamaged.y);
             thisScene[0].player.angle = inDamaged.angle;
             thisScene[0].player.kills = inDamaged.kills;
+            //If the red maks is not already active set it 
             if (maskOff) {
                 maskOff = false;
                 mask = thisScene[0].add.graphics();
                 mask.setDepth(35);
                 mask.fillStyle(0xFF0000, 0.2);
                 mask.fillRect(thisScene[0].player.x - (window.innerWidth / 2), thisScene[0].player.y - (window.innerHeight / 2), window.innerWidth + 10, window.innerHeight + 10);
+                //Timeout initiates function to remove the mask 
                 setTimeout(endmask, 175);
             }
 
-            //if (myScene.player.health <= 0) {
-            //     kill(opponent[name]);
-            //}
-            //else 
+            //Update healthbar and bloodsplat depending on health 
             if (thisScene[0].player.health <= 20) {
                 healthBar.setTexture('Red-health');
                 bloodsplats[bloodcount] = thisScene[0].add.image(thisScene[0].player.x, thisScene[0].player.y, 'blood').setScale((maxHealth - thisScene[0].player.health)/100);
@@ -329,6 +350,8 @@ function bindConnectionMessage() {
             }
 
         }
+        
+        //else if opponent was hit do the same thing you did to the player but to the opponent
         else {
             opponent[name].health = inDamaged.health;
             oppHealthBar.displayWidth = myScene.player.health;
@@ -337,10 +360,6 @@ function bindConnectionMessage() {
             opponent[name].angle = inDamaged.angle;
             opponent[name].kills = inDamaged.kills;
 
-            //if (myScene.player.health <= 0) {
-            //     kill(opponent[name]);
-            //}
-            //else 
             if (opponent[name].health <= 20) {
                 oppHealthBar[name].setTexture('Red-health');
                 bloodsplats[bloodcount] = myScene.add.image(opponent[name].x, opponent[name].y, 'blood').setScale((maxHealth - opponent[name].health) / 100);
@@ -364,14 +383,14 @@ function bindConnectionMessage() {
 
     }
 
-
+    //sets the functions called when receiving messages from the respective tasks
     connection.on('broadcastMessage', broadcastCallback, 0);
     connection.on('getPlayers', playerCallback, 0);
     connection.on('hit', hitCallback, 0);
-    //connection.on('echo', messageCallback);
     connection.onclose(onConnectionError);
 }
 
+//Function to check if a name is in opponent dictionary
 function uniquename(name) {
     if (opponent.hasOwnProperty(name)) {
         return false;
@@ -380,6 +399,8 @@ function uniquename(name) {
     return true;
 }
 
+
+//Function that creates the game object and gets the current opponents
 function startGame() {
     game = new Phaser.Game(config);
 
@@ -389,7 +410,7 @@ function startGame() {
 
 }
 
-
+//Config used to create game object
 var config = {
     type: Phaser.AUTO,
     width: window.innerWidth - 10,
@@ -405,27 +426,23 @@ var config = {
     }
 };
 
-var game;
 
-var text;
-var textBack;
-var cursors;
-var keys;
-var username;
 
+
+//Game preload function 
 function preload() {
-
-    
-    
+    //get camera dimensions
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
     
+    
+    //Creates progress bar graphics object for loading screen
     var progressBox = this.add.graphics();
     var progressBar = this.add.graphics();
     progressBox.fillStyle(0x8D5524);
     progressBox.fillRect((width / 2) - (160), (height / 2) - 30, 320, 50);
 
-    
+    //Sets new text objects
     var loadingText = this.make.text({
         x: width / 2,
         y: height / 2 - 50,
@@ -436,7 +453,6 @@ function preload() {
         }
     });
     loadingText.setOrigin(0.5, 0.5);
-
     var percentText = this.make.text({
         x: width / 2,
         y: height / 2 - 5,
@@ -447,7 +463,6 @@ function preload() {
         }
     });
     percentText.setOrigin(0.5, 0.5);
-
     var assetText = this.make.text({
         x: width / 2,
         y: height / 2 + 50,
@@ -457,9 +472,9 @@ function preload() {
             fill: '#ffffff'
         }
     });
-
     assetText.setOrigin(0.5, 0.5);
 
+    //Setting function for when progress is made
     this.load.on('progress', function (value) {
         percentText.setText(parseInt(value * 100) + '%');
         progressBar.clear();
@@ -467,22 +482,22 @@ function preload() {
         progressBar.fillRect((width / 2) + 10 - 160, (height / 2) - 20, 300 * value, 30);
     });
 
+    //setting function for when a new file is being loaded to display on screen
     this.load.on('fileprogress', function (file) {
         assetText.setText('Loading asset: ' + file.key);
     });
 
+    //Function for when loading is complete and removes all objects
     this.load.on('complete', function () {
         progressBar.destroy();
         progressBox.destroy();
         loadingText.destroy();
         percentText.destroy();
-        //loading.destroy();
         assetText.destroy();
     });
 
-    //this.load.atlas('player', 'warlock.png' , 'warlock.json');
-    //this.load.path = 'sprites/';
-    //this.load.multiatlas('player', 'spritesheet.json');
+   
+    //Loading assets to game
     this.load.image('Down-warlock-walkl', 'https://warlockstorageacc.blob.core.windows.net/warlock/Down-warlock-walkl.png');
 
     this.load.atlas('warlock', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.png', 'https://warlockstorageacc.blob.core.windows.net/warlock/warlock.json');
@@ -509,15 +524,17 @@ function preload() {
 
 }
 
-var map;
-var interactivelayer;
 
+//Game Create function
 function create() {
-
+    //gets username from html which was set from the login 
     name = document.getElementById("name").innerHTML;
+    //sets myScene to this scene as we have one scene
     myScene = this;
+    //Updates this.opponents to oppoenet array so that all players are in game object
     this.opponents = opponent;
 
+    //sets all opponent textures now that they loaded
     for (var opp in this.opponents) {
 
         this.opponents[opp].setTexture('Down-opp-walkl');
@@ -542,10 +559,9 @@ function create() {
         oppHealthBack[back].setDepth(30);
     }
 
-    //console.log(this.opponents);
 
 
-
+    //Creating player and opponent animations
     this.anims.create({
         key: 'dwalk',
         frames:
@@ -582,28 +598,23 @@ function create() {
 
 
 
-    /*The following code doesn't work and broke the program so fix if using again
-     * var i;
-    for (i = 0; i < this.opponents.length; i++)
-    {
-        this.opponents[i].texture = 'Down-warlock-walkl';
-        this.opponents[i].frame = 'Down-warlock-walkl';
-    }*/
-
-    //this.loading.destroy();
+    //Create plyer sprite and set name
     this.player = this.physics.add.sprite(getXspawn(), getYspawn(), 'Down-warlock-walkl').setScale(scale);
     this.player.name = name;
     playername = name;
+    
+    //load animations to sprite
     this.player.anims.load('dwalk');
     this.player.anims.load('drun');
 
-    this.player.health = 100;
+    //setting healt and kills to their initial state values
+    this.player.health = maxHealth;
     this.player.kills = 0;
 
+    //Creating and setting up healthbar and username of player
     backgroundBar = this.add.image(this.player.x, this.player.y - 70, 'healthBackground');
     backgroundBar.fixedToCamera = true;
     backgroundBar.displayWidth = maxHealth + 2;
-
 
     healthBar = this.add.image(this.player.x, this.player.y - 70, 'healthBar');
     healthBar.displayWidth = maxHealth;
@@ -615,16 +626,13 @@ function create() {
     backgroundBar.setDepth(30);
     healthBar.setDepth(30);
 
+    //Creating bulletgroup for player
     this.bulletGroup = new BulletGroup(this);
 
-
-
-
-
-    //this.player.frame = 'Left-warlock-walkr.png';
-
+    //Setting cursors which monitor up,down,left,right,space keys
     cursors = this.input.keyboard.createCursorKeys();
 
+    //Creating keys and adding WASDQP keys to be monitored (P is only used when debugging)
     keys = this.input.keyboard.addKeys(
         {
             W: 'W',
@@ -635,10 +643,11 @@ function create() {
             P: 'P'
         });
 
+    //Setting the camera to follow the player
     camera = this.cameras.main;
     camera.startFollow(this.player);
 
-
+    //Creates event listener for a left click to initiate a shoot
     this.input.on('pointerdown', function (pointer) {
         if (pointer.leftButtonDown()) {
             //start shooting
@@ -652,29 +661,28 @@ function create() {
     }, this);
 
 
-
+    //Create map
     var map = this.make.tilemap({ key: 'map' });
+    //Add Tileset to map
     var tileset = map.addTilesetImage('MyTilesSet', 'tiles');
+    //Create layers 
     var groundlayer = map.createLayer('ground', tileset, 0, 0);
     interactivelayer = map.createLayer('Interactive', tileset, 0, 0);
     var skylayer = map.createLayer('Sky', tileset, 0, 0);
 
+    //set interactive layer properties from JSON for the tiles that have the collide property set to true
     interactivelayer.setCollisionByProperty({ Collide: true });
 
+    //Add colliders for the player to the collision objects 
     this.physics.add.collider(this.player, interactivelayer);
+    //and one for bullets to the collision object which calls a function on collision
     this.physics.add.collider(this.bulletGroup, interactivelayer, bulletcallback);
-    // this.physics.add.collider(this.bulletGroup, this.player, bulletcallback)
 
-
+    //Ensuring the sky layer is higher than the player to allow the player to hide underneth it
     this.player.setDepth(10);
     skylayer.setDepth(20);
 
-    // set bounds so the camera won't go outside the game world
-    //this.cameras.main.setBounds(0, 0, game.width, game.height);
-    // make the camera follow the player
-    //this.cameras.main.startFollow(this.player);
-
-    //this.cameras.main.setBackgroundColor('#2889d4');
+    //Send new player message to hub
     var outMessage = sendMessage(this.player.x, this.player.y, this.player.name, this.player.angle, this.player.health, this.player.kills, this.player.velocity);
     if (outMessage) {
 
@@ -682,12 +690,15 @@ function create() {
     }
     updated = true;
 
+    //Create text for the leaderboard
     text = this.add.text(0, 0, "", {
         font: "25px Arial",
         align: "center"
     });
+    //Add image for leaderboard background
     textBack = this.add.image(0, 0, 'leaderboard');
 
+    //Set properties of leaderboard
     text.setPadding(15, 15);
     text.visible = false;
     text.setDepth(30);
@@ -695,6 +706,10 @@ function create() {
     textBack.setDepth(29);
 
 }
+
+
+
+//Game Update Function
 function update() {
 
     if (DEBUG)
