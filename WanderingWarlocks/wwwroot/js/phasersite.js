@@ -1,4 +1,6 @@
-﻿const DEBUG = true;
+
+//Boolean constant that controls DEBUG mode
+const DEBUG = false;
 
 //Variables
 var playername;
@@ -56,11 +58,13 @@ var connection = new signalR.HubConnectionBuilder()
     .build();
 bindConnectionMessage();
 
+
+//On connection start call method start Game 
 connection.start()
     .then(() => startGame())
     .catch(error => console.error(error.message));
 
-
+//On Conection end Show the error
 function onConnectionError(error) {
     if (error && error.message) {
         if (DEBUG)
@@ -71,6 +75,8 @@ function onConnectionError(error) {
     }
 }
 
+
+//Function creating JSON to be sent to Hub
 function sendMessage(xIn, yIn, keyIn, angle, health, kills, velocity) {
     var sendmessage = '{' +
         '"x": "' + xIn + '" ,' +
@@ -86,19 +92,22 @@ function sendMessage(xIn, yIn, keyIn, angle, health, kills, velocity) {
 
 //RECEIVE FROM HUB
 function bindConnectionMessage() {
+    //Function initiated whenever a broadcast message is received
     var broadcastCallback = function (type, inJSON) {
         var inMessage = JSON.parse(inJSON);
         if (!type) { return; }
+        
+        //New Player Joined game
         if (type === "newPlayer") {
-            //console.log("Before added new player: " + opponent[inMessage.key]/*.toString()*/);
-
-            //console.log("key: " + inMessage.key);
-            //console.log("player name: " + playername);
             if (inMessage.key == playername) {
                 return;
             }
+            
+            //Getting the scene
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
+            
+            //Adding Sprite and updating all information of the sprite
             opponent[inMessage.key] = thisScene[0].add.sprite(inMessage.x, inMessage.y, 'Down-opp-walkl').setScale(scale);
             opponent[inMessage.key].name = inMessage.key;
             opponent[inMessage.key].health = 100;
@@ -108,13 +117,16 @@ function bindConnectionMessage() {
             opponent[inMessage.key].mySpeed = inMessage.velocity;
             opponent[inMessage.key].anims.load('owalk');
             opponent[inMessage.key].anims.load('orun');
+            
+            //Adding Sprite health bar
             oppHealthBack[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBackground');
             oppHealthBar[inMessage.key] = thisScene[0].add.image(inMessage.x, inMessage.y - 70, 'healthBar');
             oppHealthBar[inMessage.key].displayWidth = maxHealth;
             oppHealthBack[inMessage.key].displayWidth = maxHealth + 2;
             oppHealthBack[inMessage.key].setDepth(30);
             oppHealthBar[inMessage.key].setDepth(30);
-
+            
+            //Adding Sprite username
             usernames[inMessage.key] = thisScene[0].add.text(opponent[inMessage.key].x - ((inMessage.key.length / 2) * 10), opponent[inMessage.key].y - 100, inMessage.key);
             usernames[inMessage.key].alpha = 0.5;
             usernames[inMessage.key].setDepth(30);
@@ -123,7 +135,11 @@ function bindConnectionMessage() {
                 console.log("After added new player: " + opponent[inMessage.key].toString());
             }
         }
+        
+        //Player State changed
         if (type === "updatePlayer") {
+            
+            //Updating all opponent information
             opponent[inMessage.key].x = inMessage.x;
             opponent[inMessage.key].y = inMessage.y;
             opponent[inMessage.key].health = inMessage.health;
@@ -131,7 +147,7 @@ function bindConnectionMessage() {
             opponent[inMessage.key].kills = inMessage.kills;
             opponent[inMessage.key].mySpeed = inMessage.velocity;
 
-            
+            //Setting the running or walking animation depending on velocity
             if (opponent[inMessage.key].mySpeed >= 150) {
                 if (opponent[inMessage.key].playing == false) {
                     opponent[inMessage.key].anims.play('orun', 10, true);
@@ -145,24 +161,27 @@ function bindConnectionMessage() {
                 }
             }
             else {
-                opponent[inMessage.key
-                ].anims.stop();
+                //Stopping animation when velocity is 0
+                opponent[inMessage.key].anims.stop();
                 opponent[inMessage.key].playing = false;
             }
-            //console.log(opponent[inMessage.key].kills);
-
+            
+            //Getting scene
             var thisScene = [];
             thisScene = thisScene.concat(game.scene.scenes);
 
+            //Updating opponent health bar
             oppHealthBack[inMessage.key].x = inMessage.x;
             oppHealthBack[inMessage.key].y = inMessage.y - 70;
             oppHealthBar[inMessage.key].x = inMessage.x;
             oppHealthBar[inMessage.key].y = inMessage.y - 70;
 
+            //Updating opponent username
             usernames[inMessage.key].x = opponent[inMessage.key].x - ((inMessage.key.length / 2) * 10);
             usernames[inMessage.key].y = opponent[inMessage.key].y - 100;
 
         }
+        //When a player disconnects 
         if (type === "disconnection") {
 
             if (DEBUG)
@@ -182,14 +201,19 @@ function bindConnectionMessage() {
             delete usernames[inMessage.key];
 
         }
+        //When a player shoots
         if (type === "shooting") {
             //check if shooting is from opponent
-
             if (opponent.hasOwnProperty(inMessage.key)) {
-                //console.log(inMessage.key, "shot");
+                
+                //Get scene
                 var thisScene = [];
                 thisScene = thisScene.concat(game.scene.scenes);
+                
+                //Chack if the scene has been created yet
                 if (thisScene[0] != null) {
+                    
+                    //Creating an opponent bullet group 
                     thisScene[0].bulletGroupOpp = new BulletGroupOpp(thisScene[0], inMessage.key);
                     thisScene[0].bulletGroupOpp.setDepth(10);
                     thisScene[0].bulletGroupOpp.fireBullet(inMessage.x - 20, inMessage.y - 20, inMessage.angle, inMessage.key);
@@ -199,6 +223,8 @@ function bindConnectionMessage() {
             }
         }
     }
+    
+    //Function for when this clint joins game to get all players currently playing
     var playerCallback = function (inOpp) {
         if (DEBUG) {
             console.log("entered playercallback");
