@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+<!--
+    Layout used for Home and Instructions pages, using cobblestones as the background to immerse the user into the game experience from the start
+-->
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +15,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <!--Warlock icon which redirects to home page-->
                     <img src="~/img/1.png" width="50" height="50" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,7 +34,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Play">Play!</a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <partial name="_LoginPartial" /> <!--Adding the layout scaffolded in from Identity-->
                 </div>
             </div>
         </nav>
