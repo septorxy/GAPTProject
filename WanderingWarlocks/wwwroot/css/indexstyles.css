@@ -88,6 +88,7 @@ body {
 }
 
 #playBtn {
+    /*Referenced from https://www.w3schools.com/css/css3_buttons.asp */
     background-color: #069a55;
     border: none;
     color: white;
