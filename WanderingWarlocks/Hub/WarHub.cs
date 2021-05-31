@@ -11,39 +11,47 @@ namespace WanderingWarlocks
 {
     public class WarHub : Hub
     {
+        //Interval between messages of when the cache should be updated
         int interval = 30;
 
 
         public Task BroadcastMessage(string type, object inMessage, int count)
         {
+        //Checking if inMessage is null to make sure there is no error int the deserialisation
             if (inMessage != null)
             {
+            //Deserialising the incoming JSON format object to PlayerState in order to obtain key 
                 PlayerState state = JsonConvert.DeserializeObject<PlayerState>(inMessage.ToString());
 
                 if (type.Equals("disconnection"))
                 {
+                //Converting the incoming inMessage from onDisconnectAsync to a format readable by the JS
                     inMessage = inMessage.ToString();
-                    Console.WriteLine("disconnection");
                 }
                 string key = state.key;
 
                 if (type.Equals("newPlayer"))
                 {
-                    Console.WriteLine("HereAM");
+                //New Player Code
                     IDatabase cache = ConnectionCache.GetDatabase();
-                    cache.StringSet(key, inMessage.ToString());
-                    cache.StringSet(Context.ConnectionId, key);
+                    //This is where the Redis Cache is first used within the project.
+                    //The moment a Connection is established:
+                    cache.StringSet(key, inMessage.ToString()); //The key is mapped to the player details
+                    cache.StringSet(Context.ConnectionId, key); //The connectionId is mapped to the key
+                    //the key is added to myKeys
                     if (cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals(""))
                     {
+                    //If myKeys is empty
                         cache.StringSet("myKeys", key);
-                        Console.WriteLine(cache.StringGet("myKeys").ToString());
                     }
                     else
                     {
+                    //If myKeys Exists
                         bool exists = false;
                         string[] keysArr = cache.StringGet("myKeys").ToString().Split(",");
                         for (int i = 0; i < keysArr.Length; i++)
                         {
+                        //Checking if there was a Redis error as to not have multiple of the same username in myKeys
                             if (keysArr[i].Equals(key))
                             {
                                 exists = true;
@@ -52,9 +60,9 @@ namespace WanderingWarlocks
                         }
                         if (!exists)
                         {
+                        //Add a key delimited by a ','
                             string keys = cache.StringGet("myKeys") + "," + key;
                             cache.StringSet("myKeys", keys);
-                            Console.WriteLine(cache.StringGet("myKeys").ToString());
                         }
                     }
                 }
@@ -62,12 +70,11 @@ namespace WanderingWarlocks
 
                 else if (type.Equals("updatePlayer"))
                 {
-                    //Console.WriteLine(count);
+                //Update the player within the Redis Cache with the updated info every interval
                     if (count == interval)
                     {
                         IDatabase cache = ConnectionCache.GetDatabase();
                         cache.StringSet(key, inMessage.ToString());
-                        //Console.WriteLine("Executed");
 
                     }
                 }
@@ -79,6 +86,7 @@ namespace WanderingWarlocks
 
         public Task getPlayers(string[] players)
         {
+        //Task to return all the players in myKeys with their data to initiate the opponents on other players' browsers
             int counter = 0;
             IDatabase cache = ConnectionCache.GetDatabase();
             if (cache.StringGet("myKeys").ToString() == null) { return Clients.All.SendAsync("getPlayers", players); }
@@ -87,7 +95,6 @@ namespace WanderingWarlocks
             foreach (String key in keys)
             {
                 players[counter] = cache.StringGet(key).ToString();
-                //Console.WriteLine(players[counter]);
                 counter++;
             }
             return Clients.All.SendAsync("getPlayers", players);
@@ -95,7 +102,9 @@ namespace WanderingWarlocks
 
         public Task Hit(object shooterState, object damagedState)
         {
+        //Task that triggers every time a hit happens
             if (shooterState != null && damagedState!=null){
+            //The Redis Cache is updated with the current health and kill values of the shooting and damaged player
                 PlayerState shooter = JsonConvert.DeserializeObject<PlayerState>(shooterState.ToString());
                 PlayerState damaged = JsonConvert.DeserializeObject<PlayerState>(damagedState.ToString());
                 IDatabase cache = ConnectionCache.GetDatabase();
@@ -109,20 +118,22 @@ namespace WanderingWarlocks
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            Console.WriteLine("OnDisconnectAsync");
+        //This Task is triggered automatically once a disconnection between the SignalR and the user is detected
             IDatabase cache = ConnectionCache.GetDatabase();
             if (!(cache.StringGet("myKeys").ToString() == null || cache.StringGet("myKeys").ToString().Equals("")))
             {
-                Console.WriteLine(cache.StringGet("myKeys").ToString());
+            //The Key is retrieved from the cache using the connectionId saved when the player joined the game
                 string key = cache.StringGet(Context.ConnectionId);
                 string[] keys = cache.StringGet("myKeys").ToString().Split(",");
                 var keyList = keys.ToList();
                 keyList.Remove(key);
                 keys = keyList.ToArray();
+                //Key is removed from myKeys
                 cache.StringSet("myKeys", String.Join(",", keys));
+                //Player object is retrieved from the RedisCache
                 var inMessage = cache.StringGet(key);
-
-                Console.WriteLine("Disconnected from cache: " + inMessage.ToString());
+                //BroadcastMessage is called so that when the disconnection is detected the player character is deleted from
+                //the opponents' browsers
                 await BroadcastMessage("disconnection", inMessage, 0);
             }
             else
@@ -131,17 +142,5 @@ namespace WanderingWarlocks
             }
             await base.OnDisconnectedAsync(exception);
         }
-
-        //private  async Task OnConnectedAsync(Exception exception)
-        // {
-        //    IDatabase cache = ConnectionCache.GetDatabase();
-        //    string key = cache.StringGet(Context.ConnectionId);
-        //    string[] keys = cache.StringGet("myKeys").ToString().Split(",");
-        //    var keyList = keys.ToList();
-        //    var inMessage = cache.StringGet(key);
-        //    await BroadcastMessage("newPlayer", inMessage, 0);
-        //      await base.OnConnectedAsync(Exception);
-        //  }
-
     }
 }
